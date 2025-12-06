@@ -1,0 +1,120 @@
+.special-offers-section {
+    background-color: var(--main-color);
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'Arial', sans-serif;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    font-family: 'Arial', sans-serif;
+}
+
+.offers-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.offer-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 30px 20px;
+    width: 280px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.offer-card:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.offer-icon {
+    margin-bottom: 20px;
+}
+
+.offer-icon i {
+    font-size: 4rem;
+}
+
+.offer-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'Arial', sans-serif;
+}
+
+.offer-description {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    .offers-container {
+        gap: 22px;
+    }
+
+    .offer-card {
+        padding: 24px 16px;
+        width: 220px;
+        min-height: 180px;
+    }
+
+    .offer-icon i {
+        font-size: 3.5rem;
+    }
+
+    .offer-title {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    .offers-container {
+        gap: 20px;
+    }
+
+    .offer-card {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .special-offers-section {
+        padding: 30px 15px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .offer-card {
+        padding: 25px 15px;
+        min-height: auto;
+    }
+}
