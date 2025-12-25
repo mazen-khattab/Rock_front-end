@@ -1,10 +1,12 @@
 import './Navbar.css'
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useCart } from '../../../Context/CartContext';
 import logo from '../../../assets/Rock_logo.jpg'
 
-
 const Navbar = () => {
+    const { cartCount } = useCart();
+
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [language, setLanguage] = useState<'en' | 'ar'>('en');
@@ -45,12 +47,15 @@ const Navbar = () => {
                     </div>
 
                     <div className="navbar-icons">
-                        <i className="fa-solid fa-cart-shopping"></i>
+                        <Link to='/cart' style={{ color: 'black', position: 'relative' }}>
+                            <i className="fa-solid fa-cart-shopping cart-icon"></i>
+                            <span className="cart-count">{cartCount}</span>
+                        </Link>
                         <button className='nav-lang' onClick={toggleLanguage}>{language === 'en' ? 'AR' : 'EN'}</button>
-                        <div className="login">
+                        <Link to="/login" className="login">
                             <i className="fa-solid fa-arrow-right-to-bracket"></i>
                             <span>Login</span>
-                        </div>
+                        </Link>
 
                         <div className="mobile-menu-btn">
                             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>

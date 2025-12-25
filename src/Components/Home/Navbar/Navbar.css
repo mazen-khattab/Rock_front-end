@@ -47,7 +47,7 @@
     gap: 8px;
 }
 
-.navbar .navbar-icons>i {
+.navbar .navbar-icons .cart-icon {
     cursor: pointer;
     transition: var(--transition);
     border-radius: 50%;
@@ -58,7 +58,22 @@
     justify-content: center;
 }
 
-.navbar .navbar-icons>i:hover {
+.navbar .navbar-icons .cart-count {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    background-color: #ff0000;
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar .navbar-icons .cart-icon:hover {
     background-color: var(--main-color);
     color: white;
 }
@@ -186,7 +201,7 @@
         width: 90%;
     }
 
-    .navbar .navbar-icons>i {
+    .navbar .navbar-icons .cart-icon {
         width: 30px;
         height: 30px;
     }

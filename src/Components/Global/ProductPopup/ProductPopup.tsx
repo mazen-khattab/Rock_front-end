@@ -1,23 +1,7 @@
-// ProductPopup.jsx
 import React, { useState } from 'react';
+import type { Product } from '../../../Types/product';
 import './ProductPopup.css';
-
-interface Product {
-    id: number;
-    name: string;
-    category: string;
-    image: string;
-    price: number;
-    originalPrice: number;
-    description: string;
-    discount: number;
-    countdown?: {
-        days: number;
-        hours: number;
-        minutes: number;
-        seconds: number;
-    };
-}
+import { useCart } from '../../../Context/CartContext';
 
 interface ProductPopupProps {
     product: Product,
@@ -25,10 +9,35 @@ interface ProductPopupProps {
 }
 
 const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
-    const [selectedSize, setSelectedSize] = useState('M');
-    const [selectedColor, setSelectedColor] = useState('cream');
+    const { addToCart } = useCart();
+
+    const [selectedSize, setSelectedSize] = useState(product.size);
+    const [selectedColor, setSelectedColor] = useState('black');
+    const [isAdding, setIsAdding] = useState(false);
+    const sizes = ["XS", "S", "M", "L", "XL"];
 
     if (!product) return null;
+
+    const handleAddToCart = () => {
+        if (isAdding) return;
+        
+        setIsAdding(true);
+        addToCart(product);
+
+        setTimeout(() => {
+            setIsAdding(false);
+        }, 1000);
+    };
+
+    const handleSelectedSize = (size: string) => {
+        setSelectedSize(size);
+        product.size = size;
+    }
+
+    const handleSelectedColor = (color: string) => {
+        setSelectedColor(color);
+        product.color = color;
+    }
 
     return (
         <div className="product-popup-overlay" onClick={onClose}>
@@ -62,11 +71,11 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
                         <div className="size-selector">
                             <label>Select size</label>
                             <div className="size-options">
-                                {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map(size => (
+                                {sizes.map(size => (
                                     <button
                                         key={size}
                                         className={`size-btn ${selectedSize === size ? 'selected' : ''}`}
-                                        onClick={() => setSelectedSize(size)}
+                                        onClick={() => handleSelectedSize(size)}
                                     >
                                         {size}
                                     </button>
@@ -87,13 +96,13 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
                                                 color === 'white' ? '#fff' :
                                                     color === 'gray' ? '#888' : '#a57c52'
                                         }}
-                                        onClick={() => setSelectedColor(color)}
+                                        onClick={() => handleSelectedColor(color)}
                                     ></button>
                                 ))}
                             </div>
                         </div>
 
-                        <button className="add-to-cart-btn">
+                        <button className="add-to-cart-btn" onClick={handleAddToCart}>
                             <i className="fas fa-shopping-cart"></i> Add to cart
                         </button>
 

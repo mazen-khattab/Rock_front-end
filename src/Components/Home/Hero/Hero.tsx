@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Play } from "lucide-react";
-import { useAsyncError, useNavigate } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Pants from '../../../assets/pants.jpg';
 import Shirt from '../../../assets/t-shirts2.jpg';
 import Shirt2 from '../../../assets/t-shirt.jpg';
-// import heroBanner from "@/assets/hero-banner.jpg";
 import './Hero.css'
 
 const Hero = () => {
@@ -144,10 +143,12 @@ const Hero = () => {
                         imgRef.current.style.opacity = '0';
                         imgRef.current.style.zIndex = "-1";
                         parentRef.current.style.opacity = '1';
+                        parentRef.current.style.zIndex = '1';
                     } else {
                         imgRef.current.style.opacity = '1'
                         imgRef.current.style.zIndex = "10";
                         parentRef.current.style.opacity = '0';
+                        parentRef.current.style.zIndex = '-100';
                     }
                 } else {
                     parentRef.current.style.opacity = '1';
@@ -162,8 +163,8 @@ const Hero = () => {
     }, [startPos, targetPos]);
 
     return (
-        <div className='hero'>
-            <section className="hero-wrapper container"
+        <div className='hero container'>
+            <section className="hero-wrapper"
                 onMouseEnter={() => setIsHover(true)}
                 onMouseLeave={() => setIsHover(false)}>
 
@@ -200,10 +201,6 @@ const Hero = () => {
                             className="btn-primary"
                         >
                             SHOP NOW <ArrowRight className="icon-right" />
-                        </button>
-
-                        <button className="btn-outline">
-                            <Play className="icon-left" />
                         </button>
                     </div>
                 </div>

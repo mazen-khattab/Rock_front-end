@@ -1,0 +1,292 @@
+/* ===== whyus-header ===== */
+.whyus-header {
+    background-color: var(--main-color);
+    color: white;
+    padding: 10rem 2rem;
+    text-align: center;
+}
+
+/* ===== whyus-header-container ===== */
+.whyus-header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* ===== whyus-header-title ===== */
+.whyus-header-title {
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+/* ===== whyus-header-subtitle ===== */
+.whyus-header-subtitle {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 48rem;
+    margin: 0 auto;
+}
+
+/* ===== whyus-section / whyus-section-light / whyus-section-dark ===== */
+.whyus-section,
+.whyus-section-light,
+.whyus-section-dark {
+    padding: 80px 24px;
+}
+
+.whyus-section-light {
+    background-color: #f9fafb;
+}
+
+.whyus-section-dark {
+    background-color: var(--main-color);
+    color: white;
+}
+
+/* ===== whyus-section-container ===== */
+.whyus-section-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ===== whyus-section-title (in advantages section) ===== */
+.whyus-section-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--main-color);
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.whyus-section-dark .whyus-section-title {
+    color: white;
+}
+
+/* ===== whyus-section-heading ===== */
+.whyus-section-heading {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+/* ===== whyus-section-heading-title ===== */
+.whyus-section-heading-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--main-color);
+    margin-bottom: 24px;
+}
+
+.whyus-section-dark .whyus-section-heading-title {
+    color: white;
+}
+
+/* ===== whyus-section-heading-text ===== */
+.whyus-section-heading-text {
+    font-size: 1.25rem;
+    color: #4b5563;
+    margin: 0 auto;
+    max-width: 56rem;
+}
+
+.whyus-section-dark .whyus-section-heading-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.125rem;
+    margin-bottom: 16px;
+    line-height: 1.75;
+}
+
+/* ===== whyus-feature-list ===== */
+.whyus-feature-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== whyus-feature-item ===== */
+.whyus-feature-item {
+    padding: 16px 0;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.whyus-feature-item:last-child {
+    border-bottom: none;
+}
+
+/* ===== whyus-feature-icon ===== */
+.whyus-feature-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--main-color);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* ===== whyus-feature-content ===== */
+.whyus-feature-content {
+    /* No direct styles — children inherit */
+}
+
+/* ===== whyus-feature-title ===== */
+.whyus-feature-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--main-color);
+    margin-bottom: 8px;
+}
+
+/* ===== whyus-feature-description ===== */
+.whyus-feature-description {
+    font-size: 1rem;
+    color: #4b5563;
+    margin: 0;
+}
+
+/* ===== whyus-grid-3 ===== */
+.whyus-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+/* ===== whyus-card ===== */
+.whyus-card {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.whyus-card:hover {
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+}
+
+/* ===== whyus-card-icon ===== */
+.whyus-card-icon {
+    width: 64px;
+    height: 64px;
+    background-color: var(--main-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    transition: var(--transition)
+}
+
+.whyus-card:hover .whyus-card-icon {
+    background-color: #014849;
+}
+
+/* ===== whyus-card-icon-svg ===== */
+.whyus-card-icon-svg {
+    width: 32px;
+    height: 32px;
+    color: white;
+}
+
+/* ===== whyus-card-title ===== */
+.whyus-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--main-color);
+    margin-bottom: 16px;
+}
+
+/* ===== whyus-card-text ===== */
+.whyus-card-text {
+    font-size: 1rem;
+    color: #4b5563;
+    margin: 0;
+}
+
+/* ===== whyus-testimonial ===== */
+.whyus-testimonial {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    border-left: 4px solid var(--main-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== whyus-testimonial-text ===== */
+.whyus-testimonial-text {
+    font-size: 1rem;
+    color: #4b5563;
+    margin-bottom: 16px;
+    font-style: italic;
+}
+
+/* ===== whyus-testimonial-author ===== */
+.whyus-testimonial-author {
+    font-weight: 600;
+    color: var(--main-color);
+}
+
+/* ===== whyus-cta-button-wrapper ===== */
+.whyus-cta-button-wrapper {
+    text-align: center;
+    margin-top: 48px;
+}
+
+/* ===== whyus-cta-button ===== */
+.whyus-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: white;
+    color: var(--main-color);
+}
+
+.whyus-cta-button:hover {
+    background-color: var(--hover-color);
+    color: white;
+}
+
+/* ===== Mobile Responsiveness ===== */
+@media (max-width: 1024px) {
+    .whyus-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .whyus-header-title {
+        font-size: 2rem;
+    }
+
+    .whyus-header-subtitle {
+        font-size: 1rem;
+    }
+
+    .whyus-section,
+    .whyus-section-light,
+    .whyus-section-dark {
+        padding: 48px 24px;
+    }
+
+    .whyus-section-title,
+    .whyus-section-heading-title {
+        font-size: 1.875rem;
+    }
+
+    .whyus-grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .whyus-card {
+        padding: 24px;
+    }
+}

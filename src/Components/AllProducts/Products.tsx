@@ -1,120 +1,197 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
+import Navbar from '../Home/Navbar/Navbar';
+import ProductCard from '../Global/ProductCard/ProductCard';
+import ProductPopup from '../Global/ProductPopup/ProductPopup';
+import type { Product } from '../../Types/product';
 import './Products.css';
 
 // Mock data for products
 const products = [
   {
     id: 1,
-    name: "Sherpa puffer jacket",
-    price: 85.00,
-    image: "https://via.placeholder.com/300x400?text=Sherpa+Puffer",
-    category: "Coats & Jackets",
-    discount: null,
-    colors: ["Black", "White"],
-    sizes: ["XS", "S", "M", "L"]
+    name: "Trendy Brown Coat",
+    category: "Coats",
+    image: "https://i.pinimg.com/1200x/8e/ea/13/8eea13aed6d66d753fb18a57f2f60693.jpg",
+    price: 75.00,
+    description: '',
+    originalPrice: 150.00,
+    discount: 50,
+    rating: 4.8,
+    size: 'L', // x
+    color: 'black', // x
+    quantity: 1, // x
+    reserved: 0, // x
   },
   {
     id: 2,
-    name: "Down jacket",
-    price: 120.00,
-    image: "https://via.placeholder.com/300x400?text=Down+Jacket",
-    category: "Coats & Jackets",
-    discount: null,
-    colors: ["White", "Grey"],
-    sizes: ["S", "M", "L", "XL"]
+    name: "Classy Light Coat",
+    category: "Coats",
+    image: "https://i.pinimg.com/1200x/52/34/f2/5234f25fa78fc103e303f3f9d93dfeee.jpg",
+    price: 165.00,
+    description: '',
+    originalPrice: 220.00,
+    discount: 25,
+    rating: 4.9,
+    size: 'M',
+    color: 'black',
+    quantity: 1,
+    reserved: 0,
   },
   {
     id: 3,
-    name: "Classic coat with wool blend",
-    price: 100.00,
-    image: "https://via.placeholder.com/300x400?text=Classic+Coat",
-    category: "Coats & Jackets",
-    discount: 20,
-    colors: ["Grey", "Beige"],
-    sizes: ["M", "L", "XL", "XXL"]
+    name: "Modern Brown Dress",
+    category: "t-shirt",
+    image: "https://i.pinimg.com/1200x/15/35/37/1535379e07b4b8a1dbf04a288763a71d.jpg",
+    price: 90.00,
+    description: '',
+    originalPrice: 100.00,
+    discount: 10,
+    rating: 4.8,
+    size: 'M',
+    color: 'black',
+    quantity: 1,
+    reserved: 0,
   },
   {
     id: 4,
-    name: "Sherpa jacket",
-    price: 95.00,
-    originalPrice: 120.00,
-    image: "https://via.placeholder.com/300x400?text=Sherpa+Jacket",
-    category: "Coats & Jackets",
-    discount: 20,
-    colors: ["Grey", "Brown"],
-    sizes: ["XS", "S", "M", "L"]
+    name: "Modern Black T-Shirt",
+    category: "t-shirt",
+    image: "https://i.pinimg.com/1200x/27/b5/a1/27b5a1602087a7113d58118e357bdc54.jpg",
+    price: 165.00,
+    description: '',
+    originalPrice: 220.00,
+    discount: 25,
+    rating: 4.9,
+    size: 'M',
+    color: 'black',
+    quantity: 1,
+    reserved: 0,
   },
   {
     id: 5,
-    name: "Hooded coat",
-    price: 60.00,
-    image: "https://via.placeholder.com/300x400?text=Hooded+Coat",
-    category: "Coats & Jackets",
-    discount: null,
-    colors: ["Green", "Olive"],
-    sizes: ["S", "M", "L", "XL"]
+    name: "Modern Black Dress",
+    category: "t-shirt",
+    image: "https://i.pinimg.com/736x/04/ba/46/04ba46bd3ecfe58f30f1c47820781227.jpg",
+    price: 75.00,
+    description: '',
+    originalPrice: 100.00,
+    discount: 25,
+    rating: 4.7,
+    size: 'L',
+    color: 'black',
+    quantity: 1,
+    reserved: 0,
   },
   {
     id: 6,
-    name: "Hooded jacket",
-    price: 75.00,
-    image: "https://via.placeholder.com/300x400?text=Hooded+Jacket",
-    category: "Coats & Jackets",
-    discount: null,
-    colors: ["Black", "Navy"],
-    sizes: ["M", "L", "XL"]
+    name: "Classy Light Coat",
+    category: "Coats",
+    image: "https://i.pinimg.com/736x/4c/d0/94/4cd094c4a57746a17cddf771a60b67db.jpg",
+    price: 165.00,
+    description: '',
+    originalPrice: 220.00,
+    discount: 25,
+    rating: 4.9,
+    size: 'M',
+    color: 'black',
+    quantity: 1,
+    reserved: 0,
   },
   {
     id: 7,
-    name: "Faux leather quilted jacket",
-    price: 85.00,
-    image: "https://via.placeholder.com/300x400?text=Faux+Leather",
-    category: "Coats & Jackets",
-    discount: null,
-    colors: ["Black", "Brown"],
-    sizes: ["XS", "S", "M", "L"]
+    name: "Modern Black T-Shirt",
+    category: "t-shirt",
+    image: "https://i.pinimg.com/1200x/27/b5/a1/27b5a1602087a7113d58118e357bdc54.jpg",
+    price: 165.00,
+    description: '',
+    originalPrice: 220.00,
+    discount: 25,
+    rating: 4.9,
+    size: 'M',
+    color: 'black',
+    quantity: 1,
+    reserved: 0,
   },
   {
     id: 8,
-    name: "Faux suede jacket",
-    price: 45.00,
-    originalPrice: 60.00,
-    image: "https://via.placeholder.com/300x400?text=Faux+Suede",
-    category: "Coats & Jackets",
+    name: "Modern pants",
+    category: "Pants",
+    image: "https://i.pinimg.com/1200x/65/bf/68/65bf68e8d9efa8a7129472953bc1a393.jpg",
+    price: 165.00,
+    description: '',
+    originalPrice: 220.00,
     discount: 25,
-    colors: ["Navy", "Beige"],
-    sizes: ["S", "M", "L", "XL"]
+    rating: 4.9,
+    size: 'M',
+    color: 'black',
+    quantity: 1,
+    reserved: 0,
   },
   {
     id: 9,
-    name: "Wool blend shacket",
-    price: 55.00,
-    image: "https://via.placeholder.com/300x400?text=Wool+Shacket",
-    category: "Coats & Jackets",
-    discount: null,
-    colors: ["Plaid", "Green"],
-    sizes: ["M", "L", "XL", "XXL"]
+    name: "Modern Black Dress",
+    category: "t-shirt",
+    image: "https://i.pinimg.com/736x/04/ba/46/04ba46bd3ecfe58f30f1c47820781227.jpg",
+    price: 75.00,
+    description: '',
+    originalPrice: 100.00,
+    discount: 25,
+    rating: 4.7,
+    size: 'L',
+    color: 'black',
+    quantity: 1,
+    reserved: 0,
   },
   {
     id: 10,
-    name: "Trench coat",
-    price: 150.00,
-    image: "https://via.placeholder.com/300x400?text=Trench+Coat",
-    category: "Coats & Jackets",
-    discount: 10,
-    colors: ["Beige", "Black"],
-    sizes: ["S", "M", "L"]
-  }
+    name: "Classy Light Coat",
+    category: "Coats",
+    image: "https://i.pinimg.com/736x/4c/d0/94/4cd094c4a57746a17cddf771a60b67db.jpg",
+    price: 165.00,
+    description: '',
+    originalPrice: 220.00,
+    discount: 25,
+    rating: 4.9,
+    size: 'M',
+    color: 'black',
+    quantity: 1,
+    reserved: 0,
+  },
+  {
+    id: 11,
+    name: "Modern Black T-Shirt",
+    category: "t-shirt",
+    image: "https://i.pinimg.com/1200x/27/b5/a1/27b5a1602087a7113d58118e357bdc54.jpg",
+    price: 165.00,
+    description: '',
+    originalPrice: 220.00,
+    discount: 25,
+    rating: 4.9,
+    size: 'M',
+    color: 'black',
+    quantity: 1,
+    reserved: 0,
+  },
+  {
+    id: 12,
+    name: "Modern pants",
+    category: "Pants",
+    image: "https://i.pinimg.com/1200x/65/bf/68/65bf68e8d9efa8a7129472953bc1a393.jpg",
+    price: 165.00,
+    description: '',
+    originalPrice: 220.00,
+    discount: 25,
+    rating: 4.9,
+    size: 'M',
+    color: 'black',
+    quantity: 1,
+    reserved: 0,
+  },
 ];
 
 // Filter categories (mock)
 const filterCategories = [
-  { name: "Winter outfits", subcategories: ["Coats", "Jackets"] },
-  { name: "Coats & Jackets", subcategories: ["Coats", "Jackets", "Quilted jackets", "Leather jackets"] },
-  { name: "Jumpers, Cardigans", subcategories: [] },
-  { name: "Shirts", subcategories: [] },
-  { name: "Blazers", subcategories: [] },
-  { name: "Trousers", subcategories: [] },
+  { name: "Coats & Jackets", subcategories: [] },
   { name: "Jeans", subcategories: [] },
   { name: "Hoodies & sweatshirts", subcategories: [] },
   { name: "T-shirts", subcategories: [] }
@@ -132,243 +209,126 @@ const colors = [
 ];
 
 // Size options
-const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
-
-// Material options
-const materials = [
-  "Combined materials",
-  "Corduroy",
-  "Cotton",
-  "Jeans",
-  "Leather",
-  "Wool",
-  "Recycled polyester"
-];
+const sizes = ["XS", "S", "M", "L", "XL"];
 
 function ProductPage() {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSizes, setSelectedSizes] = useState(new Set());
-  const [selectedColors, setSelectedColors] = useState(new Set());
-  const [priceRange, setPriceRange] = useState([30, 150]);
-  const [selectedMaterials, setSelectedMaterials] = useState(new Set());
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // Filter products based on selections
-  const filteredProducts = products.filter(product => {
-    // Category filter
-    if (selectedCategory && !product.category.toLowerCase().includes(selectedCategory.toLowerCase())) {
-      return false;
-    }
-
-    // Size filter
-    if (selectedSizes.size > 0) {
-      const hasMatchingSize = [...selectedSizes].some(size => product.sizes.includes(size));
-      if (!hasMatchingSize) return false;
-    }
-
-    // Color filter
-    if (selectedColors.size > 0) {
-      const hasMatchingColor = [...selectedColors].some(color => 
-        product.colors?.includes(color)
-      );
-      if (!hasMatchingColor) return false;
-    }
-
-    // Price filter
-    if (product.price < priceRange[0] || product.price > priceRange[1]) {
-      return false;
-    }
-
-    // Material filter (not in mock data, so skip for now)
-    // You can extend product data to include material
-
-    return true;
-  });
-
-  // Toggle size selection
-  const toggleSize = (size) => {
-    const newSizes = new Set(selectedSizes);
-    if (newSizes.has(size)) {
-      newSizes.delete(size);
-    } else {
-      newSizes.add(size);
-    }
-    setSelectedSizes(newSizes);
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
   };
 
-  // Toggle color selection
-  const toggleColor = (color) => {
-    const newColors = new Set(selectedColors);
-    if (newColors.has(color)) {
-      newColors.delete(color);
-    } else {
-      newColors.add(color);
-    }
-    setSelectedColors(newColors);
-  };
-
-  // Toggle material selection
-  const toggleMaterial = (material) => {
-    const newMaterials = new Set(selectedMaterials);
-    if (newMaterials.has(material)) {
-      newMaterials.delete(material);
-    } else {
-      newMaterials.add(material);
-    }
-    setSelectedMaterials(newMaterials);
-  };
-
-  // Reset filters
-  const resetFilters = () => {
-    setSelectedCategory("");
-    setSelectedSizes(new Set());
-    setSelectedColors(new Set());
-    setPriceRange([30, 150]);
-    setSelectedMaterials(new Set());
+  const handleClosePopup = () => {
+    setSelectedProduct(null);
   };
 
   return (
-    <div className="product-page">
-      {/* Header */}
-      <header className="page-header">
-        <h1>Coats & jackets</h1>
-        <div className="header-actions">
-          <button className="sort-btn">New</button>
-          <button className="sort-btn sale">Sale 20%</button>
+    <div>
+      <Navbar></Navbar>
+
+      <div className="product-page container">
+        {/* Header */}
+        <header className="page-header">
+          <h1>Products</h1>
+        </header>
+
+        <div className="page-content">
+          {/* Sidebar */}
+          <aside className="filter-sidebar">
+            <div className="filter-section" style={{marginBottom: '1rem'}}>
+              <h3>Filter</h3>
+              <button className="reset-btn">Reset all</button>
+            </div>
+
+            {/* Categories */}
+            <div className="filter-section">
+              <p>
+                <a className="collapsed-btn" data-bs-toggle="collapse" href="#cate" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Categories
+                </a>
+              </p>
+              <div className="collapse" id="cate">
+                  {filterCategories.map((cat, idx) => (
+                    <div key={idx} className="category-item">
+                      <span>{cat.name}</span>
+                      {cat.subcategories.length > 0 && <span className="chevron">›</span>}
+                    </div>
+                  ))}
+              </div>
+
+            </div>
+
+            {/* Sizes */}
+            <div className="filter-section">
+              <p>
+                <a className="collapsed-btn" data-bs-toggle="collapse" href="#sizes" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Sizes
+                </a>
+              </p>
+              <div className="collapse" id="sizes">
+                <div className="size-grid">
+                  {sizes.map(size => (
+                    <button
+                      key={size}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Colors */}
+            <div className="filter-section">
+              <p>
+                <a className="collapsed-btn" data-bs-toggle="collapse" href="#colors" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Colors
+                </a>
+              </p>
+              <div className="collapse" id="colors">
+                <div className="color-grid">
+                  {colors.map(color => (
+                    <label key={color.value} className="color-option">
+                      <input
+                        type="checkbox"
+                      />
+                      <span className="color-swatch" style={{ backgroundColor: getColorHex(color.value) }}></span>
+                      <span className="color-label">{color.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+          </aside>
+
+          {/* Main content */}
+          <main className="products-main">
+            <div className="products-grid">
+              {products.map(product => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onProductClick={handleProductClick}
+                />
+              ))}
+            </div>
+          </main>
         </div>
-      </header>
 
-      <div className="page-content">
-        {/* Sidebar */}
-        <aside className="filter-sidebar">
-          <div className="filter-section">
-            <h3>Filter</h3>
-            <button className="reset-btn" onClick={resetFilters}>Reset all</button>
-          </div>
-
-          {/* Categories */}
-          <div className="filter-section">
-            <h4>Categories</h4>
-            {filterCategories.map((cat, idx) => (
-              <div key={idx} className="category-item">
-                <span>{cat.name}</span>
-                {cat.subcategories.length > 0 && <span className="chevron">›</span>}
-              </div>
-            ))}
-          </div>
-
-          {/* Sizes */}
-          <div className="filter-section">
-            <h4>Sizes</h4>
-            <div className="size-grid">
-              {sizes.map(size => (
-                <button
-                  key={size}
-                  className={`size-btn ${selectedSizes.has(size) ? 'selected' : ''}`}
-                  onClick={() => toggleSize(size)}
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Colors */}
-          <div className="filter-section">
-            <h4>Colors</h4>
-            <div className="color-grid">
-              {colors.map(color => (
-                <label key={color.value} className="color-option">
-                  <input
-                    type="checkbox"
-                    checked={selectedColors.has(color.name)}
-                    onChange={() => toggleColor(color.name)}
-                  />
-                  <span className="color-swatch" style={{ backgroundColor: getColorHex(color.value) }}></span>
-                  <span className="color-label">{color.name}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Price */}
-          <div className="filter-section">
-            <h4>Price</h4>
-            <div className="price-slider">
-              <input
-                type="range"
-                min="30"
-                max="150"
-                value={priceRange[0]}
-                onChange={(e) => setPriceRange([parseInt(e.target.value), priceRange[1]])}
-                className="slider"
-              />
-              <input
-                type="range"
-                min="30"
-                max="150"
-                value={priceRange[1]}
-                onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])
-                }
-                className="slider"
-              />
-              <div className="price-values">
-                <span>${priceRange[0]}</span>
-                <span>${priceRange[1]}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Material */}
-          <div className="filter-section">
-            <h4>Material</h4>
-            <div className="material-list">
-              {materials.map(material => (
-                <label key={material} className="material-option">
-                  <input
-                    type="checkbox"
-                    checked={selectedMaterials.has(material)}
-                    onChange={() => toggleMaterial(material)}
-                  />
-                  <span>{material}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-        </aside>
-
-        {/* Main content */}
-        <main className="products-main">
-          <div className="products-grid">
-            {filteredProducts.map(product => (
-              <div key={product.id} className="product-card">
-                <div className="product-image-wrapper">
-                  <img src={product.image} alt={product.name} className="product-image" />
-                  {product.discount && (
-                    <div className="discount-badge">-{product.discount}%</div>
-                  )}
-                </div>
-                <div className="product-info">
-                  <h3 className="product-name">{product.name}</h3>
-                  <div className="product-price">
-                    {product.originalPrice && (
-                      <span className="original-price">${product.originalPrice.toFixed(2)}</span>
-                    )}
-                    <span className={`current-price ${product.originalPrice ? 'on-sale' : ''}`}>
-                      ${product.price.toFixed(2)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </main>
+        {selectedProduct && (
+          <ProductPopup
+            product={selectedProduct}
+            onClose={handleClosePopup}
+          />
+        )}
       </div>
     </div>
   );
 }
 
 // Helper function to get color hex codes
-function getColorHex(colorName) {
+function getColorHex(colorName: string) {
   const colors = {
     black: "#000000",
     white: "#FFFFFF",
@@ -377,8 +337,8 @@ function getColorHex(colorName) {
     brown: "#A52A2A",
     green: "#008000",
     multicolor: "linear-gradient(45deg, #FF5733, #33FF57, #3357FF)"
-  };
-  return colors[colorName] || "#CCCCCC";
+  } as const;
+  return colors[colorName as keyof typeof colors] || "#CCCCCC";
 }
 
 export default ProductPage;

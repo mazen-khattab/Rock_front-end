@@ -1,0 +1,308 @@
+/* ===== about-header ===== */
+.about-header {
+    background-color: #003334;
+    color: white;
+    padding: 10rem 2rem;
+    text-align: center;
+}
+
+/* ===== about-header-container ===== */
+.about-header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ===== about-header-title ===== */
+.about-header-title {
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+/* ===== about-header-subtitle ===== */
+.about-header-subtitle {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 48rem;
+    margin: 0 auto;
+}
+
+/* ===== about-section / about-section-light ===== */
+.about-section,
+.about-section-light {
+    padding: 80px 24px;
+}
+
+.about-section-light {
+    background-color: #f9fafb;
+}
+
+/* ===== about-section-container ===== */
+.about-section-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ===== about-section-title (h2 in content sections) ===== */
+.about-section-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #003334;
+    margin-bottom: 32px;
+}
+
+/* ===== about-section-paragraph ===== */
+.about-section-paragraph {
+    font-size: 1.125rem;
+    color: #374151;
+    margin-bottom: 16px;
+    line-height: 1.75;
+}
+
+/* ===== about-grid-2 ===== */
+.about-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+}
+
+/* ===== about-text-content ===== */
+.about-text-content {
+    /* No direct styles — layout handled by grid */
+}
+
+/* ===== about-image-placeholder ===== */
+.about-image-placeholder {
+    background-color: #003334;
+    border-radius: 16px;
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+    height: 24rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.125rem;
+    opacity: 0.6;
+}
+
+/* ===== about-grid-4 ===== */
+.about-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+}
+
+/* ===== about-card ===== */
+.about-card {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.about-card:hover {
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+}
+
+/* ===== about-card-icon ===== */
+.about-card-icon {
+    width: 64px;
+    height: 64px;
+    background-color: #003334;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    transition: background-color 0.3s ease;
+}
+
+.about-card:hover .about-card-icon {
+    background-color: #014849;
+}
+
+/* ===== about-card-icon-svg ===== */
+.about-card-icon-svg {
+    width: 32px;
+    height: 32px;
+    color: white;
+}
+
+/* ===== about-card-title ===== */
+.about-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #003334;
+    margin-bottom: 16px;
+}
+
+/* ===== about-card-text ===== */
+.about-card-text {
+    font-size: 1rem;
+    color: #4b5563;
+    margin: 0;
+}
+
+/* ===== about-section-heading ===== */
+.about-section-heading {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+/* ===== about-section-heading-title ===== */
+.about-section-heading-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #003334;
+    margin-bottom: 24px;
+}
+
+/* ===== about-section-heading-text ===== */
+.about-section-heading-text {
+    font-size: 1.25rem;
+    color: #4b5563;
+    margin: 0 auto;
+    max-width: 56rem;
+}
+
+/* ===== about-cta-wrapper ===== */
+.about-cta-wrapper {
+    text-align: center;
+    margin-top: 48px;
+}
+
+/* ===== about-cta-button ===== */
+.about-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #003334;
+    color: white;
+}
+
+.about-cta-button:hover {
+    background-color: #014849;
+}
+
+/* ===== about-cta-icon ===== */
+.about-cta-icon {
+    transition: transform 0.3s ease;
+}
+
+.about-cta-button:hover .about-cta-icon {
+    transform: translateX(4px);
+}
+
+/* ===== about-btn-group ===== */
+.about-btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+/* ===== about-btn-primary ===== */
+.about-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #003334;
+    color: white;
+}
+
+.about-btn-primary:hover {
+    background-color: #014849;
+}
+
+/* ===== about-btn-secondary ===== */
+.about-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    border: 2px solid #003334;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: #003334;
+}
+
+.about-btn-secondary:hover {
+    background-color: #003334;
+    color: white;
+}
+
+/* ===== Responsive: Tablet (≤1024px) ===== */
+@media (max-width: 1024px) {
+    .about-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+}
+
+/* ===== Responsive: Mobile (≤768px) ===== */
+@media (max-width: 768px) {
+    .about-header-title {
+        font-size: 2rem;
+    }
+
+    .about-header-subtitle {
+        font-size: 1rem;
+    }
+
+    .about-section,
+    .about-section-light {
+        padding: 48px 24px;
+    }
+
+    .about-section-title,
+    .about-section-heading-title {
+        font-size: 1.875rem;
+    }
+
+    .about-grid-4,
+    .about-grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .about-card {
+        padding: 24px;
+    }
+
+    .about-btn-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-btn-primary,
+    .about-btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}

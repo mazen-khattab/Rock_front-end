@@ -1,24 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import ProductPopup from '../../Global/ProductPopup/ProductPopup';
 import ProductCard from '../../Global/ProductCard/ProductCard';
+import type { Product } from '../../../Types/product';
 import './SpecialProducts.css'
-
-type Product = {
-    id: number;
-    name: string;
-    category: string;
-    image: string;
-    price: number;
-    originalPrice: number;
-    description: string;
-    discount: number;
-    countdown?: {
-        days: number;
-        hours: number;
-        minutes: number;
-        seconds: number;
-    };
-};
 
 const SpecialProducts = () => {
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -37,12 +21,10 @@ const SpecialProducts = () => {
             originalPrice: 150.00,
             discount: 50,
             rating: 4.8,
-            countdown: {
-                days: 5,
-                hours: 12,
-                minutes: 30,
-                seconds: 25
-            }
+            size: 'L',
+            color: 'black',
+            quantity: 1,
+            reserved: 0,
         },
         {
             id: 2,
@@ -53,7 +35,11 @@ const SpecialProducts = () => {
             description: '',
             originalPrice: 220.00,
             discount: 25,
-            rating: 4.9
+            rating: 4.9,
+            size: 'M',
+            color: 'black',
+            quantity: 1,
+            reserved: 0,
         },
         {
             id: 3,
@@ -64,7 +50,11 @@ const SpecialProducts = () => {
             description: '',
             originalPrice: 100.00,
             discount: 10,
-            rating: 4.8
+            rating: 4.8,
+            size: 'M',
+            color: 'black',
+            quantity: 1,
+            reserved: 0,
         },
         {
             id: 4,
@@ -75,7 +65,11 @@ const SpecialProducts = () => {
             description: '',
             originalPrice: 220.00,
             discount: 25,
-            rating: 4.9
+            rating: 4.9,
+            size: 'M',
+            color: 'black',
+            quantity: 1,
+            reserved: 0,
         },
         {
             id: 5,
@@ -86,7 +80,11 @@ const SpecialProducts = () => {
             description: '',
             originalPrice: 100.00,
             discount: 25,
-            rating: 4.7
+            rating: 4.7,
+            size: 'L',
+            color: 'black',
+            quantity: 1,
+            reserved: 0,
         },
         {
             id: 6,
@@ -97,7 +95,11 @@ const SpecialProducts = () => {
             description: '',
             originalPrice: 220.00,
             discount: 25,
-            rating: 4.9
+            rating: 4.9,
+            size: 'M',
+            color: 'black',
+            quantity: 1,
+            reserved: 0,
         },
         {
             id: 7,
@@ -108,7 +110,11 @@ const SpecialProducts = () => {
             description: '',
             originalPrice: 220.00,
             discount: 25,
-            rating: 4.9
+            rating: 4.9,
+            size: 'M',
+            color: 'black',
+            quantity: 1,
+            reserved: 0,
         },
         {
             id: 8,
@@ -119,7 +125,11 @@ const SpecialProducts = () => {
             description: '',
             originalPrice: 220.00,
             discount: 25,
-            rating: 4.9
+            rating: 4.9,
+            size: 'M',
+            color: 'black',
+            quantity: 1,
+            reserved: 0,
         },
     ];
 
@@ -140,9 +150,9 @@ const SpecialProducts = () => {
             } else if (window.innerWidth < 768) {
                 setProductsPerSlide(2);
             } else if (window.innerWidth < 1024) {
-                setProductsPerSlide(3);
+                setProductsPerSlide(2);
             } else {
-                setProductsPerSlide(4);
+                setProductsPerSlide(3);
             }
         };
 
@@ -198,20 +208,20 @@ const SpecialProducts = () => {
                 </div>
             </div>
 
-                <button
-                    className="carousel-arrow prev-arrow"
-                    onClick={prevSlide}
-                    aria-label="Previous products"
-                >
-                    <i className="fas fa-chevron-left"></i>
-                </button>
-                <button
-                    className="carousel-arrow next-arrow"
-                    onClick={nextSlide}
-                    aria-label="Next products"
-                >
-                    <i className="fas fa-chevron-right"></i>
-                </button>
+            <button
+                className="carousel-arrow prev-arrow"
+                onClick={prevSlide}
+                aria-label="Previous products"
+            >
+                <i className="fas fa-chevron-left"></i>
+            </button>
+            <button
+                className="carousel-arrow next-arrow"
+                onClick={nextSlide}
+                aria-label="Next products"
+            >
+                <i className="fas fa-chevron-right"></i>
+            </button>
             <div className="carousel-container">
                 {/* Navigation arrows */}
 
@@ -240,7 +250,7 @@ const SpecialProducts = () => {
 
                 {/* Slide indicators */}
                 {totalSlides > 1 && (
-                    <div className="carousel-indicators">
+                    <div className="carousel-dots">
                         {Array.from({ length: totalSlides }).map((_, index) => (
                             <button
                                 key={index}

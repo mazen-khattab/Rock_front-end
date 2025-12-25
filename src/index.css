@@ -7,7 +7,7 @@
     --main-padding: 16px
 }
 
-*  {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -22,4 +22,45 @@ a {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
+    display: block !important;
+}
+
+.color-selector {
+    margin-bottom: 20px;
+}
+
+.color-selector label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.color-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.color-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.color-btn:hover {
+    transform: scale(1.2);
+}
+
+.color-btn.selected {
+    border-color: #333;
+    transform: scale(1.2);
+}
+
+.collapsed-btn {
+    display: inline-block;
+    width: 100%;
 }
