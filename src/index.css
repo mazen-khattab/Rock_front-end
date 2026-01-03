@@ -25,9 +25,9 @@ a {
     display: block !important;
 }
 
-.color-selector {
+/* .color-selector {
     margin-bottom: 20px;
-}
+} */
 
 .color-selector label {
     display: block;
@@ -60,7 +60,40 @@ a {
     transform: scale(1.2);
 }
 
+.color-selector.display-color-error,
+.size-selector.display-color-error {
+    animation: error 0.5s ease-in-out;
+}
+
+.size-error,
+.color-error {
+    font-size: 14px;
+    margin-top: 4px;
+    font-weight: 600;
+    color: red;
+    transition: 0.1s;
+    margin-bottom: 4px;
+}
+
 .collapsed-btn {
     display: inline-block;
     width: 100%;
+}
+
+@keyframes error {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(5px);
+  }
+
+  50% {
+    transform: translateX(-5px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }

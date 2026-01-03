@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Product } from '../../../Types/product';
+import type { Product, Variant } from '../../../Types/product';
 import './ProductPopup.css';
 import { useCart } from '../../../Context/CartContext';
 
@@ -9,34 +9,99 @@ interface ProductPopupProps {
 }
 
 const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
-    const { addToCart } = useCart();
 
-    const [selectedSize, setSelectedSize] = useState(product.size);
-    const [selectedColor, setSelectedColor] = useState('black');
+    // states and variables.
+    const { addToCart } = useCart();
+    const allSizes = [...new Set(product.variants.map(v => v.size))]
+    const [mainImage, setMainImage] = useState(product.variants[0].gallery[0]);
+    const [gallery, setGallery] = useState(product.variants[0].gallery);
     const [isAdding, setIsAdding] = useState(false);
-    const sizes = ["XS", "S", "M", "L", "XL"];
+    const [selectedColor, setSelectedColor] = useState<string>(product.variants[0].color);
+    const [selectedSize, setSelectedSize] = useState<string>(product.variants[0].size);
+    const [colorError, setColorError] = useState(false);
+    const [sizeError, setSizeError] = useState(false);
+    const [uniqueColors, setUniqueColors] = useState([...new Set(product.variants.filter(v => v.size === allSizes[0]).map(v => v.color))]);
 
     if (!product) return null;
 
     const handleAddToCart = () => {
         if (isAdding) return;
-        
         setIsAdding(true);
-        addToCart(product);
+
+        if (!selectedColor || !selectedSize) {
+            if (!selectedColor) {
+                setColorError(true)
+            }
+
+            if (!selectedSize) {
+                setSizeError(true)
+            }
+        } else {
+            const variant = getVariant(selectedColor, selectedSize);
+
+            const cartItem = {
+                productId: product.id,
+                variantId: variant?.id,
+                name: product.name,
+                price: product.price,
+                description: product.description,
+                gallery: variant?.gallery,
+                colorId: variant?.colorId,
+                color: variant?.color,
+                sizeId: variant?.sizeId,
+                size: variant?.size,
+                reserved: variant?.reserved,
+                quantity: 1,
+            }
+
+            addToCart(cartItem);
+        }
 
         setTimeout(() => {
             setIsAdding(false);
+            setColorError(false)
+            setSizeError(false)
         }, 1000);
     };
 
     const handleSelectedSize = (size: string) => {
         setSelectedSize(size);
-        product.size = size;
+
+        // get all variants these are match the selected size.
+        const availableVariants = product.variants.filter(v => v.size === size)
+        setUniqueColors([...new Set(availableVariants.map(v => v.color))]);
+        
+        // change the color to be the selected color
+        setSelectedColor(availableVariants[0].color);
+        // change the main image to be the first image in the selected variant gallery
+        setMainImage(availableVariants[0].gallery[0])
+        // change the gallery to the gallery of the selected variant
+        setGallery(availableVariants[0].gallery)
     }
 
     const handleSelectedColor = (color: string) => {
+        // get a single variant by the color
+        const variant = getVariantByColor(color);
+
+        // change the color to be the selected color
         setSelectedColor(color);
-        product.color = color;
+        // change the main image to be the first image in the selected variant gallery
+        setMainImage(variant.gallery[0])
+
+        // change the gallery to the gallery of the selected variant
+        setGallery(variant.gallery)
+    }
+
+    // used to get the seleted variant to add it in the cart.
+    const getVariant = (color: string, size: string) => {
+        const selectedVariant = product.variants.filter(v => v.color === color && v.size === size)
+
+        return selectedVariant[0];
+    }
+
+    // used to return the first variant that match the given color
+    const getVariantByColor = (color: string) => {
+        return product.variants.filter(v => v.color === color)[0];
     }
 
     return (
@@ -48,13 +113,19 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
 
                 <div className="product-popup-content">
                     <div className="product-images-section">
-                        <img src={product.image} alt={product.name} className="main-product-image" />
+                        <img src={mainImage} alt={product.name} className="main-product-image" />
 
                         {/* Additional images could be added here */}
                         <div className="additional-images">
-                            <img src={product.image} alt="Product view 1" className="thumbnail" />
-                            <img src={product.image} alt="Product view 2" className="thumbnail" />
-                            <img src={product.image} alt="Product view 3" className="thumbnail" />
+                            {gallery.map((Image, index) => (
+                                <img
+                                    src={Image}
+                                    key={Image + index}
+                                    onClick={() => setMainImage(Image)}
+                                    alt="Product view 1"
+                                    className={mainImage === Image ? "thumbnail selected" : "thumbnail"}
+                                />
+                            ))}
                         </div>
                     </div>
 
@@ -68,10 +139,10 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
 
                         <div className="product-price">${product.price}</div>
 
-                        <div className="size-selector">
+                        <div className={sizeError ? "size-selector display-color-error" : "size-selector"}>
                             <label>Select size</label>
                             <div className="size-options">
-                                {sizes.map(size => (
+                                {allSizes.map(size => (
                                     <button
                                         key={size}
                                         className={`size-btn ${selectedSize === size ? 'selected' : ''}`}
@@ -82,27 +153,25 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
                                 ))}
                                 <button className="size-guide">Size Guide</button>
                             </div>
+                            <p className='size-error' style={sizeError ? { opacity: "1" } : { opacity: '0' }}>Select a size firts.</p>
                         </div>
-
-                        <div className="color-selector">
-                            <label>Color | {selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)}</label>
+                        {/* | {selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)} */}
+                        <div className={colorError ? "color-selector display-color-error" : "color-selector"}>
+                            <label>Color{selectedColor ? " | " + selectedColor : ""}</label>
                             <div className="color-options">
-                                {['black', 'white', 'gray', 'brown'].map(color => (
+                                {uniqueColors.map(color => (
                                     <button
                                         key={color}
                                         className={`color-btn ${selectedColor === color ? 'selected' : ''}`}
-                                        style={{
-                                            backgroundColor: color === 'black' ? '#000' :
-                                                color === 'white' ? '#fff' :
-                                                    color === 'gray' ? '#888' : '#a57c52'
-                                        }}
+                                        style={{ backgroundColor: color }}
                                         onClick={() => handleSelectedColor(color)}
                                     ></button>
                                 ))}
                             </div>
+                            <p className='color-error' style={colorError ? { opacity: "1" } : { opacity: '0' }}>Select a color first.</p>
                         </div>
 
-                        <button className="add-to-cart-btn" onClick={handleAddToCart}>
+                        <button className="add-to-cart-btn" onClick={() => handleAddToCart()}>
                             <i className="fas fa-shopping-cart"></i> Add to cart
                         </button>
 

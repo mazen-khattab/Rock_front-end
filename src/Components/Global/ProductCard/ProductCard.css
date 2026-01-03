@@ -62,8 +62,11 @@
   text-align: center;
   font-weight: 600;
   color: black;
-  margin-top: 0.25rem;
-  margin-bottom: 0;
+  width: fit-content;
+  margin: 0.25rem auto 0;
+  background: white;
+  padding: 0 8px;
+  border-radius: 8px;
 }
 
 .product-card .action-buttons .sizes {
@@ -192,6 +195,46 @@
 
 @media (max-width: 768px) {
   .product-card {
-    width: 250px;
+    width: 100%;
+  }
+
+  .product-card .product-image-container {
+    height: 60%;
+  }
+}
+
+@media (max-width: 500px) {
+  .product-card .product-info {
+    padding: 0.6rem 0;
+  }
+
+  .product-card .product-name {
+    font-size: 14px;
+  }
+
+  .product-card .current-price {
+    font-size: 15px;
+  }
+
+  .product-card .color-options {
+    gap: 4px;
+  }
+}
+
+@keyframes error {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(5px);
+  }
+
+  50% {
+    transform: translateX(-5px);
+  }
+
+  100% {
+    transform: translateX(0);
   }
 }

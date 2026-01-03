@@ -1,18 +1,9 @@
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useCart } from '../../Context/CartContext';
+import type { CartItem } from '../../Types/product';
 import Navbar from '../Home/Navbar/Navbar';
 import './cart.css';
-
-interface CartItem {
-    id: number;
-    name: string;
-    color: string;
-    size: string;
-    price: number;
-    image: string;
-    quantity: number;
-}
 
 interface UserInfo {
     name: string;
@@ -41,10 +32,10 @@ const CartPage = () => {
     const updateQuantity = (item: CartItem, action: actions) => {
         switch (action) {
             case "INCREASE":
-                increaseAmount(item.id, item.color, item.size);
+                increaseAmount(item.variantId);
                 break;
             case 'DECREASE':
-                decreaseAmount(item.id, item.color, item.size);
+                decreaseAmount(item.variantId);
                 break;
             default:
                 return;
@@ -52,7 +43,7 @@ const CartPage = () => {
     };
 
     const removeItem = (item: CartItem) => {
-        removeFromCart(item.id, item.color, item.size);
+        removeFromCart(item.variantId);
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +71,6 @@ const CartPage = () => {
 
         alert(`✅ Order placed successfully!\nThank you, ${userInfo.name}!\nTotal: $${total.toFixed(2)}`);
         setIsCheckoutOpen(false);
-        // In real app: call API → reset cart → redirect to success page
     };
 
     return (
@@ -102,8 +92,8 @@ const CartPage = () => {
                             </div>
                         ) : (
                             items.map(item => (
-                                <div key={item.id + item.color + item.size} className="cart-item">
-                                    <img src={item.image} alt={item.name} className="cart-item-image" />
+                                <div key={item.variantId} className="cart-item">
+                                    <img src={item.gallery[0]} alt={item.name} className="cart-item-image" />
                                     <div className="cart-item-details">
                                         <h3 className="cart-item-name">{item.name}</h3>
                                         <p className="cart-item-info">Color: <span style={{ color: getColorHex(item.color) }}>{item.color}</span></p>

@@ -1,16 +1,5 @@
 import React, { useEffect, useReducer, useContext, createContext } from "react";
-
-type CartItem = {
-  id: number,
-  name: string,
-  description: string,
-  price: number,
-  quantity: number,
-  image: string,
-  size: string,
-  color: string,
-  reserved: number,
-}
+import type { CartItem } from '../Types/product'
 
 type CartState = {
   items: CartItem[];
@@ -20,58 +9,41 @@ const initialState: CartState = { items: [] };
 
 type CartAction =
   | { type: 'ADD_ITEM', item: CartItem }
-  | { type: 'REMOVE_ITEM', payload: { id: number, color: string, size: string } }
-  | { type: 'INCREASE_QUANTITY', payload: { id: number, color: string, size: string } }
-  | { type: 'DECREASE_QUANTITY', payload: { id: number, color: string, size: string } }
+  | { type: 'REMOVE_ITEM', id: number } // id => variantId
+  | { type: 'INCREASE_QUANTITY', id: number } // id => variantId
+  | { type: 'DECREASE_QUANTITY', id: number } // id => variantId
 
 function cartReducer(state: CartState, action: CartAction) {
   switch (action.type) {
     case "ADD_ITEM": {
-      const existing = state.items.find(
-        item => item.id === action.item.id &&
-          item.color === action.item.color &&
-          item.size === action.item.size
-      );
+      const existing = state.items.find(item => item.variantId === action.item.variantId);
 
       if (existing) {
         return {
           ...state,
-          items: state.items.map(stateItem =>
-            stateItem.id === action.item.id &&
-              stateItem.color === action.item.color &&
-              stateItem.size === action.item.size ?
-              { ...stateItem, quantity: stateItem.quantity + action.item.quantity }
-              : stateItem)
+          items: state.items.map(stateItem => stateItem.variantId === action.item.variantId
+            ? { ...stateItem, quantity: stateItem.quantity + action.item.quantity }
+            : stateItem)
         }
       }
       return { ...state, items: [...state.items, action.item] };
     }
 
     case "REMOVE_ITEM": return {
-      ...state, items: state.items.filter(item => item.id !== action.payload.id &&
-        item.color !== action.payload.color &&
-        item.size !== action.payload.size)
+      ...state, items: state.items.filter(item => item.variantId !== action.id)
     }
 
     case "INCREASE_QUANTITY":
       return {
-        ...state, items: state.items.map(item =>
-          item.id === action.payload.id &&
-            item.color === action.payload.color &&
-            item.size === action.payload.size ?
-
-            { ...item, quantity: item.quantity + 1 } : item
+        ...state, items: state.items.map(item => item.variantId === action.id ?
+          { ...item, quantity: item.quantity + 1 } : item
         )
       }
 
     case "DECREASE_QUANTITY":
       return {
-        ...state, items: state.items.map(item =>
-          item.id === action.payload.id &&
-            item.color === action.payload.color &&
-            item.size === action.payload.size ?
-
-            { ...item, quantity: Math.max(1, item.quantity - 1) } : item
+        ...state, items: state.items.map(item => item.variantId === action.id ?
+          { ...item, quantity: Math.max(1, item.quantity - 1) } : item
         )
       }
 
@@ -84,9 +56,9 @@ const CartContext = createContext<{
   items: CartItem[];
   cartCount: number;
   addToCart: (item: CartItem) => void;
-  removeFromCart: (id: number, color: string, size: string) => void;
-  increaseAmount: (id: number, color: string, size: string) => void;
-  decreaseAmount: (id: number, color: string, size: string) => void;
+  removeFromCart: (id: number) => void;
+  increaseAmount: (id: number) => void;
+  decreaseAmount: (id: number) => void;
 }>({
   items: [],
   cartCount: 0,
@@ -123,19 +95,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [state.items]);
 
   const addToCart = (item: CartItem) => {
-    dispatch({ type: 'ADD_ITEM', item: { ...item, quantity: item.quantity || 1 } })
+    dispatch({ type: 'ADD_ITEM', item })
   }
 
-  const removeFromCart = (id: number, color: string, size: string) => {
-    dispatch({ type: 'REMOVE_ITEM', payload: { id, color, size } });
+  const removeFromCart = (id: number) => {
+    dispatch({ type: 'REMOVE_ITEM', id });
   }
 
-  const increaseAmount = (id: number, color: string, size: string) => {
-    dispatch({ type: 'INCREASE_QUANTITY', payload: { id, color, size } });
+  const increaseAmount = (id: number) => {
+    dispatch({ type: 'INCREASE_QUANTITY', id });
   }
 
-  const decreaseAmount = (id: number, color: string, size: string) => {
-    dispatch({ type: 'DECREASE_QUANTITY', payload: { id, color, size } });
+  const decreaseAmount = (id: number) => {
+    dispatch({ type: 'DECREASE_QUANTITY', id });
   }
 
   return (
