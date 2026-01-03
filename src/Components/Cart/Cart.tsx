@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useCart } from '../../Context/CartContext';
 import type { CartItem } from '../../Types/product';
 import Navbar from '../Home/Navbar/Navbar';
-import './cart.css';
+import './Cart.css';
 
 interface UserInfo {
     name: string;
