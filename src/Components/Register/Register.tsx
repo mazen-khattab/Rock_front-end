@@ -1,7 +1,7 @@
 // src/pages/Register.tsx
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import './register.css';
+import './Register.css';
 
 const Register = () => {
   const [name, setName] = useState('');
