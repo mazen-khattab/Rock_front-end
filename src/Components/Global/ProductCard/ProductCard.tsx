@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import type { Product, Variant } from '../../../Types/product';
+import type { Product } from '../../../Types/product';
 import { useCart } from '../../../Context/CartContext';
 import './ProductCard.css';
 
@@ -15,12 +15,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onProductClick }) =>
     // states and variables.
     const { addToCart } = useCart();
     const mainImage = product.variants[0].gallery[0]
+    const uniqueColors = [...new Set(product.variants.map(v => v.color))];
     const [isHovered, setIsHovered] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
     const [selectedColor, setSelectedColor] = useState<string>();
     const [colorError, setColorError] = useState(false);
     const [uniqueSizes, setUniqueSizes] = useState([...new Set(product.variants.map(v => v.size))]);
-    const [uniqueColors, setUniqueColors] = useState([...new Set(product.variants.map(v => v.color))]);
 
     // added the variant to the cart when the user select a color and click on any size.
     const handleAddToCart = (size: string) => {

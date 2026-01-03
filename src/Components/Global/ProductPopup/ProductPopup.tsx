@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Product, Variant } from '../../../Types/product';
+import type { Product } from '../../../Types/product';
 import './ProductPopup.css';
 import { useCart } from '../../../Context/CartContext';
 
