@@ -4,7 +4,8 @@
     --secondary-color: white;
     --transition: 0.3s;
     --main-margin: 64px;
-    --main-padding: 16px
+    --main-padding: 16px;
+    --focus-input-color: #0148496e;
 }
 
 * {
@@ -80,20 +81,46 @@ a {
     width: 100%;
 }
 
+.password-wrap {
+    position: relative;
+}
+
+.password-wrap .password-toggle-btn {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    padding: 8px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-wrap .password-toggle-btn i {
+    display: none;
+}
+
+.password-wrap:focus-within .password-toggle-btn i {
+    display: block;
+}
+
 @keyframes error {
-  0% {
-    transform: translateX(0);
-  }
+    0% {
+        transform: translateX(0);
+    }
 
-  25% {
-    transform: translateX(5px);
-  }
+    25% {
+        transform: translateX(5px);
+    }
 
-  50% {
-    transform: translateX(-5px);
-  }
+    50% {
+        transform: translateX(-5px);
+    }
 
-  100% {
-    transform: translateX(0);
-  }
+    100% {
+        transform: translateX(0);
+    }
 }

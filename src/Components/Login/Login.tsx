@@ -6,7 +6,7 @@ import './Login.css';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -37,14 +37,24 @@ const Login = () => {
 
                     <div className="login-input-group">
                         <label htmlFor="password" className="login-label">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="login-input"
-                            required
-                        />
+                        <div className="password-wrap">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="login-input"
+                                required
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="password-toggle-btn"
+                                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                            >
+                                {showPassword ? <i className="fa-solid fa-eye-slash"></i> : <i className="fa-solid fa-eye"></i>}
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit" className="login-btn">

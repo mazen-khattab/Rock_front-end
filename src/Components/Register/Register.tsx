@@ -8,6 +8,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,7 +54,7 @@ const Register = () => {
           </div>
 
           <div className="register-input-group">
-            <label htmlFor="password" className="register-label">Password</label>
+            {/* <label htmlFor="password" className="register-label">Password</label>
             <input
               type="password"
               id="password"
@@ -62,11 +63,30 @@ const Register = () => {
               className="register-input"
               required
               minLength={6}
-            />
+            /> */}
+            <label htmlFor="password" className="register-label">Password</label>
+            <div className="password-wrap">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="register-input"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="password-toggle-btn"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <i className="fa-solid fa-eye-slash"></i> : <i className="fa-solid fa-eye"></i>}
+              </button>
+            </div>
           </div>
 
           <div className="register-input-group">
-            <label htmlFor="confirmPassword" className="register-label">Confirm Password</label>
+            {/* <label htmlFor="confirmPassword" className="register-label">Confirm Password</label>
             <input
               type="password"
               id="confirmPassword"
@@ -74,7 +94,26 @@ const Register = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="register-input"
               required
-            />
+            /> */}
+            <label htmlFor="confirmPassword" className="register-label">Confirm Password</label>
+            <div className="password-wrap">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="register-input"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="password-toggle-btn"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <i className="fa-solid fa-eye-slash"></i> : <i className="fa-solid fa-eye"></i>}
+              </button>
+            </div>
           </div>
 
           <button type="submit" className="register-btn">

@@ -176,25 +176,25 @@
 }
 
 @media (max-width: 1180px) {
-  .product-card {
+  .products-grid .product-card {
     width: 230px;
   }
 }
 
 @media (max-width: 1024px) {
-  .product-card {
+  .products-grid .product-card {
     width: 260px;
   }
 }
 
 @media (max-width: 900px) {
-  .product-card {
+  .products-grid .product-card {
     width: 240px;
   }
 }
 
 @media (max-width: 768px) {
-  .product-card {
+  .products-grid .product-card {
     width: 100%;
   }
 

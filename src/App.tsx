@@ -10,6 +10,7 @@ import About from "./Components/About/About";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import CartPage from "./Components/Cart/Cart";
+import ProductDetails from "./Components/Global/ProductDetails/ProductDetails"
 import { CartProvider } from "./Context/CartContext";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/why-us" element={<Whyus />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />

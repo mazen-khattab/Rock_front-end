@@ -668,10 +668,6 @@ const SpecialProducts = () => {
     // Calculate translateX value for carousel
     const translateX = -currentIndex * 100;
 
-    const handleProductClick = (product: Product) => {
-        setSelectedProduct(product);
-    };
-
     const handleClosePopup = () => {
         setSelectedProduct(null);
     };
@@ -729,7 +725,6 @@ const SpecialProducts = () => {
                                     <ProductCard
                                         key={product.id}
                                         product={product}
-                                        onProductClick={handleProductClick}
                                     />
                                 ))}
                         </div>

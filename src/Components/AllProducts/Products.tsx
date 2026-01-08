@@ -542,7 +542,8 @@ const colors = [
 const sizes = ["XS", "S", "M", "L", "XL"];
 
 function ProductPage() {
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const handleProductClick = (product: Product) => {
@@ -551,6 +552,10 @@ function ProductPage() {
 
   const handleClosePopup = () => {
     setSelectedProduct(null);
+  };
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -563,7 +568,6 @@ function ProductPage() {
           <aside className="filter-sidebar">
             <div className="filter-section" style={{ marginBottom: '1rem' }}>
               <h3>Filter</h3>
-              <button className="reset-btn">Reset all</button>
             </div>
 
             {/* Categories */}
@@ -626,7 +630,94 @@ function ProductPage() {
               </div>
             </div>
 
+            {/* Apply & Reset */}
+            <div className="filter-sidebar-footer">
+              <button className="btn-clear">Reset</button>
+              <button className="btn-apply">Apply</button>
+            </div>
           </aside>
+
+          <div className="mobile-filter-container">
+            <button
+              className="moblie-filter-button"
+              onClick={toggleSidebar}
+              aria-label={isOpen && window.innerWidth <= 768 ? "Close filters" : "Open filters"}>
+              Filter <i className="fa-solid fa-filter" style={{ marginLeft: '.25rem' }}></i>
+            </button>
+
+            <div className={`moblie-sidebar-overlay ${isOpen ? 'active' : ''}`} onClick={toggleSidebar} />
+
+            <aside className={`moblie-filter-sidebar ${isOpen ? 'open' : ''}`}>
+              <p className='filter-sidebar-title'>Filter</p>
+              <div className="sidebar-content">
+                {/* Categories */}
+                <div className="filter-section">
+                  <p>
+                    <a className="collapsed-btn" data-bs-toggle="collapse" href="#cate" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      Categories
+                    </a>
+                  </p>
+                  <div className="collapse" id="cate">
+                    {filterCategories.map((cat, idx) => (
+                      <div key={idx} className="category-item">
+                        <span>{cat.name}</span>
+                        {cat.subcategories.length > 0 && <span className="chevron">›</span>}
+                      </div>
+                    ))}
+                  </div>
+
+                </div>
+
+                {/* Sizes */}
+                <div className="filter-section">
+                  <p>
+                    <a className="collapsed-btn" data-bs-toggle="collapse" href="#sizes" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      Sizes
+                    </a>
+                  </p>
+                  <div className="collapse" id="sizes">
+                    <div className="size-grid">
+                      {sizes.map(size => (
+                        <button
+                          key={size}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Colors */}
+                <div className="filter-section">
+                  <p>
+                    <a className="collapsed-btn" data-bs-toggle="collapse" href="#colors" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      Colors
+                    </a>
+                  </p>
+                  <div className="collapse" id="colors">
+                    <div className="color-grid">
+                      {colors.map(color => (
+                        <label key={color.value} className="color-option">
+                          <input
+                            type="checkbox"
+                          />
+                          <span className="color-swatch" style={{ backgroundColor: getColorHex(color.value) }}></span>
+                          <span className="color-label">{color.name}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Apply & Reset */}
+              <div className="filter-sidebar-footer">
+                <button className="btn-clear">Reset</button>
+                <button className="btn-apply">Apply</button>
+              </div>
+            </aside>
+          </div>
 
           {/* Main content */}
           <main className="products-main">

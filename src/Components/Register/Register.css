@@ -60,7 +60,7 @@
 
 .register-input {
   width: 100%;
-  padding: 14px 16px;
+  padding: .5rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 1rem;
@@ -70,13 +70,13 @@
 
 .register-input:focus {
   outline: none;
-  border-color: #003334;
-  box-shadow: 0 0 0 3px rgba(0, 51, 52, 0.1);
+  /* border-color: #003334; */
+  box-shadow: 0 0 0 3px var(--focus-input-color);
 }
 
 .register-btn {
   width: 100%;
-  padding: 16px;
+  padding: .75rem;
   background: #003334;
   color: white;
   border: none;
@@ -88,7 +88,7 @@
 }
 
 .register-btn:hover {
-  background: #014849;
+  background: var(--hover-color);
 }
 
 .register-divider {
@@ -155,7 +155,7 @@
 }
 
 .register-toggle-link:hover {
-  color: #014849;
+  color: var(--hover-color);
   text-decoration: underline;
 }
 

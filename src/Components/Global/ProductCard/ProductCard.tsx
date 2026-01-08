@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { Product } from '../../../Types/product';
 import { useCart } from '../../../Context/CartContext';
 import './ProductCard.css';
 
 interface ProductCardProps {
     product: Product;
-    onProductClick: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onProductClick }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const navigate = useNavigate();
 
     // states and variables.
@@ -85,7 +84,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onProductClick }) =>
             onMouseLeave={() => setIsHovered(false)}>
 
             <div className="product-image-container">
-                <img src={mainImage} alt={product.name} onClick={() => onProductClick(product)} className="product-image" />
+                <Link
+                    to="/product-details"
+                    className="product-link"
+                    aria-label="View product details"
+                >
+                    <img src={mainImage} alt={product.name} className="product-image" />
+                </Link>
 
                 {/* Discount badge */}
                 {product.discount && (
