@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Navbar from '../Home/Navbar/Navbar';
 import ProductCard from '../Global/ProductCard/ProductCard';
-import ProductPopup from '../Global/ProductPopup/ProductPopup';
-import type { Product } from '../../Types/product';
+// import ProductPopup from '../Global/ProductPopup/ProductPopup';
+// import type { Product } from '../../Types/product';
 import './Products.css';
 
 // Mock data for products
@@ -543,16 +543,16 @@ const sizes = ["XS", "S", "M", "L", "XL"];
 
 function ProductPage() {
   const [isOpen, setIsOpen] = useState(false);
-  const [search, setSearch] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  // const [search, setSearch] = useState("");
+  // const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const handleProductClick = (product: Product) => {
-    setSelectedProduct(product);
-  };
+  // const handleProductClick = (product: Product) => {
+  //   setSelectedProduct(product);
+  // };
 
-  const handleClosePopup = () => {
-    setSelectedProduct(null);
-  };
+  // const handleClosePopup = () => {
+  //   setSelectedProduct(null);
+  // };
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -726,19 +726,19 @@ function ProductPage() {
                 <ProductCard
                   key={product.id}
                   product={product}
-                  onProductClick={handleProductClick}
+                  // onProductClick={handleProductClick}
                 />
               ))}
             </div>
           </main>
         </div>
-
+{/* 
         {selectedProduct && (
           <ProductPopup
             product={selectedProduct}
             onClose={handleClosePopup}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

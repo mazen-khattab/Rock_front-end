@@ -74,6 +74,8 @@ a {
     color: red;
     transition: 0.1s;
     margin-bottom: 4px;
+    cursor: default;
+    user-select: none;
 }
 
 .collapsed-btn {
