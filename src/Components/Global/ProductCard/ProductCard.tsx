@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import type { Product } from "../../../Types/product";
 import { useCart } from "../../../Context/CartContext";
 import "./ProductCard.css";
+import { toast } from "react-toastify";
 
 interface ProductCardProps {
   product: Product;
@@ -27,6 +28,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   // added the variant to the cart when the user select a color and click on any size.
   const handleAddToCart = (size: string) => {
     if (isAdding) return;
+
+    toast.success("Item added to cart");
+
     setIsAdding(true);
 
     if (!selectedColor) {

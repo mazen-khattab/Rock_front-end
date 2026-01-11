@@ -2,24 +2,34 @@ import './Navbar.css'
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from '../../../Context/CartContext';
+import { useTranslation } from "react-i18next";
 import logo from '../../../assets/Rock_logo.jpg'
 
 const Navbar = () => {
     const { cartCount } = useCart();
+    const { i18n, t } = useTranslation("Navbar");
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [language, setLanguage] = useState<'en' | 'ar'>('en');
+    const savedLang = localStorage.getItem("lang");
 
     const navLinks = [
-        { name: 'Home', link: "/" },
-        { name: 'Products', link: "/products" },
-        { name: 'About', link: "/about" },
-        { name: 'Why us', link: "/why-us" },
+        { name: t("home"), link: "/" },
+        { name: t("products"), link: "/products" },
+        { name: t("about"), link: "/about" },
+        { name: t("why-us"), link: "/why-us" },
     ];
 
-    const toggleLanguage = () => {
-        setLanguage((prev) => (prev === 'en' ? 'ar' : 'en'));
+    useEffect(() => {
+        if (savedLang) {
+            i18n.changeLanguage(savedLang);
+            document.documentElement.dir = savedLang.toLowerCase() === "ar" ? "rtl" : "ltr";
+        }
+    }, []);
+
+    const toggleLanguage = (lng: string) => {
+        localStorage.setItem("lang", lng);
+        window.location.reload();
     };
 
     useEffect(() => {
@@ -51,10 +61,10 @@ const Navbar = () => {
                             <i className="fa-solid fa-cart-shopping cart-icon"></i>
                             <span className="cart-count">{cartCount}</span>
                         </Link>
-                        <button className='nav-lang' onClick={toggleLanguage}>{language === 'en' ? 'AR' : 'EN'}</button>
+                        <button className='nav-lang' onClick={() => toggleLanguage(savedLang === 'en' ? 'ar' : 'en')}>{savedLang === 'en' ? 'EN' : 'AR'}</button>
                         <Link to="/login" className="login">
                             <i className="fa-solid fa-arrow-right-to-bracket"></i>
-                            <span>Login</span>
+                            <span>{t("login")}</span>
                         </Link>
 
                         <div className="mobile-menu-btn">
@@ -67,10 +77,9 @@ const Navbar = () => {
 
                 {/* Mobile Menu */}
                 <div className={`mobile-menu ${isMobileMenuOpen ? "open" : ""}`}>
-                    <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-                    <Link to="/products" onClick={() => setIsMobileMenuOpen(false)}>Products</Link>
-                    <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
-                    <Link to="/why-us" onClick={() => setIsMobileMenuOpen(false)}>Why Us</Link>
+                    {navLinks.map((link) => (
+                        <Link to={link.link} key={link.name} onClick={() => setIsMobileMenuOpen(false)}>{link.name}</Link>
+                    ))}
                 </div>
             </div>
         </nav>

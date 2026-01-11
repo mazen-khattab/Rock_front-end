@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import './Discount.css'
 
 const Discount = () => {
+    const { t } = useTranslation("Home");
+
     const discounts = [
         { name: '50% Off', discription: 'On selected summer items', icon: <i className="fa-solid fa-tag"></i> },
         { name: 'Buy 2 Get 1 Free', discription: 'On all t-shirts', icon: <i className="fa-solid fa-tag"></i> },
@@ -9,8 +12,8 @@ const Discount = () => {
 
     return (
         <div className="special-offers-section">
-            <h2 className="section-title">Special Offers</h2>
-            <p className="section-subtitle">Don't miss out on our amazing deals!</p>
+            <h2 className="section-title">{t('discount.title')}</h2>
+            <p className="section-subtitle">{t('discount.subtitle')}</p>
 
             <div className="offers-container">
                 {discounts.map((discount) => {

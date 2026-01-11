@@ -115,7 +115,7 @@
 
 .navbar .desktop-menu a {
     color: var(--main-color);
-    font-weight: 600;
+    font-weight: 800;
     position: relative;
     height: 100%;
     display: flex;
@@ -235,6 +235,24 @@
     /* .navbar-inner {
         height: 5rem;
     } */
+}
+
+@media (max-width: 480px) {
+    .navbar .navbar-icons .login {
+        padding: 5px;
+        font-size: 13px;
+    }
+
+    .navbar .navbar-icons .nav-lang {
+        width: 27px;
+        height: 29px;
+        font-size: 13px;
+    }
+
+    .navbar .mobile-menu-btn button {
+        width: 27px;
+        height: 29px;
+    }
 }
 
 /* Animation */

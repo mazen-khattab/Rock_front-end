@@ -1,0 +1,28 @@
+{
+  "Products": {
+    "filter": "تصفية",
+    "categories": "الفئات",
+    "sizes": "الأحجام",
+    "colors": "الألوان",
+    "reset": "إعادة تعيين",
+    "apply": "تطبيق",
+    "open_filters": "فتح التصفية",
+    "close_filters": "إغلاق التصفية",
+    "coats_jackets": "معاطف وجاكيتات",
+    "jeans": "جينز",
+    "hoodies_sweatshirts": "هوديز وبلوزات",
+    "t_shirts": "تيشرتات",
+    "black": "أسود",
+    "white": "أبيض",
+    "cream": "كريمي",
+    "grey": "رمادي",
+    "brown": "بني",
+    "green": "أخضر",
+    "multicolor": "متعدد الألوان",
+    "xs": "XS",
+    "s": "S",
+    "m": "M",
+    "l": "L",
+    "xl": "XL"
+  }
+}

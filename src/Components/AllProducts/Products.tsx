@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Navbar from '../Home/Navbar/Navbar';
 import ProductCard from '../Global/ProductCard/ProductCard';
+import { useTranslation } from 'react-i18next';
 // import ProductPopup from '../Global/ProductPopup/ProductPopup';
 // import type { Product } from '../../Types/product';
 import './Products.css';
@@ -519,30 +520,29 @@ const products = [
     ]
   }
 ];
-// Filter categories (mock)
-const filterCategories = [
-  { name: "Coats & Jackets", subcategories: [] },
-  { name: "Jeans", subcategories: [] },
-  { name: "Hoodies & sweatshirts", subcategories: [] },
-  { name: "T-shirts", subcategories: [] }
-];
-
-// Color options
-const colors = [
-  { name: "Black", value: "black" },
-  { name: "White", value: "white" },
-  { name: "Cream", value: "cream" },
-  { name: "Grey", value: "grey" },
-  { name: "Brown", value: "brown" },
-  { name: "Green", value: "green" },
-  { name: "Multicolor", value: "multicolor" }
-];
-
-// Size options
-const sizes = ["XS", "S", "M", "L", "XL"];
 
 function ProductPage() {
+  const { t } = useTranslation("Products");
   const [isOpen, setIsOpen] = useState(false);
+
+  const translatedCategories = [
+    { name: t('Products.coats_jackets'), subcategories: [] },
+    { name: t('Products.jeans'), subcategories: [] },
+    { name: t('Products.hoodies_sweatshirts'), subcategories: [] },
+    { name: t('Products.t_shirts'), subcategories: [] }
+  ];
+
+  const translatedColors = [
+    { name: t('Products.black'), value: "black" },
+    { name: t('Products.white'), value: "white" },
+    { name: t('Products.cream'), value: "cream" },
+    { name: t('Products.grey'), value: "grey" },
+    { name: t('Products.brown'), value: "brown" },
+    { name: t('Products.green'), value: "green" },
+    { name: t('Products.multicolor'), value: "multicolor" }
+  ];
+
+  const translatedSizes = [t('Products.xs'), t('Products.s'), t('Products.m'), t('Products.l'), t('Products.xl')];
   // const [search, setSearch] = useState("");
   // const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
@@ -567,18 +567,18 @@ function ProductPage() {
           {/* Sidebar */}
           <aside className="filter-sidebar">
             <div className="filter-section" style={{ marginBottom: '1rem' }}>
-              <h3>Filter</h3>
+              <h3>{t('Products.filter')}</h3>
             </div>
 
             {/* Categories */}
             <div className="filter-section">
               <p>
                 <a className="collapsed-btn" data-bs-toggle="collapse" href="#cate" role="button" aria-expanded="false" aria-controls="collapseExample">
-                  Categories
+                  {t('Products.categories')}
                 </a>
               </p>
               <div className="collapse" id="cate">
-                {filterCategories.map((cat, idx) => (
+                {translatedCategories.map((cat, idx) => (
                   <div key={idx} className="category-item">
                     <span>{cat.name}</span>
                     {cat.subcategories.length > 0 && <span className="chevron">›</span>}
@@ -592,12 +592,12 @@ function ProductPage() {
             <div className="filter-section">
               <p>
                 <a className="collapsed-btn" data-bs-toggle="collapse" href="#sizes" role="button" aria-expanded="false" aria-controls="collapseExample">
-                  Sizes
+                  {t('Products.sizes')}
                 </a>
               </p>
               <div className="collapse" id="sizes">
                 <div className="size-grid">
-                  {sizes.map(size => (
+                  {translatedSizes.map(size => (
                     <button
                       key={size}
                     >
@@ -612,12 +612,12 @@ function ProductPage() {
             <div className="filter-section">
               <p>
                 <a className="collapsed-btn" data-bs-toggle="collapse" href="#colors" role="button" aria-expanded="false" aria-controls="collapseExample">
-                  Colors
+                  {t('Products.colors')}
                 </a>
               </p>
               <div className="collapse" id="colors">
                 <div className="color-grid">
-                  {colors.map(color => (
+                  {translatedColors.map(color => (
                     <label key={color.value} className="color-option">
                       <input
                         type="checkbox"
@@ -632,8 +632,8 @@ function ProductPage() {
 
             {/* Apply & Reset */}
             <div className="filter-sidebar-footer">
-              <button className="btn-clear">Reset</button>
-              <button className="btn-apply">Apply</button>
+              <button className="btn-clear">{t('Products.reset')}</button>
+              <button className="btn-apply">{t('Products.apply')}</button>
             </div>
           </aside>
 
@@ -641,24 +641,24 @@ function ProductPage() {
             <button
               className="moblie-filter-button"
               onClick={toggleSidebar}
-              aria-label={isOpen && window.innerWidth <= 768 ? "Close filters" : "Open filters"}>
-              Filter <i className="fa-solid fa-filter" style={{ marginLeft: '.25rem' }}></i>
+              aria-label={isOpen && window.innerWidth <= 768 ? t('Products.close_filters') : t('Products.open_filters')}>
+              {t('Products.filter')} <i className="fa-solid fa-filter" style={{ marginLeft: '.25rem' }}></i>
             </button>
 
             <div className={`moblie-sidebar-overlay ${isOpen ? 'active' : ''}`} onClick={toggleSidebar} />
 
             <aside className={`moblie-filter-sidebar ${isOpen ? 'open' : ''}`}>
-              <p className='filter-sidebar-title'>Filter</p>
+              <p className='filter-sidebar-title'>{t('Products.filter')}</p>
               <div className="sidebar-content">
                 {/* Categories */}
                 <div className="filter-section">
                   <p>
                     <a className="collapsed-btn" data-bs-toggle="collapse" href="#cate" role="button" aria-expanded="false" aria-controls="collapseExample">
-                      Categories
+                      {t('Products.categories')}
                     </a>
                   </p>
                   <div className="collapse" id="cate">
-                    {filterCategories.map((cat, idx) => (
+                    {translatedCategories.map((cat, idx) => (
                       <div key={idx} className="category-item">
                         <span>{cat.name}</span>
                         {cat.subcategories.length > 0 && <span className="chevron">›</span>}
@@ -672,12 +672,12 @@ function ProductPage() {
                 <div className="filter-section">
                   <p>
                     <a className="collapsed-btn" data-bs-toggle="collapse" href="#sizes" role="button" aria-expanded="false" aria-controls="collapseExample">
-                      Sizes
+                      {t('Products.sizes')}
                     </a>
                   </p>
                   <div className="collapse" id="sizes">
                     <div className="size-grid">
-                      {sizes.map(size => (
+                      {translatedSizes.map(size => (
                         <button
                           key={size}
                         >
@@ -692,12 +692,12 @@ function ProductPage() {
                 <div className="filter-section">
                   <p>
                     <a className="collapsed-btn" data-bs-toggle="collapse" href="#colors" role="button" aria-expanded="false" aria-controls="collapseExample">
-                      Colors
+                      {t('Products.colors')}
                     </a>
                   </p>
                   <div className="collapse" id="colors">
                     <div className="color-grid">
-                      {colors.map(color => (
+                      {translatedColors.map(color => (
                         <label key={color.value} className="color-option">
                           <input
                             type="checkbox"
@@ -713,8 +713,8 @@ function ProductPage() {
 
               {/* Apply & Reset */}
               <div className="filter-sidebar-footer">
-                <button className="btn-clear">Reset</button>
-                <button className="btn-apply">Apply</button>
+                <button className="btn-clear">{t('Products.reset')}</button>
+                <button className="btn-apply">{t('Products.apply')}</button>
               </div>
             </aside>
           </div>

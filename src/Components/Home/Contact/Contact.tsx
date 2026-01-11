@@ -1,48 +1,49 @@
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import './Contact.css'
 
 const Contact = () => {
+    const { t } = useTranslation("Home");
     const [formData, setFormData] = useState({
         name: "",
         phone: "",
         message: "",
     });
 
-    const langString = localStorage.getItem("lang");
-    const savedLang = langString ? JSON.parse(langString) : null;
+    const savedLang = localStorage.getItem("lang");
 
     return (
         <section className="container contact-container">
             <div className={
-                savedLang?.code === `ar` ? "contact contact-ar" : "contact contact-en"
+                savedLang === `ar` ? "contact contact-ar" : "contact contact-en"
             }>
                 <div className="contact-content">
                     <div
                         className={
-                            savedLang?.code === `ar`
+                            savedLang === `ar`
                                 ? "contact-info contact-info-ar"
                                 : "contact-info contact-info-en"
                         }
                     >
-                        <h3>Get in Touch</h3>
+                        <h3>{t("contactUs.get_in_touch")}</h3>
                         <div className="info-item">
                             <i className="fa-solid fa-envelope info-icon"></i>
                             <div className="info-text">
-                                <h4>Email</h4>
+                                <h4>{t("contactUs.email")}</h4>
                                 <p>ONOStore@gmail.com</p>
                             </div>
                         </div>
                         <div className="info-item">
                             <i className="fa-solid fa-phone-flip info-icon"></i>
                             <div className="info-text">
-                                <h4>Phone</h4>
+                                <h4>{t("contactUs.phone")}</h4>
                                 <p>01023839637</p>
                             </div>
                         </div>
                         <div className="info-item">
                             <i className="fa-solid fa-location-dot info-icon"></i>
                             <div className="info-text">
-                                <h4>Address</h4>
+                                <h4>{t("contactUs.address")}</h4>
                                 <p>------------</p>
                             </div>
                         </div>
@@ -50,12 +51,12 @@ const Contact = () => {
 
                     <form className="contact-form">
                         <div className="contact-header">
-                            <h2 className="contact-title">Need Help?</h2>
-                            <p className="contact-subtitle">if you have any questions, feel free to contact us</p>
+                            <h2 className="contact-title">{t("contactUs.need_help")}</h2>
+                            <p className="contact-subtitle">{t("contactUs.subtitle")}</p>
                         </div>
                         <div className="form-group">
                             <label htmlFor="name" className="form-label">
-                                Name
+                                {t("contactUs.name")}
                             </label>
                             <input
                                 type="text"
@@ -70,7 +71,7 @@ const Contact = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="phone" className="form-label">
-                                Phone
+                                {t("contactUs.phone_label")}
                             </label>
                             <input
                                 type="number"
@@ -86,7 +87,7 @@ const Contact = () => {
                         <button type="submit" className="submit-btn">
                             <div>
                                 <span style={{ padding: "8px" }}>
-                                    Send Message
+                                    {t("contactUs.send_message")}
                                 </span>
                                 <i className="fa-solid fa-paper-plane"></i>
                             </div>

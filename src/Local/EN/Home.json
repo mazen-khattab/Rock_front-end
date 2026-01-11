@@ -1,0 +1,50 @@
+{
+  "Hero": {
+    "hero_offer": "Get up to 30% off",
+    "hero_title": "New Arrivals",
+    "hero_description": "Shop the latest looks, wear your confidence.",
+    "shop_now": "SHOP NOW",
+    "shop_by": "Shop By",
+    "category": "Category",
+    "shirts": "Shirts",
+    "jackets": "Jackets",
+    "pants": "Pants",
+    "dresses": "Dresses",
+    "shirts_description": "Classic & Modern Styles",
+    "jackets_description": "Warm & Fashionable",
+    "pants_description": "Comfortable & Stylish",
+    "dresses_description": "Elegant & Versatile",
+    "previous_category": "Previous category",
+    "next_category": "Next category",
+    "go_to_page": "Go to page {{page}}"
+  },
+  "specialProducts": {
+    "title": "Our Top Seller Products",
+    "all": "All",
+    "coats": "Coats",
+    "pants": "Pants",
+    "t_shirt": "t-shirt",
+    "previous_products": "Previous products",
+    "next_products": "Next products",
+    "go_to_slide": "Go to slide {{slide}}"
+  },
+  "discount": {
+    "title": "Special Offers",
+    "subtitle": "Don't miss out on our amazing deals!"
+  },
+  "contactUs": {
+    "get_in_touch": "Get in Touch",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "need_help": "Need Help?",
+    "subtitle": "if you have any questions, feel free to contact us",
+    "name": "Name",
+    "phone_label": "Phone",
+    "send_message": "Send Message"
+  },
+  "footer": {
+    "description": "Styling your wardrobe with premium fashion and timeless designs for every occasion.",
+    "copyright": "© 2025 Rock Fashion. All rights reserved."
+  }
+}

@@ -1,17 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import Pants from '../../../assets/pants.jpg';
 import Shirt from '../../../assets/t-shirts2.jpg';
 import Shirt2 from '../../../assets/t-shirt.jpg';
 import './Hero.css'
 
 const Hero = () => {
+    const { t } = useTranslation("Home");
     const navigate = useNavigate();
     const imgRef = useRef<HTMLImageElement>(null);
     const targetRef = useRef<HTMLImageElement>(null);
     const parentRef = useRef<HTMLImageElement>(null);
     const heroRef = useRef<HTMLImageElement>(null);
+    const savedLang = localStorage.getItem('lang');
 
     const [startPos, setStartPos] = useState<DOMRect | null>(null);
     const [targetPos, setTargetPos] = useState<DOMRect | null>(null);
@@ -20,11 +23,12 @@ const Hero = () => {
     const [isHover, setIsHover] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
+
     const categories = [
-        { id: 1, name: 'Shirts', image: Shirt, description: 'Classic & Modern Styles', ref: targetRef, parentRef: parentRef },
-        { id: 3, name: 'Jackets', image: Shirt2, description: 'Warm & Fashionable' },
-        { id: 2, name: 'Pants', image: Pants, description: 'Comfortable & Stylish' },
-        { id: 4, name: 'Dresses', image: Shirt2, description: 'Elegant & Versatile' },
+        { id: 1, name: t('Hero.shirts'), image: Shirt, description: t('Hero.shirts_description'), ref: targetRef, parentRef: parentRef },
+        { id: 3, name: t('Hero.jackets'), image: Shirt2, description: t('Hero.jackets_description') },
+        { id: 2, name: t('Hero.pants'), image: Pants, description: t('Hero.pants_description') },
+        { id: 4, name: t('Hero.dresses'), image: Shirt2, description: t('Hero.dresses_description') },
     ];
 
     const heroImages = [
@@ -179,7 +183,7 @@ const Hero = () => {
                     })}
                 </div>
 
-                <div className="overlay"></div>
+                <div className={savedLang === 'ar'? "overlay ar" : "overlay"}></div>
 
                 <button onClick={prevSlide} className='hero-nav-btn hero-left-arrow'>
                     <i className="fa-solid fa-angle-left"></i>
@@ -189,10 +193,10 @@ const Hero = () => {
                 </button>
 
                 <div className="hero-text-section">
-                    <p className="hero-offer">Get up to 30% off</p>
-                    <h1 className="hero-title">New Arrivals</h1>
+                    <p className="hero-offer">{t("Hero.hero_offer")}</p>
+                    <h1 className="hero-title">{t("Hero.hero_title")}</h1>
                     <p className="hero-description">
-                        Shop the latest looks, wear your confidence.
+                        {t("Hero.hero_description")}
                     </p>
 
                     <div className="hero-buttons">
@@ -200,7 +204,7 @@ const Hero = () => {
                             onClick={() => navigate("/products")}
                             className="btn-primary"
                         >
-                            SHOP NOW <ArrowRight className="icon-right" />
+                            {t("Hero.shop_now")} <ArrowRight className="icon-right" />
                         </button>
                     </div>
                 </div>
@@ -215,21 +219,21 @@ const Hero = () => {
             <section className="container categories-section">
                 <div className="slider-container">
                     {/* Title positioned next to cards */}
-                    <h2 className="slider-title">Shop By <span>Category</span></h2>
+                    <h2 className="slider-title">{t("Hero.shop_by")} <span>{t("Hero.category")}</span></h2>
 
                     <div className="categories-wrapper">
-                        <div className="navigation-controls">
+                        <div className={savedLang === 'ar' ? "navigation-controls ar" : "navigation-controls"}>
                             <button
                                 className="nav-button left-arrow"
                                 onClick={previousCate}
-                                aria-label="Previous category"
+                                aria-label={t("previous_category")}
                             >
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M15 18l-6-6 6-6" />
                                 </svg>
                             </button>
 
-                            <div className="categories-container">
+                            <div className={savedLang === 'ar' ? "categories-container ar" : "categories-container"}>
                                 {visibleCategories.map((category) => (
                                     <div key={category.id} className="category-card" ref={category.parentRef}>
                                         <div className="category-image-wrapper">
@@ -251,7 +255,7 @@ const Hero = () => {
                             <button
                                 className="nav-button right-arrow"
                                 onClick={nextCate}
-                                aria-label="Next category"
+                                aria-label={t("next_category")}
                             >
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M9 6l6 6-6 6" />
@@ -266,7 +270,6 @@ const Hero = () => {
                                     key={index}
                                     className={`rectangle ${index === currentIndex ? 'active' : ''}`}
                                     onClick={() => goToCateIndex(index)}
-                                    aria-label={`Go to page ${index + 1}`}
                                 />
                             ))}
                         </div>
