@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useContext, createContext } from "react";
 import type { CartItem } from '../Types/product'
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 type CartState = {
   items: CartItem[];
