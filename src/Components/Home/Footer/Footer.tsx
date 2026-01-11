@@ -1,7 +1,10 @@
 import './Footer.css'
 import Logo from '../../../assets/Rock_logo.jpg'
+import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
+    const { t } = useTranslation("Home");
+    
     return (
         <footer className="footer">
             <div className="footer-content">
@@ -14,7 +17,7 @@ const Footer = () => {
 
                 {/* Description */}
                 <p className="footer-description">
-                    Styling your wardrobe with premium fashion and timeless designs for every occasion.
+                    {t("footer.description")}
                 </p>
 
                 {/* Social Media Icons */}
@@ -36,7 +39,7 @@ const Footer = () => {
 
             {/* Copyright */}
             <div className="footer-bottom">
-                <p>© 2025 Rock Fashion. All rights reserved.</p>
+                <p>{t("footer.copyright")}</p>
             </div>
         </footer>
     )

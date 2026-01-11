@@ -12,6 +12,8 @@ import Register from "./Components/Register/Register";
 import CartPage from "./Components/Cart/Cart";
 // import ProductDetails from "./Components/Global/ProductDetails/ProductDetails"
 import { CartProvider } from "./Context/CartContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -27,6 +29,15 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<CartPage />} />
         </Routes>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+          draggable
+        />
       </Router>
     </CartProvider>
   )

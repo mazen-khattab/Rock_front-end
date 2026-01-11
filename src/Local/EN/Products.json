@@ -1,0 +1,28 @@
+{
+  "Products": {
+    "filter": "Filter",
+    "categories": "Categories",
+    "sizes": "Sizes",
+    "colors": "Colors",
+    "reset": "Reset",
+    "apply": "Apply",
+    "open_filters": "Open filters",
+    "close_filters": "Close filters",
+    "coats_jackets": "Coats & Jackets",
+    "jeans": "Jeans",
+    "hoodies_sweatshirts": "Hoodies & sweatshirts",
+    "t_shirts": "T-shirts",
+    "black": "Black",
+    "white": "White",
+    "cream": "Cream",
+    "grey": "Grey",
+    "brown": "Brown",
+    "green": "Green",
+    "multicolor": "Multicolor",
+    "xs": "XS",
+    "s": "S",
+    "m": "M",
+    "l": "L",
+    "xl": "XL"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "Hero": {
+    "hero_offer": "احصل على خصم يصل إلى 30%",
+    "hero_title": "الوصولات الجديدة",
+    "hero_description": "تسوق أحدث المظاهر، ارتدِ ثقتك.",
+    "shop_now": "تسوق الآن",
+    "shop_by": "تسوق حسب",
+    "category": "الفئة",
+    "shirts": "قمصان",
+    "jackets": "جاكيتات",
+    "pants": "بناطيل",
+    "dresses": "فساتين",
+    "shirts_description": "أنماط كلاسيكية وحديثة",
+    "jackets_description": "دافئة وأنيقة",
+    "pants_description": "مريحة وأنيقة",
+    "dresses_description": "أنيقة ومتعددة الاستخدامات",
+    "previous_category": "الفئة السابقة",
+    "next_category": "الفئة التالية",
+    "go_to_page": "اذهب إلى الصفحة {{page}}"
+  },
+  "specialProducts": {
+    "title": "أفضل منتجاتنا المبيعة",
+    "all": "الكل",
+    "coats": "معاطف",
+    "pants": "بناطيل",
+    "t_shirt": "تيشرت",
+    "previous_products": "المنتجات السابقة",
+    "next_products": "المنتجات التالية",
+    "go_to_slide": "اذهب إلى الشريحة {{slide}}"
+  },
+  "discount": {
+    "title": "عروض خاصة",
+    "subtitle": "لا تفوت عروضنا الرائعة!"
+  },
+  "contactUs": {
+    "get_in_touch": "تواصل معنا",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "address": "العنوان",
+    "need_help": "تحتاج مساعدة؟",
+    "subtitle": "إذا كان لديك أي أسئلة، فلا تتردد في الاتصال بنا",
+    "name": "الاسم",
+    "phone_label": "الهاتف",
+    "send_message": "إرسال الرسالة"
+  },
+  "footer": {
+    "description": "تصميم خزانة ملابسك بأزياء فاخرة وتصاميم خالدة لكل مناسبة.",
+    "copyright": "© 2025 Rock Fashion. جميع الحقوق محفوظة."
+  }
+}

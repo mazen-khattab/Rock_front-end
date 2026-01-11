@@ -1,14 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import ProductPopup from '../../Global/ProductPopup/ProductPopup';
 import ProductCard from '../../Global/ProductCard/ProductCard';
 import type { Product } from '../../../Types/product';
 import './SpecialProducts.css'
 
 const SpecialProducts = () => {
+    const { t } = useTranslation("Home");
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [activeCategory, setActiveCategory] = useState('All');
     const [currentIndex, setCurrentIndex] = useState(0);
     const carouselRef = useRef(null);
+    const savedLang = localStorage.getItem('lang');
 
     const products = [
         // ================= T-SHIRTS =================
@@ -642,6 +645,8 @@ const SpecialProducts = () => {
             } else {
                 setProductsPerSlide(3);
             }
+
+            setCurrentIndex(0);
         };
 
         updateProductsPerSlide();
@@ -666,7 +671,8 @@ const SpecialProducts = () => {
     };
 
     // Calculate translateX value for carousel
-    const translateX = -currentIndex * 100;
+    const direction = savedLang === 'ar' ? 1 : -1;
+    const translateX = direction * currentIndex * 100;
 
     const handleClosePopup = () => {
         setSelectedProduct(null);
@@ -675,36 +681,43 @@ const SpecialProducts = () => {
     return (
         <div className="container special-products">
             <div className="section-header">
-                <h1>Our Top Seller Products</h1>
+                <h1>{t("specialProducts.title")}</h1>
                 <div className="category-filters">
-                    {['All', 'Coats', 'Pants', 't-shirt'].map(category => (
+                    {[
+                        { key: 'All', label: t("specialProducts.all") },
+                        { key: 'Coats', label: t("specialProducts.coats") },
+                        { key: 'Pants', label: t("specialProducts.pants") },
+                        { key: 't-shirt', label: t("specialProducts.t_shirt") }
+                    ].map(({ key, label }) => (
                         <button
-                            key={category}
-                            className={`category-btn ${activeCategory === category ? 'active' : ''}`}
+                            key={key}
+                            className={`category-btn ${activeCategory === key ? 'active' : ''}`}
                             onClick={() => {
-                                setActiveCategory(category);
+                                setActiveCategory(key);
                                 setCurrentIndex(0); // Reset to first slide when changing category
                             }}
                         >
-                            {category}
+                            {label}
                         </button>
                     ))}
                 </div>
             </div>
 
             <button
-                className="carousel-arrow prev-arrow"
+                className="carousel-arrow"
+                style={savedLang === 'ar' ? { right: "1rem" } : { left: "1rem" }}
                 onClick={prevSlide}
-                aria-label="Previous products"
+                aria-label={t("specialProducts.previous_products")}
             >
-                <i className="fas fa-chevron-left"></i>
+                {savedLang === 'ar' ? <i className="fas fa-chevron-right"></i> : <i className="fas fa-chevron-left"></i>}
             </button>
             <button
-                className="carousel-arrow next-arrow"
+                className="carousel-arrow"
+                style={savedLang === 'ar' ? { left: "1rem" } : { right: "1rem" }}
                 onClick={nextSlide}
-                aria-label="Next products"
+                aria-label={t("specialProducts.next_products")}
             >
-                <i className="fas fa-chevron-right"></i>
+                {savedLang === 'ar' ? <i className="fas fa-chevron-left"></i> : <i className="fas fa-chevron-right"></i>}
             </button>
             <div className="carousel-container">
                 {/* Navigation arrows */}
@@ -739,7 +752,7 @@ const SpecialProducts = () => {
                                 key={index}
                                 className={`indicator ${index === currentIndex ? 'active' : ''}`}
                                 onClick={() => goToSlide(index)}
-                                aria-label={`Go to slide ${index + 1}`}
+                                aria-label={t("specialProducts.go_to_slide", { slide: index + 1 })}
                             />
                         ))}
                     </div>
