@@ -15,6 +15,7 @@ const Hero = () => {
     const parentRef = useRef<HTMLImageElement>(null);
     const heroRef = useRef<HTMLImageElement>(null);
     const savedLang = localStorage.getItem('lang');
+    const direction = savedLang === 'ar' ? -1 : 1;
 
     const [startPos, setStartPos] = useState<DOMRect | null>(null);
     const [targetPos, setTargetPos] = useState<DOMRect | null>(null);
@@ -71,15 +72,15 @@ const Hero = () => {
         const slideWidth = heroRef.current.scrollWidth / heroImages.length;
 
         heroRef.current.scrollTo({
-            left: clampedIndex * slideWidth,
+            left: direction * clampedIndex * slideWidth,
             behavior: 'smooth'
         });
 
         setCurrentImageIndex(clampedIndex);
     }
 
-    const nextSlide = () => goToHeroImage(currentImageIndex + 1);
-    const prevSlide = () => goToHeroImage(currentImageIndex - 1);
+    const nextSlide = () => goToHeroImage(currentImageIndex + direction);
+    const prevSlide = () => goToHeroImage(currentImageIndex - direction);
 
     // this used to check if isMobile is true of false
     useEffect(() => {
@@ -95,7 +96,7 @@ const Hero = () => {
         if (isHover || !isMobile) return
 
         const slider = setInterval(() => {
-            nextSlide();
+            savedLang === 'ar' ? prevSlide() : nextSlide();
         }, 5000);
 
         return () => clearInterval(slider);
@@ -183,7 +184,7 @@ const Hero = () => {
                     })}
                 </div>
 
-                <div className={savedLang === 'ar'? "overlay ar" : "overlay"}></div>
+                <div className={savedLang === 'ar' ? "overlay ar" : "overlay"}></div>
 
                 <button onClick={prevSlide} className='hero-nav-btn hero-left-arrow'>
                     <i className="fa-solid fa-angle-left"></i>
@@ -192,7 +193,7 @@ const Hero = () => {
                     <i className="fa-solid fa-angle-right"></i>
                 </button>
 
-                <div className="hero-text-section">
+                <div className={savedLang === 'ar' ? "hero-text-section ar" : "hero-text-section en"}>
                     <p className="hero-offer">{t("Hero.hero_offer")}</p>
                     <h1 className="hero-title">{t("Hero.hero_title")}</h1>
                     <p className="hero-description">
