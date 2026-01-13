@@ -105,7 +105,7 @@
 
 .hero .hero-description {
     font-size: 18px;
-    max-width: 400px;
+    /* max-width: 400px; */
     opacity: 0.9;
 }
 
@@ -453,6 +453,10 @@
         background: linear-gradient(to right, #003334a6 30%, #10101036 70%);
     }
 
+    .hero-wrapper .overlay.ar {
+        background: linear-gradient(to left, #003334a6 30%, #10101036 70%);
+    }
+
     .hero-wrapper .hero-slider {
         display: flex;
     }
@@ -465,6 +469,14 @@
         width: fit-content;
         text-align: center;
         position: relative;
+    }
+
+    .hero .hero-text-section.ar {
+        left: -50%;
+        transform: translateX(50%);
+    }
+
+    .hero .hero-text-section.en {
         right: -50%;
         transform: translateX(-50%);
     }
