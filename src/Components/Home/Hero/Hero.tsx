@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import Pants from '../../../assets/pants.jpg';
 import Shirt from '../../../assets/t-shirts2.jpg';
@@ -237,7 +237,8 @@ const Hero = () => {
                             <div className={savedLang === 'ar' ? "categories-container ar" : "categories-container"}>
                                 {visibleCategories.map((category) => (
                                     <div key={category.id} className="category-card" ref={category.parentRef}>
-                                        <div className="category-image-wrapper">
+                                        <Link to={`/products?category=${encodeURIComponent(category.name)}`}
+                                            className="category-image-wrapper">
                                             <img
                                                 ref={category.ref}
                                                 src={category.image}
@@ -248,7 +249,7 @@ const Hero = () => {
                                                 <h3>{category.name}</h3>
                                                 <p className="category-description">{category.description}</p>
                                             </div>
-                                        </div>
+                                        </Link>
                                     </div>
                                 ))}
                             </div>

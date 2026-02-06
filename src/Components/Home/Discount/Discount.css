@@ -9,13 +9,11 @@
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 10px;
-    font-family: 'Arial', sans-serif;
 }
 
 .section-subtitle {
     font-size: 1.2rem;
     margin-bottom: 40px;
-    font-family: 'Arial', sans-serif;
 }
 
 .offers-container {
@@ -55,13 +53,11 @@
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 10px;
-    font-family: 'Arial', sans-serif;
 }
 
 .offer-description {
     font-size: 0.9rem;
     opacity: 0.8;
-    font-family: 'Arial', sans-serif;
     margin: 0;
 }
 
