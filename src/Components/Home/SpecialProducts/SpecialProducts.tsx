@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import ProductPopup from '../../Global/ProductPopup/ProductPopup';
+// import ProductPopup from '../../Global/ProductPopup/ProductPopup';
 import ProductCard from '../../Global/ProductCard/ProductCard';
 import type { Product } from '../../../Types/product';
 import { useProduct } from '../../../Context/ProductContext';
@@ -8,7 +8,7 @@ import './SpecialProducts.css'
 
 const SpecialProducts = () => {
     const { t } = useTranslation("Home");
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    // const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [activeCategory, setActiveCategory] = useState('All');
     const [currentIndex, setCurrentIndex] = useState(0);
     const [products, setProducts] = useState<Product[]>([]);
@@ -165,12 +165,12 @@ const SpecialProducts = () => {
                 )}
             </div>
 
-            {selectedProduct && (
+            {/* {selectedProduct && (
                 <ProductPopup
                     product={selectedProduct}
                 // onClose={handleClosePopup}
                 />
-            )}
+            )} */}
         </div>
     )
 }
