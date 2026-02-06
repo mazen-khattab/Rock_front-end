@@ -7,7 +7,7 @@ type ProductContextType = {
     selectedProduct: Product | null;
     loading: boolean;
 
-    GetAllProducts: (pageNumber: number, pageSize: number, category: string, size: string, color: string) => Promise<Product[]>;
+    GetAllProducts: (pageNumber: number, pageSize: number, category?: string, size?: string, color?: string) => Promise<Product[]>;
     GetById: (id: number) => Promise<Product | null>;
 };
 
@@ -27,7 +27,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
     // =========================
     // 1) GetAllProducts
     // =========================
-    const GetAllProducts = async (pageNumber: number, pageSize: number, category: string, size: string, color: string) => {
+    const GetAllProducts = async (pageNumber: number, pageSize: number, category?: string, size?: string, color?: string) => {
         try {
             setLoading(true);
 
