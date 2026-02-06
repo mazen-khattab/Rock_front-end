@@ -1,1 +1,10 @@
-{}
+{
+    "egp": "EGP",
+    "price": "Prcie",
+    "primary_quantity": "PREMIUM QUALITY",
+    "sizes": "Sizes",
+    "color": "Color",
+    "size_guide": "Size Guide",
+    "add_to_cart": "Add to cart",
+    "add_to_cart_message": "Added to cart."
+}

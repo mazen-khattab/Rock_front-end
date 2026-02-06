@@ -3,33 +3,34 @@ import { Link, useNavigate } from "react-router-dom";
 import type { Product } from "../../../Types/product";
 import { useCart } from "../../../Context/CartContext";
 import "./ProductCard.css";
+import { useTranslation } from 'react-i18next';
 import { toast } from "react-toastify";
 
 interface ProductCardProps {
   product: Product;
+  // onProductClick: (product: Product) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation("ProductCard");
 
   // states and variables.
   const { addToCart } = useCart();
-  const mainImage = product.variants[0].gallery[0];
-  const uniqueColors = [...new Set(product.variants.map((v) => v.color))];
+  const mainImage = product.variants[0].imagesDtos[0].imageUrl;
+  const uniqueColors = [...new Set(product.variants.map((v) => v.hexCode))];
   const [isHovered, setIsHovered] = useState(false);
   const [showSizes, setShowSizes] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [selectedColor, setSelectedColor] = useState<string>();
   const [colorError, setColorError] = useState(false);
   const [uniqueSizes, setUniqueSizes] = useState([
-    ...new Set(product.variants.map((v) => v.size)),
+    ...new Set(product.variants.map((v) => v.sizeName)),
   ]);
 
   // added the variant to the cart when the user select a color and click on any size.
   const handleAddToCart = (size: string) => {
     if (isAdding) return;
-
-    toast.success("Item added to cart");
 
     setIsAdding(true);
 
@@ -44,16 +45,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         name: product.name,
         price: product.price,
         description: product.description,
-        gallery: variant?.gallery,
-        colorId: variant?.colorId,
-        color: variant?.color,
-        sizeId: variant?.sizeId,
-        size: variant?.size,
+        imagesDtos: variant?.imagesDtos,
+        color: variant?.colorName,
+        hexCode: variant?.hexCode,
+        size: variant?.sizeName,
         reserved: variant?.reserved,
         quantity: 1,
       };
 
       addToCart(cartItem);
+      toast.success(t("add_to_cart_message"));
       navigate("/cart");
     }
 
@@ -73,14 +74,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   // used to show only the sizes available of the selected color.
   const disableSizes = (color: string) => {
-    const availableVariants = product.variants.filter((v) => v.color === color);
-    setUniqueSizes([...new Set(availableVariants.map((v) => v.size))]);
+    const availableVariants = product.variants.filter((v) => v.hexCode === color);
+    setUniqueSizes([...new Set(availableVariants.map((v) => v.sizeName))]);
   };
 
   // used to get the seleted variant to add it in the cart.
   const getVariant = (color: string, size: string) => {
     const selectedVariant = product.variants.filter(
-      (v) => v.color === color && v.size === size
+      (v) => v.hexCode === color && v.sizeName === size
     );
 
     return selectedVariant[0];
@@ -96,21 +97,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <Link
           to={`/product/${product.id}`}
           className="product-link"
-          aria-label="View product details"
+          aria-label={t("view_product_details")}
         >
           <img src={mainImage} alt={product.name} className="product-image" />
         </Link>
+        {/* <img src={mainImage} alt={product.name} onClick={() => onProductClick(product)} className="product-image" /> */}
 
         {/* Discount badge */}
-        {product.discount && (
+        {/* {product.discount && (
           <div className="discount-badge">{product.discount}% off</div>
-        )}
+        )} */}
 
         {/* Action buttons (visible on hover) */}
         {isHovered && window.innerWidth > 768 && (
           <div className="action-buttons">
             <div className="sizes-overlay"></div>
-            <p className="buy-now">Buy now</p>
+            <p className="buy-now">{t("buy_now")}</p>
             <div className="sizes">
               {uniqueSizes.map((size, index) => (
                 <button
@@ -133,9 +135,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <i className="fa-solid fa-bag-shopping shopping-icon"></i>
         </button>
 
-        <div className="mobile-action-buttons" style={showSizes ? {bottom: '0'} : {bottom: '-100%'}}>
+        <div className="mobile-action-buttons" style={showSizes ? { bottom: '0' } : { bottom: '-100%' }}>
           <div className="sizes-overlay"></div>
-          <p className="buy-now">Buy now</p>
+          <p className="buy-now">{t("buy_now")}</p>
           <div className="sizes">
             {uniqueSizes.map((size, index) => (
               <button
@@ -160,9 +162,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {uniqueColors.map((color, index) => (
               <button
                 key={color + index}
-                className={`color-btn ${
-                  selectedColor === color ? "selected" : ""
-                }`}
+                className={`color-btn ${selectedColor === color ? "selected" : ""
+                  }`}
                 style={{ backgroundColor: color }}
                 onClick={() => handleSelectedColor(color)}
               ></button>
@@ -172,7 +173,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             className="color-error"
             style={colorError ? { opacity: "1" } : { opacity: "0" }}
           >
-            Select a color first.
+            {t("select_color_first")}
           </p>
         </div>
         <div className="product-category">{product.category}</div>

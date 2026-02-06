@@ -4,6 +4,7 @@ import { useCart } from '../../Context/CartContext';
 import type { CartItem } from '../../Types/product';
 import Navbar from '../Home/Navbar/Navbar';
 import './Cart.css';
+import { useTranslation } from 'react-i18next';
 
 interface UserInfo {
     name: string;
@@ -18,7 +19,8 @@ type actions = 'INCREASE' | 'DECREASE'
 
 const CartPage = () => {
     const { items, increaseAmount, decreaseAmount, removeFromCart } = useCart();
-
+    const { t } = useTranslation("Cart");
+    
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
     const [userInfo, setUserInfo] = useState<UserInfo>({
         name: '',
@@ -65,11 +67,11 @@ const CartPage = () => {
 
         // Validate required fields
         if (!userInfo.name || !userInfo.email || !userInfo.address || !userInfo.phone) {
-            alert('Please fill in all required fields.');
+            alert(t("required_fields_alert"));
             return;
         }
 
-        alert(`✅ Order placed successfully!\nThank you, ${userInfo.name}!\nTotal: $${total.toFixed(2)}`);
+        alert(t("order_success_alert", { name: userInfo.name, total: total.toFixed(2) }));
         setIsCheckoutOpen(false);
     };
 
@@ -79,30 +81,30 @@ const CartPage = () => {
 
             <div className="cart-container container">
                 <header className="cart-header">
-                    <h1 className="cart-title">Shopping cart</h1>
-                    <span className="cart-count">{items.length} products</span>
+                    <h1 className="cart-title">{t("cart_title")}</h1>
+                    <span className="cart-count">{t("products_count", { count: items.length })}</span>
                 </header>
 
                 <main className="cart-main">
                     <section className="cart-items">
                         {items.length === 0 ? (
                             <div className="cart-empty">
-                                <p>Your cart is empty.</p>
-                                <Link to="/products" className="cart-empty-link">Continue shopping</Link>
+                                <p>{t("cart_empty")}</p>
+                                <Link to="/products" className="cart-empty-link">{t("continue_shopping")}</Link>
                             </div>
                         ) : (
                             items.map(item => (
                                 <div key={item.variantId} className="cart-item">
-                                    <img src={item.gallery[0]} alt={item.name} className="cart-item-image" />
+                                    <img src={item.imagesDtos[0].imageUrl} alt={item.name} className="cart-item-image" />
                                     <div className="cart-item-details">
                                         <h3 className="cart-item-name">{item.name}</h3>
-                                        <p className="cart-item-info">Color: <span style={{ color: getColorHex(item.color) }}>{item.color}</span></p>
-                                        <p className="cart-item-info">Size: {item.size}</p>
+                                        <p className="cart-item-info">{t("color_label")} <span style={{ color: getColorHex(item.color) }}>{item.color}</span></p>
+                                        <p className="cart-item-info">{t("size_label")} {item.size}</p>
                                         <div className="cart-item-quantity">
                                             <button
                                                 onClick={() => updateQuantity(item, 'DECREASE')}
                                                 className="cart-qty-btn"
-                                                aria-label={`Decrease ${item.name} quantity`}
+                                                aria-label={t("decrease_quantity", { name: item.name })}
                                             >
                                                 −
                                             </button>
@@ -110,7 +112,7 @@ const CartPage = () => {
                                             <button
                                                 onClick={() => updateQuantity(item, 'INCREASE')}
                                                 className="cart-qty-btn"
-                                                aria-label={`Increase ${item.name} quantity`}
+                                                aria-label={t("increase_quantity", { name: item.name })}
                                             >
                                                 +
                                             </button>
@@ -131,20 +133,20 @@ const CartPage = () => {
                     </section>
 
                     <aside className="cart-summary">
-                        <h2 className="cart-summary-title">Cart summary</h2>
+                        <h2 className="cart-summary-title">{t("cart_summary_title")}</h2>
 
                         <div className="cart-summary-line">
-                            <span>Product's price</span>
+                            <span>{t("product_price")}</span>
                             <span>${subtotal.toFixed(2)}</span>
                         </div>
 
                         <div className="cart-summary-line">
-                            <span>Shipping</span>
-                            <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
+                            <span>{t("shipping_label")}</span>
+                            <span>{shipping === 0 ? t("free_label") : `$${shipping.toFixed(2)}`}</span>
                         </div>
 
                         <div className="cart-summary-total">
-                            <span>Total</span>
+                            <span>{t("total_label")}</span>
                             <span>${total.toFixed(2)}</span>
                         </div>
 
@@ -153,7 +155,7 @@ const CartPage = () => {
                             onClick={handleCheckout}
                             disabled={items.length === 0}
                         >
-                            {items.length === 0 ? 'Cart is empty' : 'Checkout'}
+                            {items.length === 0 ? t("cart_is_empty") : t("checkout_btn")}
                         </button>
 
                         <div className="cart-footer-info">
@@ -162,21 +164,21 @@ const CartPage = () => {
                                     <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path>
                                     <path d="M12 16V12M12 8H12.01"></path>
                                 </svg>
-                                <span>Safe shopping at DressHome</span>
+                                <span>{t("safe_shopping")}</span>
                             </div>
                             <div className="cart-footer-item">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#003334" strokeWidth="2">
                                     <path d="M12 12L12 20M12 12L8 8M12 12L16 8"></path>
                                     <path d="M20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12Z"></path>
                                 </svg>
-                                <span>Free delivery on orders over $30.00</span>
+                                <span>{t("free_delivery_over", { amount: "30.00" })}</span>
                             </div>
                             <div className="cart-footer-item">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#003334" strokeWidth="2">
                                     <path d="M12 8V12L15 15"></path>
                                     <circle cx="12" cy="12" r="10"></circle>
                                 </svg>
-                                <span>365 days for return</span>
+                                <span>{t("return_days")}</span>
                             </div>
                         </div>
                     </aside>
@@ -190,11 +192,11 @@ const CartPage = () => {
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="checkout-modal-header">
-                                <h2 className="checkout-modal-title">Complete Your Order</h2>
+                                <h2 className="checkout-modal-title">{t("checkout_title")}</h2>
                                 <button
                                     className="checkout-modal-close"
                                     onClick={() => setIsCheckoutOpen(false)}
-                                    aria-label="Close"
+                                    aria-label={t("close_label")}
                                 >
                                     ×
                                 </button>
@@ -202,7 +204,7 @@ const CartPage = () => {
 
                             <form className="checkout-form" onSubmit={handleSubmitOrder}>
                                 <div className="checkout-form-group">
-                                    <label htmlFor="name" className="checkout-label">Full Name *</label>
+                                    <label htmlFor="name" className="checkout-label">{t("full_name_label")}</label>
                                     <input
                                         type="text"
                                         id="name"
@@ -215,7 +217,7 @@ const CartPage = () => {
                                 </div>
 
                                 <div className="checkout-form-group">
-                                    <label htmlFor="email" className="checkout-label">Email *</label>
+                                    <label htmlFor="email" className="checkout-label">{t("email_label")}</label>
                                     <input
                                         type="email"
                                         id="email"
@@ -228,7 +230,7 @@ const CartPage = () => {
                                 </div>
 
                                 <div className="checkout-form-group">
-                                    <label htmlFor="address" className="checkout-label">Address *</label>
+                                    <label htmlFor="address" className="checkout-label">{t("address_label")}</label>
                                     <input
                                         type="text"
                                         id="address"
@@ -242,7 +244,7 @@ const CartPage = () => {
 
                                 <div className="checkout-form-row">
                                     <div className="checkout-form-group">
-                                        <label htmlFor="city" className="checkout-label">City</label>
+                                        <label htmlFor="city" className="checkout-label">{t("city_label")}</label>
                                         <input
                                             type="text"
                                             id="city"
@@ -253,7 +255,7 @@ const CartPage = () => {
                                         />
                                     </div>
                                     <div className="checkout-form-group">
-                                        <label htmlFor="zipCode" className="checkout-label">ZIP Code</label>
+                                        <label htmlFor="zipCode" className="checkout-label">{t("zip_label")}</label>
                                         <input
                                             type="text"
                                             id="zipCode"
@@ -266,7 +268,7 @@ const CartPage = () => {
                                 </div>
 
                                 <div className="checkout-form-group">
-                                    <label htmlFor="phone" className="checkout-label">Phone *</label>
+                                    <label htmlFor="phone" className="checkout-label">{t("phone_label")}</label>
                                     <input
                                         type="tel"
                                         id="phone"
@@ -279,23 +281,23 @@ const CartPage = () => {
                                 </div>
 
                                 <div className="checkout-order-summary">
-                                    <h3 className="checkout-summary-title">Order Summary</h3>
+                                    <h3 className="checkout-summary-title">{t("order_summary_title")}</h3>
                                     <div className="checkout-summary-line">
-                                        <span>Subtotal</span>
+                                        <span>{t("subtotal_label")}</span>
                                         <span>${subtotal.toFixed(2)}</span>
                                     </div>
                                     <div className="checkout-summary-line">
-                                        <span>Shipping</span>
-                                        <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
+                                        <span>{t("shipping_label")}</span>
+                                        <span>{shipping === 0 ? t("free_label") : `$${shipping.toFixed(2)}`}</span>
                                     </div>
                                     <div className="checkout-summary-total">
-                                        <span>Total</span>
+                                        <span>{t("total_label")}</span>
                                         <span>${total.toFixed(2)}</span>
                                     </div>
                                 </div>
 
                                 <button type="submit" className="checkout-submit-btn">
-                                    Place Order
+                                    {t("place_order_btn")}
                                 </button>
                             </form>
                         </div>

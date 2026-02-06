@@ -1,24 +1,30 @@
 export interface Product {
   id: number;
-  name: string;
+  name: string; // trans
+  description: string; // trans
   category: string;
   price: number;
   originalPrice: number;
-  description: string;
-  discount: number;
-  rating: number;
+  metaDescription: string;
+  metaTitle: string;
+  slug: string;
   variants: Variant[];
 }
 
 export interface Variant {
   id: number;
-  gallery: string[];
-  colorId: number;
-  color: string;
-  sizeId: number;
-  size: string;
+  productId: number;
+  imagesDtos: VariantImages[];
+  colorName: string;
+  hexCode: string;
+  sizeName: string;
   quantity: number;
   reserved: number;
+}
+
+export interface VariantImages {
+  altText: string;
+  imageUrl: string;
 }
 
 export interface CartItem {
@@ -27,10 +33,9 @@ export interface CartItem {
   name: string;
   price: number;
   description: string;
-  gallery: string[];
-  colorId: number;
+  imagesDtos: VariantImages[];
   color: string;
-  sizeId: number;
+  hexCode: string;
   size: string;
   reserved: number;
   quantity: number;

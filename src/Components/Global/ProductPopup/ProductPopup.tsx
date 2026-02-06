@@ -5,22 +5,22 @@ import { useCart } from '../../../Context/CartContext';
 
 interface ProductPopupProps {
     product: Product,
-    onClose: () => void
+    // onClose: () => void
 }
 
-const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
+const ProductPopup: React.FC<ProductPopupProps> = ({ product }) => {
 
     // states and variables.
     const { addToCart } = useCart();
-    const allSizes = [...new Set(product.variants.map(v => v.size))]
-    const [mainImage, setMainImage] = useState(product.variants[0].gallery[0]);
-    const [gallery, setGallery] = useState(product.variants[0].gallery);
+    const allSizes = [...new Set(product.variants.map(v => v.sizeName))]
+    const [mainImage, setMainImage] = useState(product.variants[0].imagesDtos[0].imageUrl);
+    const [gallery, setGallery] = useState(product.variants[0].imagesDtos);
     const [isAdding, setIsAdding] = useState(false);
-    const [selectedColor, setSelectedColor] = useState<string>(product.variants[0].color);
-    const [selectedSize, setSelectedSize] = useState<string>(product.variants[0].size);
+    const [selectedColor, setSelectedColor] = useState<string>(product.variants[0].colorName);
+    const [selectedSize, setSelectedSize] = useState<string>(product.variants[0].sizeName);
     const [colorError, setColorError] = useState(false);
     const [sizeError, setSizeError] = useState(false);
-    const [uniqueColors, setUniqueColors] = useState([...new Set(product.variants.filter(v => v.size === allSizes[0]).map(v => v.color))]);
+    const [uniqueColors, setUniqueColors] = useState([...new Set(product.variants.filter(v => v.sizeName === allSizes[0]).map(v => v.colorName))]);
 
     if (!product) return null;
 
@@ -45,11 +45,10 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
                 name: product.name,
                 price: product.price,
                 description: product.description,
-                gallery: variant?.gallery,
-                colorId: variant?.colorId,
-                color: variant?.color,
-                sizeId: variant?.sizeId,
-                size: variant?.size,
+                imagesDtos: variant?.imagesDtos,
+                color: variant?.colorName,
+                hexCode: variant?.hexCode,
+                size: variant?.sizeName,
                 reserved: variant?.reserved,
                 quantity: 1,
             }
@@ -68,15 +67,15 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
         setSelectedSize(size);
 
         // get all variants these are match the selected size.
-        const availableVariants = product.variants.filter(v => v.size === size)
-        setUniqueColors([...new Set(availableVariants.map(v => v.color))]);
-        
+        const availableVariants = product.variants.filter(v => v.sizeName === size)
+        setUniqueColors([...new Set(availableVariants.map(v => v.colorName))]);
+
         // change the color to be the selected color
-        setSelectedColor(availableVariants[0].color);
+        setSelectedColor(availableVariants[0].colorName);
         // change the main image to be the first image in the selected variant gallery
-        setMainImage(availableVariants[0].gallery[0])
+        setMainImage(availableVariants[0].imagesDtos[0].imageUrl)
         // change the gallery to the gallery of the selected variant
-        setGallery(availableVariants[0].gallery)
+        setGallery(availableVariants[0].imagesDtos)
     }
 
     const handleSelectedColor = (color: string) => {
@@ -86,28 +85,28 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
         // change the color to be the selected color
         setSelectedColor(color);
         // change the main image to be the first image in the selected variant gallery
-        setMainImage(variant.gallery[0])
+        setMainImage(variant.imagesDtos[0].imageUrl)
 
         // change the gallery to the gallery of the selected variant
-        setGallery(variant.gallery)
+        setGallery(variant.imagesDtos)
     }
 
     // used to get the seleted variant to add it in the cart.
     const getVariant = (color: string, size: string) => {
-        const selectedVariant = product.variants.filter(v => v.color === color && v.size === size)
+        const selectedVariant = product.variants.filter(v => v.colorName === color && v.sizeName === size)
 
         return selectedVariant[0];
     }
 
     // used to return the first variant that match the given color
     const getVariantByColor = (color: string) => {
-        return product.variants.filter(v => v.color === color)[0];
+        return product.variants.filter(v => v.colorName === color)[0];
     }
 
     return (
-        <div className="product-popup-overlay" onClick={onClose}>
+        <div className="product-popup-overlay">
             <div className="product-popup" onClick={(e) => e.stopPropagation()}>
-                <button className="close-btn" onClick={onClose}>
+                <button className="close-btn">
                     <i className="fas fa-times"></i>
                 </button>
 
@@ -119,11 +118,11 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ product, onClose }) => {
                         <div className="additional-images">
                             {gallery.map((Image, index) => (
                                 <img
-                                    src={Image}
-                                    key={Image + index}
-                                    onClick={() => setMainImage(Image)}
+                                    src={Image.imageUrl}
+                                    key={Image.imageUrl + index}
+                                    onClick={() => setMainImage(Image.imageUrl)}
                                     alt="Product view 1"
-                                    className={mainImage === Image ? "thumbnail selected" : "thumbnail"}
+                                    className={mainImage === Image.imageUrl ? "thumbnail selected" : "thumbnail"}
                                 />
                             ))}
                         </div>

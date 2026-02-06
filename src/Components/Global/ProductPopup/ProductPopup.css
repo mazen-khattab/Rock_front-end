@@ -1,5 +1,4 @@
-/* ProductPopup.css */
-.product-popup-overlay {
+/* .product-popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -223,7 +222,7 @@
   margin-top: 2px;
 }
 
-/* Responsive design */
+
 @media (max-width: 768px) {
   .product-popup-content {
     flex-direction: column;
@@ -285,4 +284,4 @@
     width: 80px;
     height: 80px;
   }
-}
+} */

@@ -8,6 +8,9 @@ import enProductDetails from "./Local/EN/Product-details.json";
 import enProducts from "./Local/EN/Products.json";
 import enAbout from "./Local/EN/About.json";
 import enWhyUs from "./Local/EN/Why-us.json";
+import enMessages from "./Local/EN/Why-us.json";
+import enCart from "./Local/EN/Cart.json";
+import enProductCard from "./Local/EN/ProductCard.json";
 
 import arNavbar from "./Local/AR/Navbar.json";
 import arHome from "./Local/AR/Home.json";
@@ -15,6 +18,9 @@ import arProductDetails from "./Local/AR/Product-details.json";
 import arProducts from "./Local/AR/Products.json";
 import arAbout from "./Local/AR/About.json";
 import arWhyUs from "./Local/AR/Why-us.json";
+import arMessages from "./Local/AR/Why-us.json";
+import arCart from "./Local/AR/Cart.json";
+import arProductCard from "./Local/AR/ProductCard.json";
 
 i18n
   .use(LanguageDetector)
@@ -28,6 +34,9 @@ i18n
         Products: arProducts,
         About: arAbout,
         WhyUs: arWhyUs,
+        Messages: arMessages,
+        Cart: arCart,
+        ProductCard: arProductCard,
       },
       en: {
         Navbar: enNavbar,
@@ -36,6 +45,9 @@ i18n
         Products: enProducts,
         About: enAbout,
         WhyUs: enWhyUs,
+        Messages: enMessages,
+        Cart: enCart,
+        ProductCard: enProductCard,
       },
     },
     detection: {
@@ -50,6 +62,9 @@ i18n
         "Products",
         "About",
         "WhyUs",
+        "Messages",
+        "Cart",
+        "ProductCard",
     ],
     defaultNS: "home",
     interpolation: {
