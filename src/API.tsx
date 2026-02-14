@@ -1,43 +1,137 @@
-import axios from "axios";
+// import axios from "axios";
+
+// let API_URL = "";
+
+// if ((import.meta as any).env.MODE === "development") {  
+//   API_URL = "https://localhost:7179/api";
+// } else {
+//   API_URL = "/api/";
+// }
+
+// const api = axios.create({
+//   baseURL: API_URL,
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   withCredentials: true,
+// });
+
+// api.interceptors.request.use(
+//   (config) => config,
+//   (error) => Promise.reject(error)
+// );
+
+// api.interceptors.response.use(
+//   (response) => response,
+//   async (error) => {
+//     const originalRequest = error.config;
+
+//     if (error.response.status === 401 && !originalRequest._retry) {
+
+//       originalRequest._retry = true;
+//       console.log(originalRequest);
+//       try {
+//         await api.post("/Auth/Refresh");
+
+//         console.log("called refresh token endpoint")
+
+//         return api(originalRequest);
+//       } catch {
+//         return Promise.reject(error);
+//       }
+//     }
+
+//     return Promise.reject(error);
+//   }
+// );
+
+// export default api;
+
+// src/api/axiosInstance.ts
+
+import axios from 'axios';
+import type { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
+import type { ApiError } from './Types/auth';
 
 let API_URL = "";
 
-if ((import.meta as any).env.MODE === "development") {  
+if ((import.meta as any).env.MODE === "development") {
   API_URL = "https://localhost:7179/api";
 } else {
   API_URL = "/api/";
 }
 
-const api = axios.create({
+let logoutCallback: (() => void) | null = null;
+
+export function setLogoutCallback(callback: () => void) {
+  logoutCallback = callback;
+}
+
+const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  timeout: 30000,
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
 });
 
-api.interceptors.request.use(
-  (config) => config,
-  (error) => Promise.reject(error)
+axiosInstance.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    const requestId = generateRequestId();
+    config.headers['X-Request-ID'] = requestId;
+
+    // if (process.env.NODE_ENV === 'development') {
+    //   console.log(`[API] ${config.method?.toUpperCase()} ${config.url}`, { requestId });
+    // }
+
+    return config;
+  },
+  (error) => {
+    console.error('[API] Request setup failed:', error);
+    return Promise.reject(error);
+  }
 );
 
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+  async (error: AxiosError<ApiError>) => {
+    const config = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
+    console.log(error);
 
-      originalRequest._retry = true;
-      console.log(originalRequest);
-      try {
-        await api.post("/Auth/Refresh");
+    // console.error(`[API] ${error.config?.method?.toUpperCase()} ${error.config?.url}`, {
+    //   config: config,
+    //   requestHeader: config.headers['X-Request-ID'],
+    //   status: error.response?.status,
+    //   message: error.response?.data?.message || error.message
+    // });
 
-        console.log("called refresh token endpoint")
+    // IMPORTANT: Check if this is the refresh endpoint itself
+    // If refresh endpoint returns 401, don't try to refresh again!
+    const isRefreshEndpoint = config.url?.includes('/auth/refresh');
 
-        return api(originalRequest);
-      } catch {
-        return Promise.reject(error);
+    if (error.response?.status === 401 && !isRefreshEndpoint) {
+      if (!config._retry) {
+        config._retry = true;
+
+        try {
+          console.log('[AUTH] Attempting token refresh...');
+          await axiosInstance.post('/auth/refresh');
+          console.log('[AUTH] Token refresh successful');
+          return axiosInstance(config);
+        } catch (refreshError) {
+          console.error('[AUTH] Token refresh failed, logging out');
+
+          if (logoutCallback) {
+            logoutCallback();
+          }
+
+          return Promise.reject(refreshError);
+        }
       }
     }
 
@@ -45,4 +139,8 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+function generateRequestId(): string {
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+}
+
+export default axiosInstance;

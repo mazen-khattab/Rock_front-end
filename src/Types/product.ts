@@ -31,9 +31,9 @@ export interface CartItem {
   productId: number;
   variantId: number;
   name: string;
-  price: number;
   description: string;
-  imagesDtos: VariantImages[];
+  price: number;
+  image: string;
   color: string;
   hexCode: string;
   size: string;

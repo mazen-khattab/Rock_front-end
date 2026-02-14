@@ -1,10 +1,3 @@
-/* src/pages/register.css */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .register-container {
   display: flex;
   justify-content: center;
@@ -14,7 +7,7 @@
   padding: 20px;
 }
 
-.register-card {
+.register-container .register-card {
   width: 100%;
   max-width: 420px;
   background: white;
@@ -23,42 +16,50 @@
   overflow: hidden;
 }
 
-.register-header {
+.register-container .register-header {
   background: #003334;
   color: white;
-  padding: 40px 32px 32px;
+  padding: 1.5rem 0;
   text-align: center;
 }
 
-.register-title {
+.register-container .register-title {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 12px;
 }
 
-.register-subtitle {
+.register-container .register-subtitle {
   font-size: 1.05rem;
   opacity: 0.9;
   line-height: 1.5;
 }
 
-.register-form {
-  padding: 32px;
+.register-container .register-form {
+  padding: 1rem 1.5rem;
 }
 
-.register-input-group {
-  margin-bottom: 24px;
+.register-container .register-input-group {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.register-label {
+.register-container .register-input-group .field {
+  flex: 1;
+}
+
+.register-container .register-label {
   display: block;
   font-size: 0.95rem;
   font-weight: 600;
   color: #333;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+  width: fit-content;
 }
 
-.register-input {
+.register-container .register-input {
   width: 100%;
   padding: .5rem;
   border: 1px solid #ddd;
@@ -68,13 +69,13 @@
   background: white;
 }
 
-.register-input:focus {
+.register-container .register-input:focus {
   outline: none;
   /* border-color: #003334; */
   box-shadow: 0 0 0 3px var(--focus-input-color);
 }
 
-.register-btn {
+.register-container .register-btn {
   width: 100%;
   padding: .75rem;
   background: #003334;
@@ -87,17 +88,17 @@
   transition: background 0.3s ease;
 }
 
-.register-btn:hover {
+.register-container .register-btn:hover {
   background: var(--hover-color);
 }
 
-.register-divider {
+.register-container .register-divider {
   position: relative;
   margin: 32px 0;
   text-align: center;
 }
 
-.register-divider::before {
+.register-container .register-divider::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -108,7 +109,7 @@
   transform: translateY(-50%);
 }
 
-.register-divider span {
+.register-container .register-divider span {
   position: relative;
   background: white;
   padding: 0 16px;
@@ -116,7 +117,7 @@
   color: #777;
 }
 
-.register-social {
+.register-container .register-social {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -124,7 +125,7 @@
   padding: 0 32px;
 }
 
-.register-social-btn {
+.register-container .register-social-btn {
   padding: 14px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -135,46 +136,50 @@
   transition: all 0.2s ease;
 }
 
-.register-social-btn:hover {
+.register-container .register-social-btn:hover {
   background: #f8f9fa;
   border-color: #ccc;
 }
 
-.register-footer {
+.register-container .register-footer {
   text-align: center;
-  padding: 0 32px 32px;
+  padding: 0 2rem 1rem;
   font-size: 0.95rem;
   color: #555;
 }
 
-.register-toggle-link {
+.register-container .register-toggle-link {
   color: #003334;
   font-weight: 600;
   text-decoration: none;
   margin-left: 4px;
 }
 
-.register-toggle-link:hover {
+.register-container .register-toggle-link:hover {
   color: var(--hover-color);
   text-decoration: underline;
 }
 
 /* Responsive */
 @media (max-width: 480px) {
-  .register-card {
+  .register-container .register-card {
     border-radius: 12px;
   }
-  .register-header {
+
+  .register-container .register-header {
     padding: 32px 24px 24px;
   }
-  .register-title {
+
+  .register-container .register-title {
     font-size: 1.75rem;
   }
-  .register-form,
-  .register-footer {
+
+  .register-container .register-form,
+  .register-container .register-footer {
     padding: 24px;
   }
-  .register-btn {
+
+  .register-container .register-btn {
     padding: 14px;
   }
 }

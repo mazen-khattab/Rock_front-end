@@ -1,23 +1,48 @@
 // src/pages/Register.tsx
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from '../../Context/AuthContext';
+// import { toast } from "react-toastify";
 import './Register.css';
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const { register, error } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const initialForm = {
+    fname: '',
+    lname: '',
+    phoneNumber: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  };
+
+  const [form, setForm] = useState({
+    fname: '',
+    lname: '',
+    phoneNumber: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      alert('Passwords do not match');
-      return;
+
+    try {
+      await register(form);
+
+      setForm(initialForm);
+
+      // Redirect to home page
+      navigate('/', { replace: true });
+    } catch (err: any) {
+      setFormError(err.message || 'Register failed');
     }
-    console.log('Registering:', { name, email, password });
-    // Add registration logic here
   };
 
   return (
@@ -28,91 +53,121 @@ const Register = () => {
           <p className="register-subtitle">Join us and discover timeless style</p>
         </div>
 
+        {(formError || error) && (
+          <div className="error-box">
+            <div className="error-flex">
+              <div className="error-icon-wrapper">
+                <span className="error-icon">⚠️</span>
+              </div>
+              <div className="error-content">
+                <p className="error-text">
+                  {formError || error}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <form className="register-form" onSubmit={handleSubmit}>
           <div className="register-input-group">
-            <label htmlFor="name" className="register-label">Full Name</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="register-input"
-              required
-            />
-          </div>
-
-          <div className="register-input-group">
-            <label htmlFor="email" className="register-label">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="register-input"
-              required
-            />
-          </div>
-
-          <div className="register-input-group">
-            {/* <label htmlFor="password" className="register-label">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="register-input"
-              required
-              minLength={6}
-            /> */}
-            <label htmlFor="password" className="register-label">Password</label>
-            <div className="password-wrap">
+            <div className='field'>
+              <label htmlFor="fname" className="register-label">First Name</label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                type="text"
+                id="fname"
+                value={form.fname}
+                onChange={(e) => setForm((prev) => ({ ...prev, fname: e.target.value }))}
                 className="register-input"
                 required
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="password-toggle-btn"
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-              >
-                {showPassword ? <i className="fa-solid fa-eye-slash"></i> : <i className="fa-solid fa-eye"></i>}
-              </button>
+            </div>
+
+            <div className='field'>
+              <label htmlFor="lname" className="register-label">Last Name</label>
+              <input
+                type="text"
+                id="lname"
+                value={form.lname}
+                onChange={(e) => setForm((prev) => ({ ...prev, lname: e.target.value }))}
+                className="register-input"
+                required
+              />
             </div>
           </div>
 
           <div className="register-input-group">
-            {/* <label htmlFor="confirmPassword" className="register-label">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="register-input"
-              required
-            /> */}
-            <label htmlFor="confirmPassword" className="register-label">Confirm Password</label>
-            <div className="password-wrap">
+            <div className="field">
+              <label htmlFor="email" className="register-label">Phone</label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                type="text"
+                id="phoneNumber"
+                value={form.phoneNumber}
+                onChange={(e) => setForm((prev) => ({ ...prev, phoneNumber: e.target.value }))}
                 className="register-input"
                 required
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="password-toggle-btn"
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-              >
-                {showPassword ? <i className="fa-solid fa-eye-slash"></i> : <i className="fa-solid fa-eye"></i>}
-              </button>
+            </div>
+          </div>
+
+          <div className="register-input-group">
+            <div className="field">
+              <label htmlFor="email" className="register-label">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                value={form.email}
+                onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
+                className="register-input"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="register-input-group">
+            <div className="field">
+              <label htmlFor="password" className="register-label">Password</label>
+              <div className="password-wrap">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  value={form.password}
+                  onChange={(e) => setForm((prev) => ({ ...prev, password: e.target.value }))}
+                  className="register-input"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="password-toggle-btn"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <i className="fa-solid fa-eye-slash"></i> : <i className="fa-solid fa-eye"></i>}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="register-input-group">
+            <div className="field">
+              <label htmlFor="confirmPassword" className="register-label">Confirm Password</label>
+              <div className="password-wrap">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="confirmPassword"
+                  value={form.confirmPassword}
+                  onChange={(e) => setForm((prev) => ({ ...prev, confirmPassword: e.target.value }))}
+                  className="register-input"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="password-toggle-btn"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <i className="fa-solid fa-eye-slash"></i> : <i className="fa-solid fa-eye"></i>}
+                </button>
+              </div>
             </div>
           </div>
 

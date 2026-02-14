@@ -45,7 +45,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ product }) => {
                 name: product.name,
                 price: product.price,
                 description: product.description,
-                imagesDtos: variant?.imagesDtos,
+                image: variant?.imagesDtos[0].imageUrl,
                 color: variant?.colorName,
                 hexCode: variant?.hexCode,
                 size: variant?.sizeName,
