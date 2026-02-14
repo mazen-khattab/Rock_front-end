@@ -1,16 +1,23 @@
 import './Navbar.css'
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from '../../../Context/CartContext';
 import { useTranslation } from "react-i18next";
+import { useAuth } from '../../../Context/AuthContext';
 import logo from '../../../assets/Rock_logo.jpg'
 
 const Navbar = () => {
+    const { user, isAuthenticated, logout } = useAuth();
+
+    const navigate = useNavigate();
+
     const { cartCount } = useCart();
     const { i18n, t } = useTranslation("Navbar");
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+
     const savedLang = localStorage.getItem("lang");
 
     const navLinks = [
@@ -19,6 +26,23 @@ const Navbar = () => {
         { name: t("about"), link: "/about" },
         { name: t("why-us"), link: "/why-us" },
     ];
+
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const userLogout = async () => {
+
+
+        try {
+            // Call auth context logout
+            await logout();
+            navigate('/login', { replace: true });
+        } catch (err: any) {
+            // Show error to user
+            console.error(err);
+        }
+    }
 
     useEffect(() => {
         if (savedLang) {
@@ -45,6 +69,7 @@ const Navbar = () => {
         <nav className={`navbar ${isScrolled ? "scrolled" : ""}`}>
             <div className="container">
                 <div className="navbar-inner">
+                    {/* Rock Logo */}
                     <Link to="/" className="logo">
                         <img src={logo} alt="logo" />
                     </Link>
@@ -56,16 +81,37 @@ const Navbar = () => {
                         ))}
                     </div>
 
+                    {/* Header icons (car, language, login and mobile menu) */}
                     <div className="navbar-icons">
                         <Link to='/cart' style={{ color: 'black', position: 'relative' }}>
                             <i className="fa-solid fa-cart-shopping cart-icon"></i>
                             <span className="cart-count">{cartCount}</span>
                         </Link>
+
                         <button className='nav-lang' onClick={() => toggleLanguage(savedLang === 'en' ? 'ar' : 'en')}>{savedLang === 'en' ? 'EN' : 'AR'}</button>
-                        <Link to="/login" className="login">
-                            <i className="fa-solid fa-arrow-right-to-bracket"></i>
-                            <span>{t("login")}</span>
-                        </Link>
+
+                        {isAuthenticated ?
+                            // if the user authenticated, display the userName of the user
+                            <div className="user-icon-container">
+                                <button className="user-icon" onClick={toggleDropdown}>
+                                    <span>{user?.userName}</span>
+                                </button>
+
+                                <div className={`user-dropdown-menu ${savedLang} ${isOpen ? "open" : ""}`}>
+                                    <ul>
+                                        <li onClick={userLogout}>
+                                            <span>Log out</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            :
+                            // if the user is not authenticated, display login icon
+                            <Link to="/login" className="login">
+                                <i className="fa-solid fa-arrow-right-to-bracket"></i>
+                                <span>{t("login")}</span>
+                            </Link>
+                        }
 
                         <div className="mobile-menu-btn">
                             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>

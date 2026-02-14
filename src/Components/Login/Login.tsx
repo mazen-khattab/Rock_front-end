@@ -1,17 +1,36 @@
 // src/pages/Login.tsx
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from '../../Context/AuthContext';
 import './Login.css';
 
 const Login = () => {
+    const { login, error } = useAuth();
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [formError, setFormError] = useState<string | null>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Logging in with:', { email, password });
-        // Add your login logic here (e.g., API call)
+        setFormError(null);
+
+        try {
+            // Call auth context login
+            await login(email, password);
+
+            // Success! Clear form
+            setEmail('');
+            setPassword('');
+
+            // Redirect to home page
+            navigate('/', { replace: true });
+        } catch (err: any) {
+            // Show error to user
+            setFormError(err.message || 'Login failed');
+        }
     };
 
     return (
@@ -21,6 +40,21 @@ const Login = () => {
                     <h1 className="login-title">Welcome Back</h1>
                     <p className="login-subtitle">Sign in to your account</p>
                 </div>
+
+                {(formError || error) && (
+                    <div className="error-box">
+                        <div className="error-flex">
+                            <div className="error-icon-wrapper">
+                                <span className="error-icon">⚠️</span>
+                            </div>
+                            <div className="error-content">
+                                <p className="error-text">
+                                    {formError || error}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="login-input-group">
