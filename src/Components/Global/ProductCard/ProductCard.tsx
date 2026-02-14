@@ -45,7 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         name: product.name,
         price: product.price,
         description: product.description,
-        image: mainImage,
+        imagesDtos: variant?.imagesDtos[0],
         color: variant?.colorName,
         hexCode: variant?.hexCode,
         size: variant?.sizeName,
