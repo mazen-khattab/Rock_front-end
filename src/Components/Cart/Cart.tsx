@@ -95,7 +95,7 @@ const CartPage = () => {
                         ) : (
                             items.map(item => (
                                 <div key={item.variantId} className="cart-item">
-                                    <img src={item.image} alt={item.name} className="cart-item-image" />
+                                    <img src={item.imagesDtos.imageUrl} alt={item.name} className="cart-item-image" />
                                     <div className="cart-item-details">
                                         <h3 className="cart-item-name">{item.name}</h3>
                                         <p className="cart-item-info">{t("color_label")} <span style={{ color: getColorHex(item.color) }}>{item.color}</span></p>

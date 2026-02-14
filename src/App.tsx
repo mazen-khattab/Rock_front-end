@@ -14,9 +14,16 @@ import ProductDetails from "./Components/Global/ProductDetails/ProductDetails"
 import { CartProvider } from "./Context/CartContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from './Context/AuthContext';
 import { ProductProvider } from "./Context/ProductContext";
 
 function App() {
+  const { loading } = useAuth();
+
+  if (loading) {
+    return null;
+  }
+  
   return (
     <CartProvider>
       <ProductProvider>
