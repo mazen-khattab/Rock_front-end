@@ -20,6 +20,7 @@ const Login = () => {
         try {
             // Call auth context login
             await login(email, password);
+            // console.log("[login page] Login successfully in login page");
 
             // Success! Clear form
             setEmail('');
@@ -29,6 +30,7 @@ const Login = () => {
             navigate('/', { replace: true });
         } catch (err: any) {
             // Show error to user
+            console.error("[login page] error: ", err)
             setFormError(err.message || 'Login failed');
         }
     };

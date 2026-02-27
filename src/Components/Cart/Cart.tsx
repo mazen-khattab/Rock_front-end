@@ -5,13 +5,16 @@ import type { CartItem } from '../../Types/product';
 import Navbar from '../Home/Navbar/Navbar';
 import './Cart.css';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../Context/AuthContext';
 
 interface UserInfo {
-    name: string;
+    fname: string;
+    lname: string;
     email: string;
+    password: string;
     address: string;
     city: string;
-    zipCode: string;
+    Governorate: string;
     phone: string;
 }
 
@@ -19,16 +22,19 @@ type actions = 'INCREASE' | 'DECREASE'
 
 const CartPage = () => {
     const { items, increaseAmount, decreaseAmount, removeFromCart } = useCart();
+    const { isAuthenticated, user } = useAuth();
     const { t } = useTranslation("Cart");
-    
+
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
     const [userInfo, setUserInfo] = useState<UserInfo>({
-        name: '',
+        fname: '',
+        lname: '',
         email: '',
+        password: '',
+        phone: '',
         address: '',
         city: '',
-        zipCode: '',
-        phone: ''
+        Governorate: '',
     });
 
     const updateQuantity = (item: CartItem, action: actions) => {
@@ -66,12 +72,21 @@ const CartPage = () => {
         e.preventDefault();
 
         // Validate required fields
-        if (!userInfo.name || !userInfo.email || !userInfo.address || !userInfo.phone) {
+        if (
+            !userInfo.fname     ||
+            !userInfo.lname     ||
+            !userInfo.email     ||
+            !userInfo.address   ||
+            !userInfo.phone     // ||
+            // (!isAuthenticated && !userInfo.password)
+        ) {
             alert(t("required_fields_alert"));
             return;
         }
+        console.log(isAuthenticated);
+        console.log(user?.userId);
 
-        alert(t("order_success_alert", { name: userInfo.name, total: total.toFixed(2) }));
+        // alert(t("order_success_alert", { name: userInfo.name, total: total.toFixed(2) }));
         setIsCheckoutOpen(false);
     };
 
@@ -203,78 +218,119 @@ const CartPage = () => {
                             </div>
 
                             <form className="checkout-form" onSubmit={handleSubmitOrder}>
-                                <div className="checkout-form-group">
-                                    <label htmlFor="name" className="checkout-label">{t("full_name_label")}</label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        value={userInfo.name}
-                                        onChange={handleInputChange}
-                                        className="checkout-input"
-                                        required
-                                    />
-                                </div>
+                                <div className="checkout-form-row">
+                                    <div className="checkout-form-group">
+                                        <label htmlFor="fname" className="checkout-label">{t("f_name_label")} <span className='asterisk'>*</span></label>
+                                        <input
+                                            type="text"
+                                            id="fname"
+                                            name="fname"
+                                            value={userInfo.fname}
+                                            onChange={handleInputChange}
+                                            placeholder={t("f_name_placeholder")}
+                                            className="checkout-input"
+                                            required
+                                        />
+                                    </div>
 
-                                <div className="checkout-form-group">
-                                    <label htmlFor="email" className="checkout-label">{t("email_label")}</label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={userInfo.email}
-                                        onChange={handleInputChange}
-                                        className="checkout-input"
-                                        required
-                                    />
-                                </div>
-
-                                <div className="checkout-form-group">
-                                    <label htmlFor="address" className="checkout-label">{t("address_label")}</label>
-                                    <input
-                                        type="text"
-                                        id="address"
-                                        name="address"
-                                        value={userInfo.address}
-                                        onChange={handleInputChange}
-                                        className="checkout-input"
-                                        required
-                                    />
+                                    <div className="checkout-form-group">
+                                        <label htmlFor="lname" className="checkout-label">{t("l_name_label")} <span className='asterisk'>*</span></label>
+                                        <input
+                                            type="text"
+                                            id="lname"
+                                            name="lname"
+                                            value={userInfo.lname}
+                                            onChange={handleInputChange}
+                                            placeholder={t("l_name_placeholder")}
+                                            className="checkout-input"
+                                            required
+                                        />
+                                    </div>
                                 </div>
 
                                 <div className="checkout-form-row">
                                     <div className="checkout-form-group">
-                                        <label htmlFor="city" className="checkout-label">{t("city_label")}</label>
+                                        <label htmlFor="email" className="checkout-label">{t("email_label")} <span className='asterisk'>*</span></label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            value={userInfo.email}
+                                            onChange={handleInputChange}
+                                            placeholder={t("email_placeholder")}
+                                            className="checkout-input"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="checkout-form-group">
+                                        <label htmlFor="phone" className="checkout-label">{t("phone_label")} <span className='asterisk'>*</span></label>
+                                        <input
+                                            type="tel"
+                                            autoComplete='off'
+                                            id="phone"
+                                            name="phone"
+                                            value={userInfo.phone}
+                                            onChange={handleInputChange}
+                                            placeholder={t("phone_placeholder")}
+                                            className="checkout-input"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                {!isAuthenticated && (
+                                    <div className="checkout-form-group">
+                                        <label htmlFor="password" className="checkout-label">{t("password_label")} <span className='asterisk'>*</span></label>
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            name="password"
+                                            value={userInfo.password}
+                                            onChange={handleInputChange}
+                                            placeholder={t("password_placeholder")}
+                                            className="checkout-input"
+                                            required
+                                        />
+                                    </div>
+                                )}
+
+                                <div className="checkout-form-row">
+                                    <div className="checkout-form-group">
+                                        <label htmlFor="Governorate" className="checkout-label">{t("Governorate_label")} <span className='asterisk'>*</span></label>
+                                        <input
+                                            type="text"
+                                            id="Governorate"
+                                            name="Governorate"
+                                            value={userInfo.Governorate}
+                                            onChange={handleInputChange}
+                                            placeholder={t("Governorate_placeholder")}
+                                            className="checkout-input"
+                                        />
+                                    </div>
+                                    <div className="checkout-form-group">
+                                        <label htmlFor="city" className="checkout-label">{t("city_label")} <span className='asterisk'>*</span></label>
                                         <input
                                             type="text"
                                             id="city"
                                             name="city"
                                             value={userInfo.city}
                                             onChange={handleInputChange}
-                                            className="checkout-input"
-                                        />
-                                    </div>
-                                    <div className="checkout-form-group">
-                                        <label htmlFor="zipCode" className="checkout-label">{t("zip_label")}</label>
-                                        <input
-                                            type="text"
-                                            id="zipCode"
-                                            name="zipCode"
-                                            value={userInfo.zipCode}
-                                            onChange={handleInputChange}
+                                            placeholder={t("city_placeholder")}
                                             className="checkout-input"
                                         />
                                     </div>
                                 </div>
 
                                 <div className="checkout-form-group">
-                                    <label htmlFor="phone" className="checkout-label">{t("phone_label")}</label>
+                                    <label htmlFor="address" className="checkout-label">{t("address_label")} <span className='asterisk'>*</span></label>
                                     <input
-                                        type="tel"
-                                        id="phone"
-                                        name="phone"
-                                        value={userInfo.phone}
+                                        type="text"
+                                        id="address"
+                                        name="address"
+                                        value={userInfo.address}
                                         onChange={handleInputChange}
+                                        placeholder={t("address_placeholder")}
                                         className="checkout-input"
                                         required
                                     />
