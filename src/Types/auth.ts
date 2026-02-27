@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  userId: number;
   userName: string;
   role: ["admin" | "user" | "guest" | "owner"];
   createdAt: string;

@@ -1,54 +1,3 @@
-// import axios from "axios";
-
-// let API_URL = "";
-
-// if ((import.meta as any).env.MODE === "development") {  
-//   API_URL = "https://localhost:7179/api";
-// } else {
-//   API_URL = "/api/";
-// }
-
-// const api = axios.create({
-//   baseURL: API_URL,
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   withCredentials: true,
-// });
-
-// api.interceptors.request.use(
-//   (config) => config,
-//   (error) => Promise.reject(error)
-// );
-
-// api.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const originalRequest = error.config;
-
-//     if (error.response.status === 401 && !originalRequest._retry) {
-
-//       originalRequest._retry = true;
-//       console.log(originalRequest);
-//       try {
-//         await api.post("/Auth/Refresh");
-
-//         console.log("called refresh token endpoint")
-
-//         return api(originalRequest);
-//       } catch {
-//         return Promise.reject(error);
-//       }
-//     }
-
-//     return Promise.reject(error);
-//   }
-// );
-
-// export default api;
-
-// src/api/axiosInstance.ts
-
 import axios from 'axios';
 import type { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import type { ApiError } from './Types/auth';
@@ -101,7 +50,7 @@ axiosInstance.interceptors.response.use(
 
   async (error: AxiosError<ApiError>) => {
     const config = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
-    console.log(error);
+    // console.log(error);
 
     // console.error(`[API] ${error.config?.method?.toUpperCase()} ${error.config?.url}`, {
     //   config: config,
@@ -119,9 +68,9 @@ axiosInstance.interceptors.response.use(
         config._retry = true;
 
         try {
-          console.log('[AUTH] Attempting token refresh...');
+          // console.log('[AUTH] Attempting token refresh...');
           await axiosInstance.post('/auth/refresh');
-          console.log('[AUTH] Token refresh successful');
+          // console.log('[AUTH] Token refresh successful');
           return axiosInstance(config);
         } catch (refreshError) {
           console.error('[AUTH] Token refresh failed, logging out');

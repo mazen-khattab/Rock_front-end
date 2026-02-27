@@ -1,5 +1,3 @@
-// src/services/authService.ts
-
 import axiosInstance from "../API";
 import type {
   User,
@@ -25,14 +23,14 @@ export const authService = {
     }
 
     try {
-      console.log("[AuthService] Logging in:", { email: request.email });
+      // console.log("[AuthService] Logging in:", { email: request.email });
 
       const response = await axiosInstance.post<ApiResponse<User>>(
         "/Auth/Login",
         request,
       );
 
-      console.log("[AuthService] Login successful");
+      // console.log("[AuthService] Login successful");
       return { user: response.data.data };
     } catch (error: any) {
       const message =
@@ -45,7 +43,13 @@ export const authService = {
   },
 
   async register(data: RegisterRequest): Promise<{ user: User }> {
-    if (!data.email || !data.password || !data.fname || !data.lname || !data.phoneNumber) {
+    if (
+      !data.email ||
+      !data.password ||
+      !data.fname ||
+      !data.lname ||
+      !data.phoneNumber
+    ) {
       throw new Error("Email, password, and name are required");
     }
 
@@ -67,12 +71,12 @@ export const authService = {
     };
 
     try {
-      console.log("[AuthService] Registering user:", { email: request.email });
+      // console.log("[AuthService] Registering user:", { email: request.email });
       const response = await axiosInstance.post<ApiResponse<User>>(
         "/Auth/Register",
         request,
       );
-      console.log("[AuthService] Registration successful");
+      // console.log("[AuthService] Registration successful");
       return { user: response.data.data };
     } catch (error: any) {
       if (error.response?.status === 409) {
@@ -93,41 +97,39 @@ export const authService = {
         {},
       );
 
-      console.log(response);
-
-      console.log("[AuthService] Token refresh successful");
+      // console.log("[AuthService] Token refresh successful");
       return { user: response.data.data };
     } catch (error: any) {
-      console.log(
-        "[AuthService] Token refresh failed:",
-        error.response?.status,
-      );
+      // console.log(
+      //   "[AuthService] Token refresh failed:",
+      //   error.response?.status,
+      // );
       throw error;
     }
   },
 
   async logout(): Promise<void> {
     try {
-      console.log("[AuthService] Logging out...");
+      // console.log("[AuthService] Logging out...");
       await axiosInstance.post("/Auth/logout", {});
-      console.log("[AuthService] Logout successful");
+      // console.log("[AuthService] Logout successful");
     } catch (error: any) {
       console.error("[AuthService] Logout API failed:", error);
     }
   },
 
-  async assignRole(userId: number, role: "admin" | "user" | "owner"): Promise<void> {
+  async assignRole(
+    userId: number,
+    role: "admin" | "user" | "owner",
+  ): Promise<void> {
     const request: AssignRoleRequest = { userId, role };
 
     try {
-      console.log("[AuthService] Assigning role:", { userId, role });
+      // console.log("[AuthService] Assigning role:", { userId, role });
 
-      await axiosInstance.post(
-        `/Auth/assign-role`,
-        request,
-      );
+      await axiosInstance.post(`/Auth/assign-role`, request);
 
-      console.log("[AuthService] Role assignment successful");
+      // console.log("[AuthService] Role assignment successful");
     } catch (error: any) {
       if (error.response?.status === 403) {
         throw new Error("You do not have permission to assign roles");
@@ -148,3 +150,4 @@ function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
+

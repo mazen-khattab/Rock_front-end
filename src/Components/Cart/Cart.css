@@ -54,6 +54,12 @@
     object-fit: cover;
     border-radius: 8px;
     margin-right: 20px;
+
+}
+
+[dir="rtl"] .cart-container .cart-item-image {
+    margin-left: 20px;
+    margin-right: 0px;
 }
 
 .cart-container .cart-item-details {
@@ -355,7 +361,7 @@
 }
 
 .checkout-form-group {
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
 }
 
 .checkout-label {
@@ -364,6 +370,10 @@
     font-weight: 600;
     color: #333;
     margin-bottom: 8px;
+}
+
+.checkout-label .asterisk {
+    color: red;
 }
 
 .checkout-input {
@@ -384,6 +394,7 @@
 .checkout-form-row {
     display: flex;
     gap: 16px;
+    margin-bottom: 20px;
 }
 
 .checkout-form-row .checkout-form-group {

@@ -1,8 +1,8 @@
-// src/context/AuthContext.tsx
-
 import React, { createContext, useState, useEffect, useCallback } from 'react';
+import { v4 as uuidv4 } from "uuid";
 import type { User, AuthContextValue, RegisterRequest } from '../Types/auth';
 import { authService } from '../Services/AuthService';
+import { cartService } from '../Services/CartService';
 import { setLogoutCallback } from '../API';
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -11,12 +11,24 @@ interface AuthProviderProps {
     children: React.ReactNode;
 }
 
+function getOrCreateGuestId() {
+    let guestId = localStorage.getItem("GuestId");
+
+    if (!guestId) {
+        guestId = uuidv4();
+        localStorage.setItem("GuestId", guestId);
+    }
+
+    return guestId;
+}
+
 export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     const isAuthenticated = user !== null;
+    console.log(user?.userId);
 
     const clearError = useCallback(() => {
         setError(null);
@@ -27,16 +39,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
             setLoading(true);
             setError(null);
 
-            console.log('[AuthContext] Initializing auth...');
+            // console.log('[AuthContext] Initializing auth...');
 
             const { user: userData } = await authService.refresh();
 
             setUser(userData);
-            console.log(`[AuthContext] user: ${user}`);
-            console.log('[AuthContext] Auth initialized, user logged in');
+            // console.log(`[AuthContext] user: ${user}`);
+            // console.log('[AuthContext] Auth initialized, user logged in');
         } catch (err: any) {
-            console.log('[AuthContext] No active session found (expected for guests)');
+            // console.log('[AuthContext] No active session found (expected for guests)');
             setUser(null);
+            getOrCreateGuestId()
         } finally {
             setLoading(false);
         }
@@ -48,12 +61,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
             setError(null);
 
             await authService.logout();
+            getOrCreateGuestId()
         } catch (err: any) {
             console.error('[AuthContext] Logout API failed:', err);
         } finally {
             setUser(null);
             setLoading(false);
-            console.log('[AuthContext] User logged out');
+            // console.log('[AuthContext] User logged out');
         }
     }, []);
 
@@ -88,7 +102,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             // }
 
             setLoading(false);
-            console.log('[AuthContext] Role assigned successfully');
+            // console.log('[AuthContext] Role assigned successfully');
             // return userData;
         } catch (err: any) {
             const errorMessage = err.message || 'Failed to assign role';
@@ -105,9 +119,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
             setError(null);
 
             const { user: userData } = await authService.login(email, password);
+
+            const guestId = getOrCreateGuestId();
+
+            if (guestId) {
+                try {
+                    const response = await cartService.Merge(guestId);
+                    // console.log(response);
+                } catch (mergeError) {
+                    console.error('[AuthContext] Cart merge failed:', mergeError);
+                }
+            }
+
             setUser(userData);
             setLoading(false);
-            console.log('[AuthContext] User logged in');
+            // console.log('[AuthContext] User logged in');
         } catch (err: any) {
             const errorMessage = err.message || 'Login failed';
             setError(errorMessage);
@@ -167,3 +193,4 @@ export function useAuthActions() {
 }
 
 export { AuthContext };
+
