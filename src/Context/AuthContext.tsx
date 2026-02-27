@@ -124,7 +124,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
             if (guestId) {
                 try {
-                    const response = await cartService.Merge(guestId);
+                    await cartService.Merge(guestId);
                     // console.log(response);
                 } catch (mergeError) {
                     console.error('[AuthContext] Cart merge failed:', mergeError);
