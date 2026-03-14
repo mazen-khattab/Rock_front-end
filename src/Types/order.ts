@@ -1,5 +1,3 @@
-import type { ApiResponse } from "./auth";
-
 export interface CheckoutRequest {
     firstName: string;
     lastName: string;
