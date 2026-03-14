@@ -16,6 +16,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from './Context/AuthContext';
 import { ProductProvider } from "./Context/ProductContext";
+import { OrderProvider } from "./Context/OrderContext";
 
 function App() {
   const { loading } = useAuth();
@@ -23,29 +24,31 @@ function App() {
   if (loading) {
     return null;
   }
-  
+
   return (
     <CartProvider>
       <ProductProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/why-us" element={<Whyus />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/cart" element={<CartPage />} />
-          </Routes>
-          <ToastContainer position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            pauseOnHover
-            draggable />
-        </Router>
+        <OrderProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/why-us" element={<Whyus />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/cart" element={<CartPage />} />
+            </Routes>
+            <ToastContainer position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              pauseOnHover
+              draggable />
+          </Router>
+        </OrderProvider>
       </ProductProvider>
     </CartProvider>
   )

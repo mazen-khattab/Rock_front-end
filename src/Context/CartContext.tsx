@@ -21,7 +21,8 @@ type CartAction =
   | { type: "ADD_ITEM"; item: CartItem }
   | { type: "REMOVE_ITEM"; id: number }
   | { type: "INCREASE_QUANTITY"; id: number }
-  | { type: "DECREASE_QUANTITY"; id: number };
+  | { type: "DECREASE_QUANTITY"; id: number }
+  | { type: "CLEAR_CART" };
 
 function cartReducer(state: CartState, action: CartAction) {
   switch (action.type) {
@@ -76,6 +77,9 @@ function cartReducer(state: CartState, action: CartAction) {
         ),
       };
 
+    case "CLEAR_CART":
+      return { ...state, items: [] };
+
     default:
       return state;
   }
@@ -89,6 +93,7 @@ type CartContextValue = {
   removeFromCart: (id: number) => Promise<ApiResponse<string>>;
   increaseAmount: (id: number) => Promise<ApiResponse<string>>;
   decreaseAmount: (id: number) => Promise<ApiResponse<string>>;
+  clearCart: () => void;
 };
 
 const CartContext = createContext<CartContextValue>({
@@ -99,26 +104,13 @@ const CartContext = createContext<CartContextValue>({
   removeFromCart: async () => ({ success: false, message: "", data: "" }),
   increaseAmount: async () => ({ success: false, message: "", data: "" }),
   decreaseAmount: async () => ({ success: false, message: "", data: "" }),
+  clearCart: () => {}
 });
 
 function getLangId() {
   const savedLang = localStorage.getItem("lang");
   return savedLang === "ar" ? 1 : 2;
 }
-
-// function getOrCreateGuestId() {
-//   let guestId = localStorage.getItem("GuestId");
-
-//   if (!guestId) {
-//     guestId =
-//       typeof crypto !== "undefined" && crypto.randomUUID
-//         ? crypto.randomUUID()
-//         : `guest-${Date.now()}`;
-//     localStorage.setItem("GuestId", guestId);
-//   }
-
-//   return guestId;
-// }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, loading } = useAuth();
@@ -134,8 +126,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const response = isAuthenticated
         ? await cartService.GetUserCart(langId)
         : await cartService.GetGuestCart(guestId, langId);
-
-      // console.log("[CartContext] getCart: ",response);
 
       dispatch({ type: "SET_ITEMS", items: response.data ?? [] });
       return response;
@@ -205,6 +195,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     [isAuthenticated],
   );
 
+  const clearCart = () => {
+    dispatch({ type: "CLEAR_CART" });
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -215,6 +209,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         removeFromCart,
         increaseAmount,
         decreaseAmount,
+        clearCart,
       }}
     >
       {children}
