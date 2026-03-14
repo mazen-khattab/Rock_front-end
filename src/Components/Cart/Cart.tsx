@@ -6,6 +6,9 @@ import Navbar from '../Home/Navbar/Navbar';
 import './Cart.css';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../Context/AuthContext';
+import { toast } from "react-toastify";
+import { useOrder } from '../../Context/OrderContext';
+import type { CheckoutRequest } from '../../Types/order';
 
 interface UserInfo {
     fname: string;
@@ -21,20 +24,25 @@ interface UserInfo {
 type actions = 'INCREASE' | 'DECREASE'
 
 const CartPage = () => {
-    const { items, increaseAmount, decreaseAmount, removeFromCart } = useCart();
-    const { isAuthenticated, user } = useAuth();
+    const { checkout } = useOrder();
+
+    const { items, increaseAmount, decreaseAmount, removeFromCart, clearCart } = useCart();
+    const { isAuthenticated } = useAuth();
     const { t } = useTranslation("Cart");
 
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+    const [orderSuccess, setOrderSuccess] = useState(false);
+    const [orderNumber, setOrderNumber] = useState('');
+    const [totalPrice, setTotalPrice] = useState(0);
     const [userInfo, setUserInfo] = useState<UserInfo>({
         fname: '',
         lname: '',
+        phone: '',
+        Governorate: '',
+        city: '',
+        address: '',
         email: '',
         password: '',
-        phone: '',
-        address: '',
-        city: '',
-        Governorate: '',
     });
 
     const updateQuantity = (item: CartItem, action: actions) => {
@@ -68,26 +76,53 @@ const CartPage = () => {
         setIsCheckoutOpen(true);
     };
 
-    const handleSubmitOrder = (e: React.FormEvent) => {
+    const handleSubmitOrder = async (e: React.FormEvent) => {
         e.preventDefault();
 
         // Validate required fields
         if (
-            !userInfo.fname     ||
-            !userInfo.lname     ||
-            !userInfo.email     ||
-            !userInfo.address   ||
-            !userInfo.phone     // ||
-            // (!isAuthenticated && !userInfo.password)
+            !userInfo.fname ||
+            !userInfo.lname ||
+            !userInfo.email ||
+            !userInfo.address ||
+            !userInfo.phone
         ) {
-            alert(t("required_fields_alert"));
+            toast.error(t("required_fields_alert"));
             return;
         }
-        console.log(isAuthenticated);
-        console.log(user?.userId);
 
-        // alert(t("order_success_alert", { name: userInfo.name, total: total.toFixed(2) }));
+        var orderNumber = '';
+        const checoutRequest: CheckoutRequest = {
+            firstName: userInfo.fname,
+            lastName: userInfo.lname,
+            phone: userInfo.phone,
+            governorate: userInfo.Governorate,
+            city: userInfo.city,
+            address: userInfo.address,
+            email: userInfo.email,
+            password: userInfo.password ?? "",
+            isAuthenticated: isAuthenticated,
+            idempotencyKey: "",
+            guestId: localStorage.getItem("guestId") ?? "",
+        };
+
+        try {
+            const response = await checkout(checoutRequest);
+            orderNumber = response.orderNumber;
+            setOrderNumber(orderNumber);
+            setOrderSuccess(true);
+            setTotalPrice(response.totalPrice);
+            clearCart();
+        } catch (error) {
+            console.error("Checkout error:", error);
+        }
+
         setIsCheckoutOpen(false);
+    };
+
+    const handleCloseOrderSuccess = () => {
+        setOrderSuccess(false);
+        setOrderNumber('');
     };
 
     return (
@@ -359,6 +394,76 @@ const CartPage = () => {
                         </div>
                     </div>
                 )}
+
+                {/* Order Success Modal */}
+                {orderSuccess && (
+                    <div className="order-success-overlay" onClick={handleCloseOrderSuccess}>
+                        <div
+                            className="order-success-modal"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <button
+                                className="order-success-close"
+                                onClick={handleCloseOrderSuccess}
+                                aria-label={t("close_label")}
+                            >
+                                ×
+                            </button>
+                            <div className="order-success-hero">
+                                <div className="order-success-sparkles" aria-hidden="true">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <div className="order-success-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="28" height="28">
+                                        <path
+                                            d="M20 6L9 17L4 12"
+                                            fill="none"
+                                            stroke="#fff"
+                                            strokeWidth="2.5"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <h3 className="order-success-title">{t("order_success_title")}</h3>
+                            <p className="order-success-message">{t("order_success_alert", {
+                                name: userInfo.fname,
+                                total: totalPrice.toFixed(2),
+                            })}</p>
+                            {orderNumber && (
+                                <p className="order-success-number">
+                                    {t("order_number_label")} <span>#{orderNumber}</span>
+                                </p>
+                            )}
+
+                            <div className="order-success-actions">
+                                <button
+                                    type="button"
+                                    className="order-success-btn secondary"
+                                    onClick={handleCloseOrderSuccess}
+                                >
+                                    {t("view_order_btn")}
+                                </button>
+                                <Link
+                                    to="/products"
+                                    className="order-success-btn primary"
+                                    onClick={handleCloseOrderSuccess}
+                                >
+                                    {t("continue_shopping")}
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -385,3 +490,4 @@ function getColorHex(colorName: string) {
 }
 
 export default CartPage;
+

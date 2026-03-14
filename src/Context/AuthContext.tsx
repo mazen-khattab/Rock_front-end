@@ -28,7 +28,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [error, setError] = useState<string | null>(null);
 
     const isAuthenticated = user !== null;
-    console.log(user?.userId);
 
     const clearError = useCallback(() => {
         setError(null);
