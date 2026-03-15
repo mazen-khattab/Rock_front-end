@@ -103,7 +103,7 @@ const CartPage = () => {
             password: userInfo.password ?? "",
             isAuthenticated: isAuthenticated,
             idempotencyKey: "",
-            guestId: localStorage.getItem("guestId") ?? "",
+            guestId: localStorage.getItem("GuestId") ?? "",
         };
 
         try {
@@ -446,13 +446,13 @@ const CartPage = () => {
                             )}
 
                             <div className="order-success-actions">
-                                <button
-                                    type="button"
+                                <Link
+                                    to={"/order-history"}
                                     className="order-success-btn secondary"
                                     onClick={handleCloseOrderSuccess}
                                 >
                                     {t("view_order_btn")}
-                                </button>
+                                </Link>
                                 <Link
                                     to="/products"
                                     className="order-success-btn primary"

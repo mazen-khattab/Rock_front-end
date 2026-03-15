@@ -102,6 +102,9 @@ const Navbar = () => {
                                         <li onClick={userLogout}>
                                             <span>Log out</span>
                                         </li>
+                                        <li onClick={() => navigate('/order-history')}>
+                                            <span>Order History</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
