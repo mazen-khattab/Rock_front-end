@@ -1,0 +1,439 @@
+/* Order History Page Styles */
+.order-history-page {
+  padding: 96px 48px 64px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.order-history-page .order-history-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.order-history-page .page-header {
+  background: linear-gradient(135deg, var(--main-color), var(--hover-color));
+  color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 25px #01484963;
+}
+
+.order-history-page .header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.order-history-page .header-icon {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.75rem;
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+}
+
+.order-history-page .page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.order-history-page .page-subtitle {
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+.order-history-page .orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.order-history-page .order-card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.order-history-page .order-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.order-history-page .order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.order-history-page .order-header:hover {
+  background-color: #f8fafc;
+}
+
+.order-history-page .order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.order-history-page .order-id {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #374151;
+  font-size: 1.1rem;
+}
+
+.order-history-page .order-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.order-history-page .order-date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.order-history-page .order-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.order-history-page .status-delivered {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.order-history-page .status-shipped {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.order-history-page .status-processing {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.order-history-page .status-cancelled {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.order-history-page .order-summary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.order-history-page .order-total {
+  font-weight: 700;
+  color: var(--main-color);
+  font-size: 20px;
+}
+
+.order-history-page .order-total .currency {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.order-history-page .expand-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.order-history-page .expand-btn:hover {
+  background-color: #f3f4f6;
+  color: var(--main-color);
+}
+
+.order-history-page .order-details {
+  border-top: 2px solid #e5e7eb;
+  padding: 1.5rem;
+  background-color: #ededed;
+}
+
+.order-history-page .products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.order-history-page .product-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.order-history-page .product-item:hover {
+  box-shadow: 0 4px 12px rgb(0 0 0 / 19%);
+  transform: translateY(-1px);
+}
+
+.order-history-page .product-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.order-history-page .product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.order-history-page .product-info {
+  min-width: 0;
+  flex: 2;
+}
+
+.order-history-page .product-name {
+  font-weight: 800;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 20px;
+}
+
+.order-history-page .product-description {
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.order-history-page .product-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 14px;
+  color: black;
+  margin-top: 16px;
+}
+
+.order-history-page .product-meta .product-meta-info {
+  background-color: #f3f4f6;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  /* font-weight: 700; */
+}
+
+.order-history-page .product-price .currency {
+  font-weight: 600;
+  font-size: 10px;
+}
+
+.order-history-page .product-Totalprice {
+  font-weight: 600;
+  font-size: 16px;
+  background-color: var(--main-color);
+  width: fit-content;
+  border-radius: 0.25rem;
+  margin-top: 16px;
+  color: white;
+  padding: 5px 8px;
+}
+
+.order-history-page .product-Totalprice .currency {
+  font-size: 12px;
+}
+
+.order-history-page .order-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.order-history-page .action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.order-history-page .action-btn.secondary {
+  background-color: white;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+}
+
+.order-history-page .action-btn.secondary:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.order-history-page .action-btn.primary {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.order-history-page .action-btn.primary:hover {
+  background-color: #d91621;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(236, 28, 37, 0.3);
+}
+
+.order-history-page .empty-orders {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.order-history-page .empty-icon {
+  color: #d1d5db;
+  margin-bottom: 1.5rem;
+}
+
+.order-history-page .empty-orders h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.order-history-page .empty-orders p {
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+.order-history-page .shop-now-btn {
+  background-color: var(--main-color);
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.order-history-page .shop-now-btn:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px #01484969;
+}
+
+@media (max-width: 1024px) {
+  .order-history-page {
+    padding: 96px 32px 64px;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-history-page {
+    padding: 6rem 1rem 2rem;
+  }
+
+  .order-history-page .page-header {
+    padding: 1.5rem;
+  }
+
+  .order-history-page .header-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .order-history-page .page-title {
+    font-size: 1.5rem;
+  }
+
+  .order-history-page .order-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .order-history-page .order-summary {
+    justify-content: space-between;
+  }
+
+  .order-history-page .order-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .order-history-page .product-Totalprice {
+    grid-column: 2;
+    text-align: left;
+    margin-top: 0.5rem;
+  }
+
+  .order-history-page .order-actions {
+    flex-direction: column;
+  }
+
+  .order-history-page .action-btn {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 650px) {
+  .order-history-page .product-item {
+    flex-direction: column;
+  }
+
+  .order-history-page .product-name {
+    text-align: center;
+  }
+
+  .order-history-page .product-description {
+    text-align: center;
+  }
+
+  .order-history-page .product-meta {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-history-page .product-meta {
+    gap: 0.5rem;
+    font-size: 12px;
+  }
+
+  .order-history-page .product-image {
+    justify-self: center;
+    width: 180px;
+    height: 180px;
+  }
+
+  .order-history-page .product-Totalprice {
+    grid-column: 1;
+    text-align: center;
+  }
+}

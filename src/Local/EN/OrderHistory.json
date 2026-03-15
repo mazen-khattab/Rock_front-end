@@ -1,0 +1,16 @@
+{
+  "order_history": "Order History",
+  "view_and_track_orders": "View and track your past orders",
+  "order": "Order number",
+  "order_date": "Order Date",
+  "status": "Status",
+  "total_price": "Total Price",
+  "currency": "EGP",
+  "price": "Price",
+  "quantity": "Quantity",
+  "no_orders_yet": "No Orders Yet",
+  "no_orders_message": "You haven't placed any orders yet. Start shopping to see your order history here.",
+  "start_shopping": "Start Shopping",
+  "color": "Color",
+  "size": "Size"
+}

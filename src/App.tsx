@@ -10,6 +10,7 @@ import About from "./Components/About/About";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import CartPage from "./Components/Cart/Cart";
+import OrderHistory from "./Components/OrderHistory/OrderHistory";
 import ProductDetails from "./Components/Global/ProductDetails/ProductDetails"
 import { CartProvider } from "./Context/CartContext";
 import { ToastContainer } from "react-toastify";
@@ -39,6 +40,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/cart" element={<CartPage />} />
+              <Route path="/order-history" element={<OrderHistory />} />
             </Routes>
             <ToastContainer position="top-right"
               autoClose={3000}

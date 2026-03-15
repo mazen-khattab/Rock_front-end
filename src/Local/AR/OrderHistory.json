@@ -1,0 +1,17 @@
+{
+  "order_history": "سجل الطلبات",
+  "view_and_track_orders": "اعرض وتتبع طلباتك السابقة",
+  "order": "رقم الطلب",
+  "order_date": "تاريخ الطلب",
+  "status": "الحالة",
+  "total_price": "السعر الإجمالي",
+  "currency": "جنيه",
+  "age": "العمر",
+  "price": "السعر",
+  "quantity": "الكمية",
+  "no_orders_yet": "لا توجد طلبات حتى الآن",
+  "no_orders_message": "لم تقم بأي طلبات بعد. ابدأ التسوق لعرض سجل الطلبات هنا.",
+  "start_shopping": "ابدأ التسوق",
+  "color": "اللون",
+  "size": "المقاس"
+}
