@@ -10,6 +10,15 @@
   margin: 0 auto;
 }
 
+@keyframes order-history-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .order-history-page .page-header {
   background: linear-gradient(135deg, var(--main-color), var(--hover-color));
   color: white;
@@ -437,3 +446,4 @@
     text-align: center;
   }
 }
+
