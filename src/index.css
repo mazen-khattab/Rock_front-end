@@ -1,29 +1,29 @@
 :root {
-    --main-color: #003334;
-    --hover-color: #014849;
-    --secondary-color: white;
-    --transition: 0.3s;
-    --main-margin: 64px;
-    --main-padding: 16px;
-    --focus-input-color: #0148496e;
+  --main-color: #003334;
+  --hover-color: #014849;
+  --secondary-color: white;
+  --transition: 0.3s;
+  --main-margin: 64px;
+  --main-padding: 16px;
+  --focus-input-color: #0148496e;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "cairo", serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "cairo", serif;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    display: block !important;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: block !important;
 }
 
 /* .color-selector {
@@ -31,135 +31,144 @@ a {
 } */
 
 .color-selector label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #333;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
 }
 
 .color-options {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .color-btn {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid #ddd;
-    cursor: pointer;
-    transition: all 0.2s ease;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .color-btn:hover {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 .color-btn.selected {
-    border-color: #333;
-    transform: scale(1.2);
+  border-color: #333;
+  transform: scale(1.2);
 }
 
 .color-selector.display-color-error,
 .size-selector.display-color-error {
-    animation: error 0.5s ease-in-out;
+  animation: error 0.5s ease-in-out;
 }
 
 .size-error,
 .color-error {
-    font-size: 14px;
-    margin-top: 4px;
-    font-weight: 600;
-    color: red;
-    transition: 0.1s;
-    margin-bottom: 4px;
-    cursor: default;
-    user-select: none;
+  font-size: 14px;
+  margin-top: 4px;
+  font-weight: 600;
+  color: red;
+  transition: 0.1s;
+  margin-bottom: 4px;
+  cursor: default;
+  user-select: none;
 }
 
 .collapsed-btn {
-    display: inline-block;
-    width: 100%;
+  display: inline-block;
+  width: 100%;
 }
 
 .password-wrap {
-    position: relative;
+  position: relative;
 }
 
 .password-wrap .password-toggle-btn {
-    position: absolute;
-    top: 50%;
-    right: 1rem;
-    transform: translateY(-50%);
-    border: none;
-    background: transparent;
-    padding: 8px;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  padding: 8px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .password-wrap .password-toggle-btn i {
-    display: none;
+  display: none;
 }
 
 .password-wrap:focus-within .password-toggle-btn i {
-    display: block;
+  display: block;
 }
 
 .error-box {
-    border-radius: 0.375rem;
-    background-color: #fef2f2;
-    border: 1px solid #fecaca;
-    padding: 0.5rem;
-    margin: 0.5rem auto;
-    width: 90%;
+  border-radius: 0.375rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 0.5rem;
+  margin: 0.5rem auto;
+  width: 90%;
 }
 
 .error-flex {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-
 .error-icon-wrapper {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .error-icon {
-    color: #dc2626;
-    font-size: 1.5rem;
-
+  color: #dc2626;
+  font-size: 1.5rem;
 }
 
 .error-content {
-    margin-left: 0.75rem;
-
+  margin-left: 0.75rem;
 }
 
 .error-text {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #991b1b;
-    margin-bottom: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #991b1b;
+  margin-bottom: 0;
+}
+
+.page-loading {
+  transform: translate(50%, -50%);
+  position: absolute;
+  top: 50%;
+  right: 50%;
+}
+
+.page-loading .page-loading-icon {
+  color: var(--main-color);
+  animation: order-history-spin 1s linear infinite;
 }
 
 @keyframes error {
-    0% {
-        transform: translateX(0);
-    }
+  0% {
+    transform: translateX(0);
+  }
 
-    25% {
-        transform: translateX(5px);
-    }
+  25% {
+    transform: translateX(5px);
+  }
 
-    50% {
-        transform: translateX(-5px);
-    }
+  50% {
+    transform: translateX(-5px);
+  }
 
-    100% {
-        transform: translateX(0);
-    }
+  100% {
+    transform: translateX(0);
+  }
 }

@@ -297,7 +297,7 @@
 /* ... (previous cart.css — everything up to .cart-footer-item) ... */
 
 /* ===== Checkout Modal Overlay ===== */
-.checkout-modal-overlay {
+.cart-container .checkout-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -311,8 +311,8 @@
   padding: 20px;
 }
 
-/* ===== Checkout Modal ===== */
-.checkout-modal {
+/* =====.cart-container  Checkout Modal ===== */
+.cart-container .checkout-modal {
   background: white;
   border-radius: 16px;
   width: 100%;
@@ -322,7 +322,7 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
-.checkout-modal-header {
+.cart-container .checkout-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -330,13 +330,13 @@
   border-bottom: 1px solid #eee;
 }
 
-.checkout-modal-title {
+.cart-container .checkout-modal-title {
   font-size: 1.5rem;
   font-weight: 700;
   color: #003334;
 }
 
-.checkout-modal-close {
+.cart-container .checkout-modal-close {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -350,20 +350,30 @@
   transition: background 0.2s ease;
 }
 
-.checkout-modal-close:hover {
+.cart-container .checkout-modal-close:hover {
   background: #e0e0e0;
 }
 
-/* ===== Checkout Form ===== */
-.checkout-form {
+.cart-container .checkout-error {
+  margin: 1rem auto;
+  font-weight: 600;
+  color: red;
+  text-align: center;
+}
+
+.cart-container .checkout-error .error-message {
+}
+
+/* =====.cart-container  Checkout Form ===== */
+.cart-container .checkout-form {
   padding: 24px;
 }
 
-.checkout-form-group {
+.cart-container .checkout-form-group {
   margin-bottom: 1rem;
 }
 
-.checkout-label {
+.cart-container .checkout-label {
   display: block;
   font-size: 0.95rem;
   font-weight: 600;
@@ -371,11 +381,11 @@
   margin-bottom: 8px;
 }
 
-.checkout-label .asterisk {
+.cart-container .checkout-label .asterisk {
   color: red;
 }
 
-.checkout-input {
+.cart-container .checkout-input {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ddd;
@@ -384,32 +394,32 @@
   transition: border-color 0.2s ease;
 }
 
-.checkout-input:focus {
+.cart-container .checkout-input:focus {
   outline: none;
   box-shadow: 0 0 0 3px var(--focus-input-color);
 }
 
 /* Two-column row */
-.checkout-form-row {
+.cart-container .checkout-form-row {
   display: flex;
   gap: 16px;
   margin-bottom: 20px;
 }
 
-.checkout-form-row .checkout-form-group {
+.cart-container .checkout-form-row .checkout-form-group {
   flex: 1;
   margin-bottom: 0;
 }
 
 /* Order Summary in Modal */
-.checkout-order-summary {
+.cart-container .checkout-order-summary {
   background: #f9f9f9;
   border-radius: 12px;
   padding: 20px;
   margin: 24px 0;
 }
 
-.checkout-summary-title {
+.cart-container .checkout-summary-title {
   font-size: 1.1rem;
   font-weight: 700;
   color: #003334;
@@ -417,14 +427,14 @@
   text-align: center;
 }
 
-.checkout-summary-line {
+.cart-container .checkout-summary-line {
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
   font-size: 0.95rem;
 }
 
-.checkout-summary-total {
+.cart-container .checkout-summary-total {
   display: flex;
   justify-content: space-between;
   font-size: 1.25rem;
@@ -436,7 +446,7 @@
 }
 
 /* Submit Button */
-.checkout-submit-btn {
+.cart-container .checkout-submit-btn {
   width: 100%;
   padding: 16px;
   background: #003334;
@@ -449,32 +459,32 @@
   transition: background 0.2s ease;
 }
 
-.checkout-submit-btn:hover {
+.cart-container .checkout-submit-btn:hover {
   background: #014849;
 }
 
 /* Responsive Modal */
 @media (max-width: 480px) {
-  .checkout-form-row {
+  .cart-container .checkout-form-row {
     flex-direction: column;
     gap: 16px;
   }
 
-  .checkout-modal {
+  .cart-container .checkout-modal {
     border-radius: 12px;
   }
 
-  .checkout-modal-header {
+  .cart-container .checkout-modal-header {
     padding: 20px 20px 12px;
   }
 
-  .checkout-form {
+  .cart-container .checkout-form {
     padding: 20px;
   }
 }
 
 /* ===== Order Success Modal ===== */
-.order-success-overlay {
+.cart-container .order-success-overlay {
   position: fixed;
   inset: 0;
   background: rgb(0 0 0 / 58%);
@@ -486,7 +496,7 @@
   backdrop-filter: blur(10px);
 }
 
-.order-success-modal {
+.cart-container .order-success-modal {
   position: relative;
   background: #ffffff;
   border-radius: 16px;
@@ -498,7 +508,7 @@
   animation: orderSuccessPop 0.35s ease-out;
 }
 
-.order-success-close {
+.cart-container .order-success-close {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -514,7 +524,7 @@
   justify-content: center;
 }
 
-.order-success-hero {
+.cart-container .order-success-hero {
   position: relative;
   height: 120px;
   display: flex;
@@ -523,7 +533,7 @@
   margin-bottom: 12px;
 }
 
-.order-success-icon {
+.cart-container .order-success-icon {
   width: 84px;
   height: 84px;
   border-radius: 50%;
@@ -534,12 +544,12 @@
   box-shadow: 8px 6px 24px -4px #095657bd;
 }
 
-.order-success-sparkles {
+.cart-container .order-success-sparkles {
   position: absolute;
   inset: 0;
 }
 
-.order-success-sparkles span {
+.cart-container .order-success-sparkles span {
   position: absolute;
   width: 6px;
   height: 6px;
@@ -549,48 +559,48 @@
   animation: orderSuccessFloat 2.2s ease-in-out infinite;
 }
 
-.order-success-sparkles span:nth-child(1) {
+.cart-container .order-success-sparkles span:nth-child(1) {
   top: 12px;
   left: 40%;
   animation-delay: 0s;
 }
-.order-success-sparkles span:nth-child(2) {
+.cart-container .order-success-sparkles span:nth-child(2) {
   top: 22px;
   left: 60%;
   width: 8px;
   height: 8px;
   animation-delay: 0.2s;
 }
-.order-success-sparkles span:nth-child(3) {
+.cart-container .order-success-sparkles span:nth-child(3) {
   top: 40px;
   left: 20%;
   animation-delay: 0.4s;
 }
-.order-success-sparkles span:nth-child(4) {
+.cart-container .order-success-sparkles span:nth-child(4) {
   top: 18px;
   left: 18%;
   width: 5px;
   height: 5px;
   animation-delay: 0.6s;
 }
-.order-success-sparkles span:nth-child(5) {
+.cart-container .order-success-sparkles span:nth-child(5) {
   top: 50px;
   right: 20%;
   animation-delay: 0.8s;
 }
-.order-success-sparkles span:nth-child(6) {
+.cart-container .order-success-sparkles span:nth-child(6) {
   top: 68px;
   right: 32%;
   width: 7px;
   height: 7px;
   animation-delay: 1s;
 }
-.order-success-sparkles span:nth-child(7) {
+.cart-container .order-success-sparkles span:nth-child(7) {
   top: 72px;
   left: 52%;
   animation-delay: 1.2s;
 }
-.order-success-sparkles span:nth-child(8) {
+.cart-container .order-success-sparkles span:nth-child(8) {
   top: 30px;
   right: 10%;
   width: 4px;
@@ -598,32 +608,32 @@
   animation-delay: 1.4s;
 }
 
-.order-success-title {
+.cart-container .order-success-title {
   font-size: 1.4rem;
   font-weight: 700;
   color: #2a2a2a;
   margin-bottom: 10px;
 }
 
-.order-success-message {
+.cart-container .order-success-message {
   color: #838383;
   font-size: 1rem;
   margin-bottom: 12px;
   font-weight: 700;
 }
 
-.order-success-number {
+.cart-container .order-success-number {
   font-size: 0.95rem;
   color: #333;
   margin-bottom: 4px;
 }
 
-.order-success-number span {
+.cart-container .order-success-number span {
   font-weight: 700;
   color: #ff7a2f;
 }
 
-.order-success-actions {
+.cart-container .order-success-actions {
   display: flex;
   justify-content: center;
   gap: 12px;
@@ -631,7 +641,7 @@
   flex-wrap: wrap;
 }
 
-.order-success-btn {
+.cart-container .order-success-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -646,20 +656,20 @@
     box-shadow 0.2s ease;
 }
 
-.order-success-btn.primary {
+.cart-container .order-success-btn.primary {
   background: var(--main-color);
   color: #fff;
   border: 1px solid var(--main-color);
   box-shadow: 5px 7px 18px #0148494d;
 }
 
-.order-success-btn.secondary {
+.cart-container .order-success-btn.secondary {
   background: #fff;
   color: #444;
   border: 1px solid #e2e2e2;
 }
 
-.order-success-btn:hover {
+.cart-container .order-success-btn:hover {
   transform: translateY(-1px);
 }
 
@@ -687,15 +697,15 @@
 }
 
 @media (max-width: 480px) {
-  .order-success-modal {
+  .cart-container .order-success-modal {
     padding: 28px 20px 24px;
   }
 
-  .order-success-actions {
+  .cart-container .order-success-actions {
     flex-direction: column;
   }
 
-  .order-success-btn {
+  .cart-container .order-success-btn {
     width: 100%;
   }
 }

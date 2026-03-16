@@ -39,6 +39,8 @@ export interface OrderHistoryItem {
 
 
 export interface OrderContextValue {
-  checkout: (request: CheckoutRequest) => Promise<CheckoutResponse>;
-  getOrderHistory: () => Promise<OrderHistoryItem[]>;
+    loading: boolean;
+
+    checkout: (request: CheckoutRequest) => Promise<CheckoutResponse>;
+    getOrderHistory: () => Promise<OrderHistoryItem[]>;
 }

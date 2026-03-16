@@ -4,6 +4,7 @@ import React, {
   useContext,
   createContext,
   useCallback,
+  useState,
 } from "react";
 import type { ApiResponse } from "../Types/auth";
 import type { CartItem } from "../Types/product";
@@ -88,6 +89,7 @@ function cartReducer(state: CartState, action: CartAction) {
 type CartContextValue = {
   items: CartItem[];
   cartCount: number;
+  cartLoading: boolean,
   getCart: () => Promise<ApiResponse<CartItem[]> | null>;
   addToCart: (item: CartItem) => Promise<ApiResponse<string>>;
   removeFromCart: (id: number) => Promise<ApiResponse<string>>;
@@ -99,12 +101,13 @@ type CartContextValue = {
 const CartContext = createContext<CartContextValue>({
   items: [],
   cartCount: 0,
+  cartLoading: false,
   getCart: async () => null,
   addToCart: async () => ({ success: false, message: "", data: "" }),
   removeFromCart: async () => ({ success: false, message: "", data: "" }),
   increaseAmount: async () => ({ success: false, message: "", data: "" }),
   decreaseAmount: async () => ({ success: false, message: "", data: "" }),
-  clearCart: () => {}
+  clearCart: () => { }
 });
 
 function getLangId() {
@@ -115,6 +118,7 @@ function getLangId() {
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, loading } = useAuth();
   const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [cartLoading, setCartLoading] = useState(false);
   const guestId = localStorage.getItem("GuestId") ?? "";
 
   const cartCount = state.items.reduce((count, item) => count + item.quantity, 0);
@@ -123,6 +127,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const langId = getLangId();
 
     try {
+      setCartLoading(true);
+
       const response = isAuthenticated
         ? await cartService.GetUserCart(langId)
         : await cartService.GetGuestCart(guestId, langId);
@@ -132,6 +138,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       console.error("[CartContext] getCart failed", error);
       return null;
+    } finally {
+      setCartLoading(false);
     }
   }, [isAuthenticated]);
 
@@ -204,6 +212,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       value={{
         items: state.items,
         cartCount,
+        cartLoading,
         getCart,
         addToCart,
         removeFromCart,
