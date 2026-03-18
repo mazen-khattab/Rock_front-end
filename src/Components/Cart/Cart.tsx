@@ -36,7 +36,7 @@ const CartPage = () => {
     const [orderSuccess, setOrderSuccess] = useState(false);
     const [orderNumber, setOrderNumber] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
-    const [error, setError] = useState<string | null>("asdf");
+    const [error, setError] = useState<string | null>("");
     const [userInfo, setUserInfo] = useState<UserInfo>({
         fname: '',
         lname: '',
