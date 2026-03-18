@@ -7,7 +7,7 @@ let API_URL = "";
 if ((import.meta as any).env.MODE === "development") {
   API_URL = "https://localhost:7179/api";
 } else {
-  API_URL = "/api/";
+  API_URL = "https://rock.runasp.net/api/";
 }
 
 let logoutCallback: (() => void) | null = null;
@@ -50,14 +50,6 @@ axiosInstance.interceptors.response.use(
 
   async (error: AxiosError<ApiError>) => {
     const config = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
-    // console.log(error);
-
-    // console.error(`[API] ${error.config?.method?.toUpperCase()} ${error.config?.url}`, {
-    //   config: config,
-    //   requestHeader: config.headers['X-Request-ID'],
-    //   status: error.response?.status,
-    //   message: error.response?.data?.message || error.message
-    // });
 
     // IMPORTANT: Check if this is the refresh endpoint itself
     // If refresh endpoint returns 401, don't try to refresh again!
