@@ -103,10 +103,10 @@ const CartContext = createContext<CartContextValue>({
   cartCount: 0,
   cartLoading: false,
   getCart: async () => null,
-  addToCart: async () => ({ success: false, message: "", data: "" }),
-  removeFromCart: async () => ({ success: false, message: "", data: "" }),
-  increaseAmount: async () => ({ success: false, message: "", data: "" }),
-  decreaseAmount: async () => ({ success: false, message: "", data: "" }),
+  addToCart: async () => ({ isSucess: false, message: "", data: "" }),
+  removeFromCart: async () => ({ isSucess: false, message: "", data: "" }),
+  increaseAmount: async () => ({ isSucess: false, message: "", data: "" }),
+  decreaseAmount: async () => ({ isSucess: false, message: "", data: "" }),
   clearCart: () => { }
 });
 

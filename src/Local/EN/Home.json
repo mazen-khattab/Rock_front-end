@@ -41,7 +41,8 @@
     "subtitle": "if you have any questions, feel free to contact us",
     "name": "Name",
     "phone_label": "Phone",
-    "send_message": "Send Message"
+    "send_message": "Send Message",
+    "contact_message": "Message sent successfully!"
   },
   "footer": {
     "description": "Styling your wardrobe with premium fashion and timeless designs for every occasion.",
