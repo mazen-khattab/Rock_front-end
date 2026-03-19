@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     User,
     Mail,
@@ -34,7 +34,7 @@ const UserProfile = () => {
     const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
 
-    const savedLang = localStorage.getItem("lang");
+    // const savedLang = localStorage.getItem("lang");
     // const savedLang = langString ? JSON.parse(langString) : null;
 
     const [passwordData, setPasswordData] = useState({
@@ -77,7 +77,9 @@ const UserProfile = () => {
     };
 
     const handlePasswordSubmit = () => {
-
+        setInfoErrorMessage("");
+        setPasswordErrorMessage("");
+        setSuccessMessage("")
     }
 
     const handleSave = () => {
