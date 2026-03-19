@@ -33,7 +33,7 @@ const CartPage = () => {
     const { t } = useTranslation("Cart");
 
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-    const [orderSuccess, setOrderSuccess] = useState(false);
+    const [orderSuccess, setOrderSuccess] = useState(true);
     const [orderNumber, setOrderNumber] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
     const [error, setError] = useState<string | null>("");

@@ -12,6 +12,7 @@ import Register from "./Components/Register/Register";
 import CartPage from "./Components/Cart/Cart";
 import OrderHistory from "./Components/OrderHistory/OrderHistory";
 import ProductDetails from "./Components/Global/ProductDetails/ProductDetails";
+import UserProfile from "./Components/UserProfile/UserProfile";
 import { CartProvider } from "./Context/CartContext";
 import { ContactUsProvider } from "./Context/ContactUsContext";
 import { ToastContainer } from "react-toastify";
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/order-history" element={<OrderHistory />} />
+                <Route path="/user-profile" element={<UserProfile />} />
               </Routes>
               <ToastContainer
                 position="top-right"
