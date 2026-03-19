@@ -32,7 +32,7 @@ const CartPage = () => {
     const { isAuthenticated } = useAuth();
     const { t } = useTranslation("Cart");
 
-    const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+    const [isCheckoutOpen, setIsCheckoutOpen] = useState(true);
     const [orderSuccess, setOrderSuccess] = useState(true);
     const [orderNumber, setOrderNumber] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
