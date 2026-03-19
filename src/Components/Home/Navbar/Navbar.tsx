@@ -105,6 +105,9 @@ const Navbar = () => {
                                         <li onClick={() => navigate('/order-history')}>
                                             <span>Order History</span>
                                         </li>
+                                        <li onClick={() => navigate('/user-profile')}>
+                                            <span>Profile</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

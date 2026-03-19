@@ -1,0 +1,310 @@
+/* User Profile Page Styles */
+.profile-page {
+  padding: 6rem 0;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+/* .profile-page .container {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    } */
+
+/* .profile-page .container {
+    } */
+
+.profile-page .profile-page-content {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.profile-page .profile-header {
+  background: linear-gradient(135deg, var(--main-color), var(--hover-color));
+  color: white;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.profile-page .profile-avatar {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.profile-page .profile-title h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.profile-page .profile-title p {
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+.profile-page .actions-buttons {
+  margin-left: auto;
+}
+
+[dir="rtl"] .profile-page .actions-buttons {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.profile-page .edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.profile-page .edit-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.profile-page .edit-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.profile-page .cancel-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-page .cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.profile-page .save-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  color: var(--main-color);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-page .save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.profile-page .profile-content {
+  padding: 2rem;
+}
+
+.profile-page .profile-section {
+  margin-bottom: 3rem;
+}
+
+.profile-page .profile-section:last-child {
+  margin-bottom: 0;
+}
+
+.profile-page .section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.profile-page .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.profile-page .form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.profile-page .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-page .form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.profile-page .form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.profile-page .form-input,
+.profile-page .form-textarea,
+.profile-page .form-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.profile-page .form-input:focus,
+.profile-page .form-textarea:focus,
+.profile-page .form-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-input-color);
+}
+
+.profile-page .form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.profile-page .form-display {
+  padding: 0.75rem 1rem;
+  background: #f3f4f6;
+  border-radius: 0.5rem;
+  color: #374151;
+  font-size: 0.875rem;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.profile-page .password-form {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+}
+
+.profile-page .password-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profile-page .change-password-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--main-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 5px 7px 18px #0148494d;
+}
+
+.profile-page .change-password-btn:hover {
+  background: var(--hover-color);
+  transform: translateY(-2px);
+  /* box-shadow: 0 4px 12px rgba(236, 28, 37, 0.3); */
+}
+
+.profile-page .profile-content .error-message {
+  color: red;
+  text-align: center;
+}
+
+.profile-page .profile-content .success-message {
+  color: #089f08;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .profile-page .profile-page {
+    padding: 6rem 1rem 2rem;
+  }
+
+  .profile-page .profile-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .profile-page .profile-actions {
+    margin-left: 0;
+  }
+
+  .profile-page .edit-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .profile-page .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-page .section-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .profile-page .profile-title h1 {
+    font-size: 1.5rem;
+  }
+
+  .profile-page .profile-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-page .profile-avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .profile-page .profile-header {
+    padding: 1.5rem;
+  }
+
+  .profile-page .form-input,
+  .profile-page .form-textarea,
+  .profile-page .form-select {
+    padding: 0.625rem 0.75rem;
+  }
+}
