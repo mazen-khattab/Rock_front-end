@@ -32,8 +32,8 @@ const CartPage = () => {
     const { isAuthenticated } = useAuth();
     const { t } = useTranslation("Cart");
 
-    const [isCheckoutOpen, setIsCheckoutOpen] = useState(true);
-    const [orderSuccess, setOrderSuccess] = useState(true);
+    const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+    const [orderSuccess, setOrderSuccess] = useState(false);
     const [orderNumber, setOrderNumber] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
     const [error, setError] = useState<string | null>("");
