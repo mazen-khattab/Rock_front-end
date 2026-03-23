@@ -7,7 +7,7 @@ let API_URL = "";
 if ((import.meta as any).env.MODE === "development") {
   API_URL = "https://localhost:7179/api";
 } else {
-  API_URL = "https://rock.runasp.net/api/";
+  API_URL = "/api/";
 }
 
 let logoutCallback: (() => void) | null = null;
