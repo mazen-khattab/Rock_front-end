@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     User,
     Mail,
@@ -13,36 +13,75 @@ import {
 import Navbar from "../Home/Navbar/Navbar";
 import Footer from "../Home/Footer/Footer";
 import { useTranslation } from "react-i18next";
+import { useUser } from "../../Context/UserContext";
 import "./UserProfile.css";
+
+const initialFormData = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    address: {
+        governorate: "",
+        city: "",
+        fullAddress: "",
+    },
+};
+
+const initialPasswordData = {
+    oldPassword: "",
+    newPassword: "",
+    confirmedPassword: "",
+};
 
 const UserProfile = () => {
     const { t } = useTranslation("UserProfile");
+    const { profile, loading, getProfile, updateProfile, changePassword } = useUser();
 
     const [isEditing, setIsEditing] = useState(false);
-    const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        address: {
-            governorate: "",
-            city: "",
-            fullAddress: "",
-        },
-    });
-    const [infoErrorMessage, setInfoErrorMessage] = useState("")
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
+    const [formData, setFormData] = useState(initialFormData);
+    const [profileErrorMessage, setProfileErrorMessage] = useState("")
+    const [profileSuccessMessage, setProfileSuccessMessage] = useState("");
     const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+    const [passwordSuccessMessage, setPasswordSuccessMessage] = useState("");
+    const [passwordData, setPasswordData] = useState(initialPasswordData);
 
-    // const savedLang = localStorage.getItem("lang");
-    // const savedLang = langString ? JSON.parse(langString) : null;
+    // used to load the user profile info
+    useEffect(() => {
+        const loadProfile = async () => {
+            try {
+                await getProfile();
+            } catch (error: any) {
+                setProfileErrorMessage(error.message || "Failed to load profile");
+            } finally {
+                setIsInitialLoading(false);
+            }
+        };
 
-    const [passwordData, setPasswordData] = useState({
-        oldPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-    });
+        loadProfile();
+    }, [getProfile]);
 
+    // used to update the values of FormData from the getProfile endpoint
+    useEffect(() => {
+        if (!profile) {
+            return;
+        }
+
+        setFormData({
+            firstName: profile.firstName || "",
+            lastName: profile.lastName || "",
+            email: profile.email || "",
+            phone: profile.phone || "",
+            address: {
+                governorate: profile.governorate || "",
+                city: profile.city || "",
+                fullAddress: profile.fullAddress || "",
+            },
+        });
+    }, [profile]);
+
+    // used to handle changing in any user info input value
     const handleInputChange = (field: string, value: string) => {
         setFormData((prev) => ({
             ...prev,
@@ -50,6 +89,7 @@ const UserProfile = () => {
         }));
     };
 
+    // used to handle changing in user address input value
     const handleAddressChange = (field: string, value: string) => {
         setFormData((prev) => ({
             ...prev,
@@ -60,6 +100,7 @@ const UserProfile = () => {
         }));
     };
 
+    // used to handle changing in user passwords value
     const handlePasswordChange = (field: string, value: string) => {
         setPasswordData((prev) => ({
             ...prev,
@@ -67,23 +108,84 @@ const UserProfile = () => {
         }));
     };
 
+    // used to cancel and discart the changing before saving
     const handleCancel = () => {
         setIsEditing(false);
-        setPasswordData({
-            oldPassword: "",
-            newPassword: "",
-            confirmPassword: "",
+        setProfileErrorMessage("");
+        setProfileSuccessMessage("");
+        // setPasswordData(initialPasswordData);
+
+        if (!profile) {
+            setFormData(initialFormData);
+            return;
+        }
+
+        setFormData({
+            firstName: profile.firstName || "",
+            lastName: profile.lastName || "",
+            email: profile.email || "",
+            phone: profile.phone || "",
+            address: {
+                governorate: profile.governorate || "",
+                city: profile.city || "",
+                fullAddress: profile.fullAddress || "",
+            },
         });
     };
 
-    const handlePasswordSubmit = () => {
-        setInfoErrorMessage("");
+    // calling change password endpoint
+    const handlePasswordSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         setPasswordErrorMessage("");
-        setSuccessMessage("")
+        setPasswordSuccessMessage("");
+
+        try {
+            await changePassword(passwordData);
+            setPasswordData(initialPasswordData);
+            setPasswordSuccessMessage("Password changed successfully");
+        } catch (error: any) {
+            setPasswordErrorMessage(error.message || "Failed to change password");
+        }
     }
 
-    const handleSave = () => {
+    // calling seve the user info 
+    const handleSave = async () => {
+        setProfileErrorMessage("");
+        setProfileSuccessMessage("");
 
+        try {
+            await updateProfile({
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                phone: formData.phone,
+                governorate: formData.address.governorate,
+                city: formData.address.city,
+                fullAddress: formData.address.fullAddress,
+            });
+            setIsEditing(false);
+            setProfileSuccessMessage("Profile updated successfully");
+        } catch (error: any) {
+            setProfileErrorMessage(error.message || "Failed to update profile");
+        }
+    }
+
+    if (isInitialLoading) {
+        return (
+            <div>
+                <Navbar></Navbar>
+                <div className="profile-page">
+                    <div className="container">
+                        <div className="profile-page-content">
+                            <div className="profile-section">
+                                <p>{t("manage_personal_info")}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <Footer></Footer>
+            </div>
+        );
     }
 
     return (
@@ -112,9 +214,9 @@ const UserProfile = () => {
                                         <button onClick={handleCancel} className="cancel-btn">
                                             {t("cancel")}
                                         </button>
-                                        <button onClick={handleSave} className="save-btn">
+                                        <button onClick={handleSave} className="save-btn" disabled={loading}>
                                             <Save size={18} />
-                                            {t("save_changes")}
+                                            {loading ? "Saving..." : t("save_changes")}
                                         </button>
                                     </div>
                                 )}
@@ -125,8 +227,13 @@ const UserProfile = () => {
                             <div className="profile-section">
                                 <h2 className="section-title">{t("personal_information")}</h2>
                                 <p className="error-message" style={{ marginBottom: "16px" }}>
-                                    {infoErrorMessage}
+                                    {profileErrorMessage}
                                 </p>
+                                {!profileErrorMessage && profileSuccessMessage ? (
+                                    <p className="success-message" style={{ marginBottom: "16px" }}>
+                                        {profileSuccessMessage}
+                                    </p>
+                                ) : null}
                                 <div className="form-grid">
                                     <div className="form-group">
                                         <label className="form-label">
@@ -273,7 +380,9 @@ const UserProfile = () => {
                                 <h2 className="section-title">{t("change_password")}</h2>
                                 <form onSubmit={handlePasswordSubmit} className="password-form">
                                     <p className="error-message">{passwordErrorMessage}</p>
-                                    <p className="success-message">{successMessage}</p>
+                                    {!passwordErrorMessage && passwordSuccessMessage ? (
+                                        <p className="success-message">{passwordSuccessMessage}</p>
+                                    ) : null}
                                     <div className="form-grid">
                                         <div className="form-group full-width">
                                             <label className="form-label">
@@ -316,9 +425,9 @@ const UserProfile = () => {
                                             </label>
                                             <input
                                                 type="password"
-                                                value={passwordData.confirmPassword}
+                                                value={passwordData.confirmedPassword}
                                                 onChange={(e) =>
-                                                    handlePasswordChange("confirmPassword", e.target.value)
+                                                    handlePasswordChange("confirmedPassword", e.target.value)
                                                 }
                                                 className="form-input"
                                                 placeholder={t("confirm_password_placeholder")}
@@ -328,9 +437,9 @@ const UserProfile = () => {
                                     </div>
 
                                     <div className="password-actions">
-                                        <button type="submit" className="change-password-btn">
+                                        <button type="submit" className="change-password-btn" disabled={loading}>
                                             <Lock size={18} />
-                                            {t("change_password_button")}
+                                            {loading ? "Loading..." : t("change_password_button")}
                                         </button>
                                     </div>
                                 </form>
