@@ -1,11 +1,12 @@
 import axiosInstance from "../API";
+import type { ApiResponse } from "../Types/auth";
 import type { CheckoutRequest, CheckoutResponse, OrderHistoryItem } from "../Types/order";
 
 export const orderService = {
     async checkout(request: CheckoutRequest): Promise<CheckoutResponse> {
         try {
             const response = await axiosInstance.post(
-                "Order/Checkout",
+                "Orders/Checkout",
                 request,
             );
 
@@ -25,9 +26,9 @@ export const orderService = {
         }
     },
 
-    async getOrderHistory(langId: number): Promise<OrderHistoryItem[]> {
+    async getOrderHistory(): Promise<ApiResponse<OrderHistoryItem[]>> {
         try {
-            const response = await axiosInstance.get(`Order/OrderHistory/${langId}`);
+            const response = await axiosInstance.get<ApiResponse<OrderHistoryItem[]>>(`Orders/OrderHistory`);
 
             return response.data;
         } catch (error: any) {

@@ -38,17 +38,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
             setLoading(true);
             setError(null);
 
-            // console.log('[AuthContext] Initializing auth...');
-
-            const { user: userData } = await authService.refresh();
+            const { user: userData } = await authService.getUserInfo();
 
             setUser(userData);
-            // console.log(`[AuthContext] user: ${user}`);
-            // console.log('[AuthContext] Auth initialized, user logged in');
         } catch (err: any) {
-            // console.log('[AuthContext] No active session found (expected for guests)');
             setUser(null);
-            getOrCreateGuestId()
+            getOrCreateGuestId() 
         } finally {
             setLoading(false);
         }

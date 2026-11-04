@@ -20,8 +20,20 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "./Context/AuthContext";
 import { ProductProvider } from "./Context/ProductContext";
 import { OrderProvider } from "./Context/OrderContext";
+import { useEffect } from "react";
 
 function App() {
+
+  useEffect(() => {
+    // Check if langId exists in localStorage
+    const savedLang = localStorage.getItem("lang");
+
+    // If not exists, set a default value
+    if (!savedLang) {
+      localStorage.setItem('lang', 'ar'); // Default to ar
+    }
+  }, []);
+
   const { loading } = useAuth();
 
   if (loading) {

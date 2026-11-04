@@ -4,10 +4,10 @@ import type { CartItem } from "../Types/product";
 
 export const cartService = {
   // user methods
-  async GetUserCart(langId: number): Promise<ApiResponse<CartItem[]>> {
+  async GetUserCart(): Promise<ApiResponse<CartItem[]>> {
     try {
       const response = await axiosInstance.get<ApiResponse<CartItem[]>>(
-        `Cart/GetUserCart/${langId}`,
+        `Carts/GetUserCart`,
       );
 
       // console.log("[UserCartService] Cart retrieved successfully");
@@ -34,7 +34,7 @@ export const cartService = {
 
     try {
       const response = await axiosInstance.post<ApiResponse<string>>(
-        `Cart/AddToCartUser`,
+        `Carts/AddToCartUser`,
         request,
       );
       // console.log("[UserCartService] Added to user cart successfully");
@@ -57,7 +57,7 @@ export const cartService = {
 
     try {
       const response = await axiosInstance.put<ApiResponse<string>>(
-        `Cart/IncreaseUserAmount`,
+        `Carts/IncreaseUserAmount`,
         request,
       );
 
@@ -81,7 +81,7 @@ export const cartService = {
 
     try {
       const response = await axiosInstance.put<ApiResponse<string>>(
-        `Cart/DecreaseUserAmount`,
+        `Carts/DecreaseUserAmount`,
         request,
       );
 
@@ -101,7 +101,7 @@ export const cartService = {
   async RemoveUserItem(variantId: number): Promise<ApiResponse<string>> {
     try {
       const response = await axiosInstance.delete<ApiResponse<string>>(
-        `Cart/RemoveUserItem/${variantId}`,
+        `Carts/RemoveUserItem/${variantId}`,
       );
 
       // console.log("[UserCartService] item deleted successfully");
@@ -119,15 +119,12 @@ export const cartService = {
   },
 
   // guest methods
-  async GetGuestCart(
-    guestId: string,
-    langId: number,
-  ): Promise<ApiResponse<CartItem[]>> {
+  async GetGuestCart(guestId: string): Promise<ApiResponse<CartItem[]>> {
     try {
       // console.log("[GuestCartService] LandId:", { langId: langId });
 
       const response = await axiosInstance.get<ApiResponse<CartItem[]>>(
-        `Cart/GetGuestCart/${langId}/${guestId}`,
+        `Carts/GetGuestCart/${guestId}`,
       );
 
       // console.log("[GuestCartService] Cart retrieved successfully");
@@ -156,7 +153,7 @@ export const cartService = {
 
     try {
       const response = await axiosInstance.post<ApiResponse<string>>(
-        `Cart/AddToGuestCart`,
+        `Carts/AddToGuestCart`,
         request,
       );
 
@@ -184,7 +181,7 @@ export const cartService = {
 
     try {
       const response = await axiosInstance.put<ApiResponse<string>>(
-        `Cart/IncreaseGuestAmount`,
+        `Carts/IncreaseGuestAmount`,
         request,
       );
 
@@ -212,7 +209,7 @@ export const cartService = {
 
     try {
       const response = await axiosInstance.put<ApiResponse<string>>(
-        `Cart/DecreaseGuestAmount`,
+        `Carts/DecreaseGuestAmount`,
         request,
       );
 
@@ -235,7 +232,7 @@ export const cartService = {
   ): Promise<ApiResponse<string>> {
     try {
       const response = await axiosInstance.delete<ApiResponse<string>>(
-        `Cart/RemoveGuestItem/${guestId}/${variantId}`,
+        `Carts/RemoveGuestItem/${guestId}/${variantId}`,
       );
 
       // console.log("[GuestCartService] item deleted successfully");
@@ -260,7 +257,7 @@ export const cartService = {
 
     try {
       const response = await axiosInstance.post<ApiResponse<CartItem[]>>(
-        `Cart/Merge`,
+        `Carts/Merge`,
         request,
       );
 

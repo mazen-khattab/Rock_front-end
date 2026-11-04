@@ -10,7 +10,7 @@ export const userService = {
     async getProfile(): Promise<{ profile: UserProfile }> {
         try {
             const response = await axiosInstance.get<ApiResponse<UserProfile>>(
-                "/User/profile",
+                "/Users/profile",
             );
 
             return { profile: response.data.data };
@@ -48,7 +48,7 @@ export const userService = {
 
         try {
             const response = await axiosInstance.put<ApiResponse<UserProfile>>(
-                "/User/profile/update",
+                "/Users/profile/update",
                 request,
             );
 
@@ -88,8 +88,8 @@ export const userService = {
         }
 
         try {
-            await axiosInstance.post<ApiResponse<null>>(
-                "/User/password/change",
+            await axiosInstance.put<ApiResponse<null>>(
+                "/Users/password/change",
                 request,
             );
         } catch (error: any) {

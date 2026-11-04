@@ -8,7 +8,7 @@ import './SpecialProducts.css'
 
 const SpecialProducts = () => {
     const { t } = useTranslation("Home");
-    // const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    // const [selectedProduct, setSelectedProduct] = useState<AllProducts | null>(null);
     const [activeCategory, setActiveCategory] = useState('All');
     const [currentIndex, setCurrentIndex] = useState(0);
     const [products, setProducts] = useState<Product[]>([]);

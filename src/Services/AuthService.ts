@@ -108,6 +108,15 @@ export const authService = {
     }
   },
 
+  async getUserInfo(): Promise<{ user: User }> {
+    try {
+      const response = await axiosInstance.get<ApiResponse<User>>("/Auth/UserInfo");
+      return { user: response.data.data };
+    } catch (error: any) {
+      throw error;
+    }
+  },
+
   async logout(): Promise<void> {
     try {
       // console.log("[AuthService] Logging out...");

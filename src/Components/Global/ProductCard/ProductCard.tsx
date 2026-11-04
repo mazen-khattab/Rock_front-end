@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 
 interface ProductCardProps {
   product: Product;
-  // onProductClick: (product: Product) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
@@ -17,7 +16,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   // states and variables.
   const { addToCart } = useCart();
-  const mainImage = product.variants[0].imagesDtos[0].imageUrl;
+  const mainImage = product.variants[0].imagesDtos.imageUrl;
   const uniqueColors = [...new Set(product.variants.map((v) => v.hexCode))];
   const [isHovered, setIsHovered] = useState(false);
   const [showSizes, setShowSizes] = useState(false);
@@ -45,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         name: product.name,
         price: product.price,
         description: product.description,
-        imagesDtos: variant?.imagesDtos[0],
+        imagesDtos: variant?.imagesDtos,
         color: variant?.colorName,
         hexCode: variant?.hexCode,
         size: variant?.sizeName,
@@ -101,12 +100,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         >
           <img src={mainImage} alt={product.name} className="product-image" />
         </Link>
-        {/* <img src={mainImage} alt={product.name} onClick={() => onProductClick(product)} className="product-image" /> */}
-
-        {/* Discount badge */}
-        {/* {product.discount && (
-          <div className="discount-badge">{product.discount}% off</div>
-        )} */}
 
         {/* Action buttons (visible on hover) */}
         {isHovered && window.innerWidth > 768 && (
