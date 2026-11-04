@@ -136,7 +136,7 @@
 //                             {product.description || "Prepare to embrace the cold in style and warmth with our Premium Quality Down Jacket. Crafted with the utmost attention to detail and featuring the finest materials, this jacket is designed to keep you cozy in even the harshest winter conditions."}
 //                         </p>
 
-//                         <div className="product-price">${product.price}</div>
+//                         <div className="product-price">{product.price} EGP</div>
 
 //                         <div className={sizeError ? "size-selector display-color-error" : "size-selector"}>
 //                             <label>Select size</label>
@@ -175,7 +175,7 @@
 //                         </button>
 
 //                         <div className="delivery-info">
-//                             <i className="fas fa-truck"></i> Free delivery on orders over $30.00
+//                             <i className="fas fa-truck"></i> Free delivery on orders over 500 EGP
 //                         </div>
 
 //                         <div className="features-section">

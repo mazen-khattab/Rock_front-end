@@ -191,7 +191,7 @@ const CartPage = () => {
                                             >
                                                 <i className="fa-solid fa-trash-can"></i>
                                             </button>
-                                            <span className="cart-item-price">${(item.price * item.quantity).toFixed(2)}</span>
+                                            <span className="cart-item-price">{(item.price * item.quantity).toFixed(2)} EGP</span>
                                         </div>
                                     </div>
                                 ))
@@ -203,17 +203,17 @@ const CartPage = () => {
 
                             <div className="cart-summary-line">
                                 <span>{t("product_price")}</span>
-                                <span>${subtotal.toFixed(2)}</span>
+                                <span>{subtotal.toFixed(2)} EGP</span>
                             </div>
 
                             <div className="cart-summary-line">
                                 <span>{t("shipping_label")}</span>
-                                <span>{shipping === 0 ? t("free_label") : `$${shipping.toFixed(2)}`}</span>
+                                <span>{shipping === 0 ? t("free_label") : `${shipping.toFixed(2)} EGP`}</span>
                             </div>
 
                             <div className="cart-summary-total">
                                 <span>{t("total_label")}</span>
-                                <span>${total.toFixed(2)}</span>
+                                <span>{total.toFixed(2)} EGP</span>
                             </div>
 
                             <button
@@ -398,15 +398,15 @@ const CartPage = () => {
                                         <h3 className="checkout-summary-title">{t("order_summary_title")}</h3>
                                         <div className="checkout-summary-line">
                                             <span>{t("subtotal_label")}</span>
-                                            <span>${subtotal.toFixed(2)}</span>
+                                            <span>{subtotal.toFixed(2)} EGP</span>
                                         </div>
                                         <div className="checkout-summary-line">
                                             <span>{t("shipping_label")}</span>
-                                            <span>{shipping === 0 ? t("free_label") : `$${shipping.toFixed(2)}`}</span>
+                                            <span>{shipping === 0 ? t("free_label") : `${shipping.toFixed(2)} EGP`}</span>
                                         </div>
                                         <div className="checkout-summary-total">
                                             <span>{t("total_label")}</span>
-                                            <span>${total.toFixed(2)}</span>
+                                            <span>{total.toFixed(2)} EGP</span>
                                         </div>
                                     </div>
 

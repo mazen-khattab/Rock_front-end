@@ -10,23 +10,17 @@ import './Hero.css'
 const Hero = () => {
     const { t } = useTranslation("Home");
     const navigate = useNavigate();
-    const imgRef = useRef<HTMLImageElement>(null);
-    const targetRef = useRef<HTMLImageElement>(null);
-    const parentRef = useRef<HTMLImageElement>(null);
-    const heroRef = useRef<HTMLImageElement>(null);
+    const heroRef = useRef<HTMLDivElement>(null);
     const savedLang = localStorage.getItem('lang');
     const direction = savedLang === 'ar' ? -1 : 1;
 
-    const [startPos, setStartPos] = useState<DOMRect | null>(null);
-    const [targetPos, setTargetPos] = useState<DOMRect | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isHover, setIsHover] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
-
     const categories = [
-        { id: 1, name: t('Hero.shirts'), image: Shirt, description: t('Hero.shirts_description'), ref: targetRef, parentRef: parentRef },
+        { id: 1, name: t('Hero.shirts'), image: Shirt, description: t('Hero.shirts_description') },
         { id: 3, name: t('Hero.jackets'), image: Shirt2, description: t('Hero.jackets_description') },
         { id: 2, name: t('Hero.pants'), image: Pants, description: t('Hero.pants_description') },
         { id: 4, name: t('Hero.dresses'), image: Shirt2, description: t('Hero.dresses_description') },
@@ -37,20 +31,25 @@ const Hero = () => {
         'https://i.pinimg.com/736x/62/06/b4/6206b4e72672217b1272425fb2207855.jpg',
         'https://i.pinimg.com/1200x/ba/26/17/ba26177dc019f9df2bb592310bcd365f.jpg',
         'https://i.pinimg.com/736x/ed/57/12/ed5712064c2372659df2a41364cdaa54.jpg',
-    ]
+    ];
 
-    var itemsPerPage;
+    const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth > 768 ? 3 : 2);
 
-    if (window.innerWidth > 768) {
-        itemsPerPage = 3
-    } else {
-        itemsPerPage = 2
-    }
+    useEffect(() => {
+        const handleResize = () => {
+            const count = window.innerWidth > 768 ? 3 : 2;
+            setItemsPerPage(count);
+            setIsMobile(window.innerWidth < 1024);
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Calculate visible categories based on current index
     const startIndex = currentIndex * itemsPerPage;
     const visibleCategories = categories.slice(startIndex, startIndex + itemsPerPage);
-
     const maxIndex = Math.ceil(categories.length / itemsPerPage) - 1;
 
     const goToCateIndex = (index: number) => {
@@ -66,7 +65,7 @@ const Hero = () => {
     };
 
     const goToHeroImage = (index: number) => {
-        if (!heroRef.current) return
+        if (!heroRef.current) return;
 
         const clampedIndex = ((index % heroImages.length) + heroImages.length) % heroImages.length;
         const slideWidth = heroRef.current.scrollWidth / heroImages.length;
@@ -77,119 +76,46 @@ const Hero = () => {
         });
 
         setCurrentImageIndex(clampedIndex);
-    }
+    };
 
     const nextSlide = () => goToHeroImage(currentImageIndex + direction);
     const prevSlide = () => goToHeroImage(currentImageIndex - direction);
 
-    // this used to check if isMobile is true of false
+    // Auto-slide for mobile hero images
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-
-        checkMobile(); // initial check
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
-
-    // this is used to move the silder each 5s
-    useEffect(() => {
-        if (isHover || !isMobile) return
+        if (isHover || !isMobile) return;
 
         const slider = setInterval(() => {
             savedLang === 'ar' ? prevSlide() : nextSlide();
         }, 5000);
 
         return () => clearInterval(slider);
-    }, [isHover, heroImages.length, currentImageIndex, isMobile])
-
-    // this is used to update the position of the target and moving images
-    useEffect(() => {
-        const updatePositions = () => {
-            if (!imgRef.current || !targetRef.current) return;
-
-            const moving = imgRef.current.getBoundingClientRect();
-            const target = targetRef.current.getBoundingClientRect();
-
-            setStartPos(moving);
-            setTargetPos(target);
-        };
-
-        updatePositions();
-        window.addEventListener("resize", updatePositions);
-
-        return () => window.removeEventListener("resize", updatePositions);
-    }, []);
-
-    // this is used to move the image until it reach to the target
-    useEffect(() => {
-        if (!startPos || !targetPos) return;
-
-        const handleScroll = () => {
-            const requiredScroll = targetPos.top - startPos.top;
-            const scrollY = window.scrollY;
-
-            let progress = scrollY / requiredScroll;
-            progress = Math.max(0, Math.min(1, progress));
-
-            const newY = startPos.top + (targetPos.top - startPos.top) * progress;
-            const newX = startPos.left + (targetPos.left - startPos.left) * progress;
-
-            // const width = startPos.width === targetPos.width ? 1 : startPos.width + (targetPos.width - startPos.width) * progress;
-            // const height = startPos.height === targetPos.height ? 1 : startPos.height + (targetPos.height - startPos.height) * progress;
-
-            if (imgRef.current && parentRef.current) {
-                imgRef.current.style.transform = `translate(${newX - startPos.left}px, ${newY - startPos.top}px)`;
-
-                // imgRef.current.style.width = `${width}px`;
-                // imgRef.current.style.height = `${height}px`;
-
-                if (window.innerWidth > 1024) {
-                    if (progress === 1) {
-                        imgRef.current.style.opacity = '0';
-                        imgRef.current.style.zIndex = "-1";
-                        parentRef.current.style.opacity = '1';
-                        parentRef.current.style.zIndex = '1';
-                    } else {
-                        imgRef.current.style.opacity = '1'
-                        imgRef.current.style.zIndex = "10";
-                        parentRef.current.style.opacity = '0';
-                        parentRef.current.style.zIndex = '-100';
-                    }
-                } else {
-                    parentRef.current.style.opacity = '1';
-                }
-
-            }
-        };
-
-        window.addEventListener("scroll", handleScroll);
-
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [startPos, targetPos]);
+    }, [isHover, heroImages.length, currentImageIndex, isMobile]);
 
     return (
         <div className='hero container'>
-            <section className="hero-wrapper"
+            <section
+                className="hero-wrapper"
                 onMouseEnter={() => setIsHover(true)}
-                onMouseLeave={() => setIsHover(false)}>
-
+                onMouseLeave={() => setIsHover(false)}
+            >
                 <div className='hero-slider' ref={heroRef}>
-                    {heroImages.map((image, index) => {
-                        return (
-                            <img src={image}
-                                alt=""
-                                key={image}
-                                loading={index === 0 ? "eager" : "lazy"} />
-                        )
-                    })}
+                    {heroImages.map((image, index) => (
+                        <img
+                            src={image}
+                            alt=""
+                            key={image}
+                            loading={index === 0 ? "eager" : "lazy"}
+                        />
+                    ))}
                 </div>
 
                 <div className={savedLang === 'ar' ? "overlay ar" : "overlay"}></div>
 
-                <button onClick={prevSlide} className='hero-nav-btn hero-left-arrow'>
+                <button onClick={prevSlide} className='hero-nav-btn hero-left-arrow' aria-label="Previous slide">
                     <i className="fa-solid fa-angle-left"></i>
                 </button>
-                <button onClick={nextSlide} className='hero-nav-btn hero-right-arrow'>
+                <button onClick={nextSlide} className='hero-nav-btn hero-right-arrow' aria-label="Next slide">
                     <i className="fa-solid fa-angle-right"></i>
                 </button>
 
@@ -210,16 +136,16 @@ const Hero = () => {
                     </div>
                 </div>
 
+                {/* Permanent Floating Hero Clothing Images */}
                 <div className="hero-images">
-                    <img src={Shirt} ref={imgRef} alt="Shirt" className="img img-top" />
+                    <img src={Shirt} alt="Shirt" className="img img-top" />
                     <img src={Pants} alt="Pants" className="img img-bottom" />
                 </div>
-
             </section>
 
+            {/* Shop By Category Section */}
             <section className="container categories-section">
                 <div className="slider-container">
-                    {/* Title positioned next to cards */}
                     <h2 className="slider-title">{t("Hero.shop_by")} <span>{t("Hero.category")}</span></h2>
 
                     <div className="categories-wrapper">
@@ -227,20 +153,22 @@ const Hero = () => {
                             <button
                                 className="nav-button left-arrow"
                                 onClick={previousCate}
-                                aria-label={t("previous_category")}
+                                aria-label={t("Hero.previous_category") || "Previous category"}
                             >
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                     <path d="M15 18l-6-6 6-6" />
                                 </svg>
                             </button>
 
+                            {/* All Category Cards Always Rendered & Visible */}
                             <div className={savedLang === 'ar' ? "categories-container ar" : "categories-container"}>
                                 {visibleCategories.map((category) => (
-                                    <div key={category.id} className="category-card" ref={category.parentRef}>
-                                        <Link to={`/products?category=${encodeURIComponent(category.name)}`}
-                                            className="category-image-wrapper">
+                                    <div key={category.id} className="category-card">
+                                        <Link
+                                            to={`/products?category=${encodeURIComponent(category.name)}`}
+                                            className="category-image-wrapper"
+                                        >
                                             <img
-                                                ref={category.ref}
                                                 src={category.image}
                                                 alt={category.name}
                                                 className="category-image"
@@ -257,21 +185,22 @@ const Hero = () => {
                             <button
                                 className="nav-button right-arrow"
                                 onClick={nextCate}
-                                aria-label={t("next_category")}
+                                aria-label={t("Hero.next_category") || "Next category"}
                             >
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                     <path d="M9 6l6 6-6 6" />
                                 </svg>
                             </button>
                         </div>
 
-                        {/* Rectangular pagination indicators instead of dots */}
+                        {/* Pagination indicator rectangles */}
                         <div className="pagination-rectangles">
                             {[...Array(maxIndex + 1)].map((_, index) => (
                                 <button
                                     key={index}
                                     className={`rectangle ${index === currentIndex ? 'active' : ''}`}
                                     onClick={() => goToCateIndex(index)}
+                                    aria-label={`Go to slide ${index + 1}`}
                                 />
                             ))}
                         </div>
@@ -279,7 +208,7 @@ const Hero = () => {
                 </div>
             </section>
         </div>
-    )
-}
+    );
+};
 
 export default Hero;

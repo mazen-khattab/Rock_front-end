@@ -172,9 +172,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="product-category">{product.category}</div>
         <h3 className="product-name">{product.name}</h3>
         <div className="product-price">
-          <span className="current-price">${product.price}</span>
+          <span className="current-price">{product.price} EGP</span>
           {product.originalPrice && (
-            <span className="original-price">${product.originalPrice}</span>
+            <span className="original-price">{product.originalPrice} EGP</span>
           )}
         </div>
       </div>
