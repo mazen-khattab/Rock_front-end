@@ -2,14 +2,13 @@ import axios from 'axios';
 import type { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import type { ApiError } from './Types/auth';
 
-let API_URL = "";
-const savedLang = localStorage.getItem("lang");
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV
+    ? "https://localhost:7179/api"
+    : "https://api.keef-wear.com/api");
 
-if ((import.meta as any).env.MODE === "development") {
-  API_URL = "https://localhost:7179/api";
-} else {
-  API_URL = "/api/";
-}
+const savedLang = localStorage.getItem("lang");
 
 let logoutCallback: (() => void) | null = null;
 
@@ -32,10 +31,6 @@ axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const requestId = generateRequestId();
     config.headers['X-Request-ID'] = requestId;
-
-    // if (process.env.NODE_ENV === 'development') {
-    //   console.log(`[API] ${config.method?.toUpperCase()} ${config.url}`, { requestId });
-    // }
 
     return config;
   },
