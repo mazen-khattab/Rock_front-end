@@ -1,33 +1,43 @@
 import { useEffect, useState } from 'react';
-import type { ProductDetails, VariantImages } from '../../../Types/product';
+import type { ProductDetails as ProductDetailsType, VariantImages } from '../../../Types/product';
 import './ProductDetails.css';
 import { useCart } from '../../../Context/CartContext';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useProduct } from '../../../Context/ProductContext';
 import { useTranslation } from 'react-i18next';
 import { toast } from "react-toastify";
 import Navbar from '../../Home/Navbar/Navbar';
 
-const ProductPopup = () => {
+const ProductDetails = () => {
     const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
     const { GetById } = useProduct();
-    const [product, setProduct] = useState<ProductDetails | null>(null);
+    const [product, setProduct] = useState<ProductDetailsType | null>(null);
+    const [pageLoading, setPageLoading] = useState(true);
     const { t } = useTranslation("ProductDetails");
 
-    // calling the endpoint that return the product by id
+    const savedLang = localStorage.getItem("lang") || "en";
+
+    // calling the endpoint that returns the product by id
     useEffect(() => {
         const getSelectedProduct = async () => {
-            const response = await GetById(id ? parseInt(id) : 0);
-
-            setProduct(response);
-        }
+            try {
+                setPageLoading(true);
+                const response = await GetById(id ? parseInt(id) : 0);
+                setProduct(response);
+            } catch (err) {
+                console.error("[ProductDetails] Error fetching product:", err);
+            } finally {
+                setPageLoading(false);
+            }
+        };
 
         getSelectedProduct();
-    }, [])
+    }, [id]);
 
     // states and variables.
     const { addToCart } = useCart();
-    const allSizes = [...new Set(product?.variants.map(v => v.sizeName))]
+    const allSizes = [...new Set(product?.variants.map(v => v.sizeName) || [])];
     const [mainImage, setMainImage] = useState<string>();
     const [gallery, setGallery] = useState<VariantImages[]>([]);
     const [isAdding, setIsAdding] = useState(false);
@@ -38,27 +48,22 @@ const ProductPopup = () => {
     const [uniqueColors, setUniqueColors] = useState<string[]>([]);
 
     useEffect(() => {
-        if (product) {
-            setMainImage(product?.variants[0].imagesDtos[0].imageUrl);
-            setGallery(product?.variants[0].imagesDtos);
-            setSelectedColor(product?.variants[0].hexCode);
-            setSelectedSize(product?.variants[0].sizeName);
-            setUniqueColors([...new Set(product?.variants.filter(v => v.sizeName === allSizes[0]).map(v => v.hexCode))])
+        if (product && product.variants && product.variants.length > 0) {
+            setMainImage(product.variants[0].imagesDtos[0]?.imageUrl);
+            setGallery(product.variants[0].imagesDtos || []);
+            setSelectedColor(product.variants[0].hexCode);
+            setSelectedSize(product.variants[0].sizeName);
+            setUniqueColors([...new Set(product.variants.filter(v => v.sizeName === product.variants[0].sizeName).map(v => v.hexCode))]);
         }
-    }, [product])
+    }, [product]);
 
     const handleAddToCart = () => {
         if (isAdding) return;
         setIsAdding(true);
 
         if (!selectedColor || !selectedSize) {
-            if (!selectedColor) {
-                setColorError(true)
-            }
-
-            if (!selectedSize) {
-                setSizeError(true)
-            }
+            if (!selectedColor) setColorError(true);
+            if (!selectedSize) setSizeError(true);
         } else {
             const variant = getVariant(selectedColor, selectedSize);
 
@@ -70,16 +75,16 @@ const ProductPopup = () => {
             const cartItem = {
                 productId: product.id,
                 variantId: variant.id,
-                name: product?.name,
-                price: product?.price,
-                description: product?.description,
-                imagesDtos: variant?.imagesDtos[0],
-                color: variant?.colorName,
+                name: product.name,
+                price: product.price,
+                description: product.description,
+                imagesDtos: variant.imagesDtos[0],
+                color: variant.colorName,
                 hexCode: variant.hexCode,
-                size: variant?.sizeName,
-                reserved: variant?.reserved,
+                size: variant.sizeName,
+                reserved: variant.reserved,
                 quantity: 1,
-            }
+            };
 
             addToCart(cartItem);
             toast.success(t("add_to_cart_message"));
@@ -87,137 +92,200 @@ const ProductPopup = () => {
 
         setTimeout(() => {
             setIsAdding(false);
-            setColorError(false)
-            setSizeError(false)
+            setColorError(false);
+            setSizeError(false);
         }, 1000);
     };
 
     const handleSelectedSize = (size: string) => {
         setSelectedSize(size);
+        const availableVariants = product?.variants.filter(v => v.sizeName === size) || [];
+        setUniqueColors([...new Set(availableVariants.map(v => v.hexCode))]);
 
-        // get all variants these are match the selected size.
-        const availableVariants = product?.variants.filter(v => v.sizeName === size)
-        setUniqueColors([...new Set(availableVariants?.map(v => v.hexCode))]);
-
-        // change the color to be the selected color
-        if (availableVariants && availableVariants.length > 0) {
+        if (availableVariants.length > 0) {
             setSelectedColor(availableVariants[0].hexCode);
+            if (availableVariants[0].imagesDtos && availableVariants[0].imagesDtos.length > 0) {
+                setMainImage(availableVariants[0].imagesDtos[0].imageUrl);
+                setGallery(availableVariants[0].imagesDtos);
+            }
         }
-    }
+    };
 
     const handleSelectedColor = (color: string) => {
-        // get a single variant by the color
         const variant = getVariantByColor(color);
-
-        // change the color to be the selected color
         setSelectedColor(color);
-        // change the main image to be the first image in the selected variant gallery
-        setMainImage(variant?.imagesDtos[0].imageUrl)
-        // change the gallery to the gallery of the selected variant
-        setGallery(variant?.imagesDtos || [])
-    }
-
-    // used to get the seleted variant to add it in the cart.
-    const getVariant = (color: string, size: string) => {
-        const selectedVariant = product?.variants.filter(v => v.hexCode === color && v.sizeName === size)
-
-        if (selectedVariant && selectedVariant.length > 0) {
-            return selectedVariant[0];
+        if (variant && variant.imagesDtos && variant.imagesDtos.length > 0) {
+            setMainImage(variant.imagesDtos[0].imageUrl);
+            setGallery(variant.imagesDtos);
         }
-    }
+    };
 
-    // used to return the first variant that match the given color
-    const getVariantByColor = (color: string) => product?.variants.filter(v => v.hexCode === color)[0];
+    const getVariant = (color: string, size: string) => {
+        const selected = product?.variants.filter(v => v.hexCode === color && v.sizeName === size);
+        return selected && selected.length > 0 ? selected[0] : undefined;
+    };
+
+    const getVariantByColor = (color: string) => {
+        return product?.variants.filter(v => v.hexCode === color)[0];
+    };
+
+    const handleExit = () => {
+        if (window.history.length > 1) {
+            navigate(-1);
+        } else {
+            navigate('/products');
+        }
+    };
 
     return (
-        <div>
-            <Navbar></Navbar>
+        <div className="product-details-page">
+            <Navbar />
 
-            <div className="product-popup">
-                <div className="product-popup-content">
-                    <div className="product-images-section">
-                        <img src={mainImage} alt={product?.name} className="main-product-image" />
+            <main className="product-details-container">
+                <div className={`product-details-card ${savedLang === 'ar' ? 'rtl' : 'ltr'}`}>
+                    {/* Exit Button */}
+                    <button
+                        className="product-exit-btn"
+                        onClick={handleExit}
+                        aria-label="Exit product details"
+                        title="Back"
+                    >
+                        <i className="fa-solid fa-xmark"></i>
+                    </button>
 
-                        {/* Additional images could be added here */}
-                        <div className="additional-images">
-                            {gallery?.map((Image, index) => (
-                                <img
-                                    src={Image.imageUrl}
-                                    key={Image.imageUrl + index}
-                                    onClick={() => setMainImage(Image.imageUrl)}
-                                    alt="Product view 1"
-                                    className={mainImage === Image.imageUrl ? "thumbnail selected" : "thumbnail"}
+                    {pageLoading ? (
+                        <div className="product-details-loading">
+                            <i className="fa-solid fa-circle-notch fa-spin"></i>
+                        </div>
+                    ) : (
+                        <div className="product-details-grid">
+                            {/* Images Section */}
+                            <div className="product-images-section">
+                                <div className="main-image-wrapper">
+                                    <img
+                                        src={mainImage}
+                                        alt={product?.name || "Product"}
+                                        className="main-product-image"
+                                    />
+                                </div>
+
+                                {/* Thumbnail Gallery */}
+                                {gallery && gallery.length > 1 && (
+                                    <div className="additional-images">
+                                        {gallery.map((img, index) => (
+                                            <button
+                                                key={img.imageUrl + index}
+                                                type="button"
+                                                onClick={() => setMainImage(img.imageUrl)}
+                                                className={`thumbnail-btn ${mainImage === img.imageUrl ? "selected" : ""}`}
+                                                aria-label={`View image ${index + 1}`}
+                                            >
+                                                <img
+                                                    src={img.imageUrl}
+                                                    alt={img.altText || `View ${index + 1}`}
+                                                    className="thumbnail"
+                                                />
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Details Section */}
+                            <div className="product-details-section">
+                                <div className="product-badge">{t("primary_quantity")}</div>
+                                <h1 className="product-title">{product?.name}</h1>
+
+                                <div
+                                    className="product-description"
+                                    dangerouslySetInnerHTML={{
+                                        __html: product?.description || ""
+                                    }}
                                 />
-                            ))}
-                        </div>
-                    </div>
 
-                    <div className="product-details-section">
-                        <div className="product-badge">{t("primary_quantity")}</div>
-                        <h1 className="product-title">{product?.name}</h1>
-                            <div dangerouslySetInnerHTML={{
-                                __html: product?.description || ""
-                            }} />
-                        <p >
-                        </p>
+                                <div className="product-price">
+                                    <span className="price-label">{t("price")}:</span>{" "}
+                                    <span className="price-value">{product?.price} {t("egp")}</span>
+                                </div>
 
-                        <div className="product-price">{t("price")}:  {product?.price} {t("egp")}</div>
+                                {/* Sizes Selector */}
+                                <div className={sizeError ? "size-selector display-color-error" : "size-selector"}>
+                                    <label>{t("sizes")}</label>
+                                    <div className="size-options">
+                                        {allSizes.map(size => (
+                                            <button
+                                                key={size}
+                                                type="button"
+                                                className={`size-btn ${selectedSize === size ? 'selected' : ''}`}
+                                                onClick={() => handleSelectedSize(size)}
+                                            >
+                                                {size}
+                                            </button>
+                                        ))}
+                                        <button type="button" className="size-guide">
+                                            {t("size_guide")}
+                                        </button>
+                                    </div>
+                                    <p className='size-error' style={sizeError ? { opacity: "1" } : { opacity: '0' }}>
+                                        Select a size first.
+                                    </p>
+                                </div>
 
-                        <div className={sizeError ? "size-selector display-color-error" : "size-selector"}>
-                            <label>{t("sizes")}</label>
-                            <div className="size-options">
-                                {allSizes.map(size => (
-                                    <button
-                                        key={size}
-                                        className={`size-btn ${selectedSize === size ? 'selected' : ''}`}
-                                        onClick={() => handleSelectedSize(size)}
-                                    >
-                                        {size}
-                                    </button>
-                                ))}
-                                <button className="size-guide">{t("size_guide")}</button>
+                                {/* Colors Selector */}
+                                <div className={colorError ? "color-selector display-color-error" : "color-selector"}>
+                                    <label>
+                                        {t("color")}{selectedColor ? " | " + (getVariantByColor(selectedColor)?.colorName || "") : ""}
+                                    </label>
+                                    <div className="color-options">
+                                        {uniqueColors.map(color => (
+                                            <button
+                                                key={color}
+                                                type="button"
+                                                className={`color-btn ${selectedColor === color ? 'selected' : ''}`}
+                                                style={{ backgroundColor: color }}
+                                                onClick={() => handleSelectedColor(color)}
+                                                aria-label={`Select color ${color}`}
+                                            ></button>
+                                        ))}
+                                    </div>
+                                    <p className='color-error' style={colorError ? { opacity: "1" } : { opacity: '0' }}>
+                                        Select a color first.
+                                    </p>
+                                </div>
+
+                                {/* Add to Cart Button */}
+                                <button
+                                    type="button"
+                                    className="add-to-cart-btn"
+                                    onClick={handleAddToCart}
+                                    disabled={isAdding}
+                                >
+                                    <i className="fa-solid fa-cart-shopping"></i> {t("add_to_cart")}
+                                </button>
+
+                                {/* Delivery Info */}
+                                <div className="delivery-info">
+                                    <i className="fa-solid fa-truck-fast"></i> Free delivery on orders over 500 EGP
+                                </div>
+
+                                {/* Key Features */}
+                                <div className="features-section">
+                                    <h3>KEY FEATURES</h3>
+                                    <ul>
+                                        <li><i className="fa-solid fa-check"></i> High stand-up collar</li>
+                                        <li><i className="fa-solid fa-check"></i> Metal zipper and hidden button fastening</li>
+                                        <li><i className="fa-solid fa-check"></i> Two slit pockets with buttons</li>
+                                        <li><i className="fa-solid fa-check"></i> Long sleeves with hidden elastic cuffs</li>
+                                        <li><i className="fa-solid fa-check"></i> Premium inner lining</li>
+                                    </ul>
+                                </div>
                             </div>
-                            <p className='size-error' style={sizeError ? { opacity: "1" } : { opacity: '0' }}>Select a size firts.</p>
                         </div>
-                        {/* | {selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)} */}
-                        <div className={colorError ? "color-selector display-color-error" : "color-selector"}>
-                            <label>{t("color")}{selectedColor ? " | " + getVariantByColor(selectedColor)?.colorName : ""}</label>
-                            <div className="color-options">
-                                {uniqueColors.map(color => (
-                                    <button
-                                        key={color}
-                                        className={`color-btn ${selectedColor === color ? 'selected' : ''}`}
-                                        style={{ backgroundColor: color }}
-                                        onClick={() => handleSelectedColor(color)}
-                                    ></button>
-                                ))}
-                            </div>
-                            <p className='color-error' style={colorError ? { opacity: "1" } : { opacity: '0' }}>Select a color first.</p>
-                        </div>
-
-                        <button className="add-to-cart-btn" onClick={() => handleAddToCart()}>
-                            <i className="fas fa-shopping-cart"></i> {t("add_to_cart")}
-                        </button>
-
-                        <div className="delivery-info">
-                            <i className="fas fa-truck"></i> Free delivery on orders over $30.00
-                        </div>
-
-                        <div className="features-section">
-                            <h3>KEY FEATURES</h3>
-                            <ul>
-                                <li><i className="fas fa-check"></i> High stand-up collar</li>
-                                <li><i className="fas fa-check"></i> Metal zipper and hidden button fastening</li>
-                                <li><i className="fas fa-check"></i> Two slit pockets with buttons</li>
-                                <li><i className="fas fa-check"></i> Long sleeves with hidden elastic cuffs</li>
-                                <li><i className="fas fa-check"></i> Lining inside</li>
-                            </ul>
-                        </div>
-                    </div>
+                    )}
                 </div>
-            </div>
+            </main>
         </div>
     );
 };
 
-export default ProductPopup;
+export default ProductDetails;

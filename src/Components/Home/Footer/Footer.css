@@ -1,17 +1,23 @@
+/* ==========================================================================
+   FOOTER SECTION - Black & Gray Degrees Monochrome Redesign
+   ========================================================================== */
+
 .footer {
-    background-color: var(--main-color);
-    color: white;
-    padding: 40px 20px 20px;
-    font-family: 'Arial', sans-serif;
+    background-color: #000000;
+    color: #f3f4f6;
+    padding: 60px 20px 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
 }
 
 .footer-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 22px;
+    padding-bottom: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .footer-logo {
@@ -21,111 +27,86 @@
 }
 
 .logo-circle {
-    width: 100px;
-    height: 70px;
-    background-color: #ff3b3b;
-    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: opacity 0.2s ease;
+}
+
+.logo-circle:hover {
+    opacity: 0.85;
 }
 
 .logo-circle img {
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
 }
 
 .footer-description {
-    font-size: 1rem;
+    font-size: 1.05rem;
     text-align: center;
     max-width: 600px;
-    line-height: 1.5;
-    opacity: 0.8;
+    line-height: 1.6;
+    color: #cbd5e1;
+    margin: 0;
 }
 
 .social-icons {
     display: flex;
-    gap: 15px;
+    gap: 16px;
+    margin-top: 6px;
 }
 
+/* Social Icon (No box-shadow, color change on hover, no movement) */
 .social-icon {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #1a1c22;
+    border: 1px solid #4a4e58;
     border-radius: 50%;
-    transition: background-color 0.3s ease;
+    box-shadow: none !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .social-icon:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #282c35;
+    border-color: #cbd5e1;
 }
 
 .social-icon svg {
     width: 20px;
     height: 20px;
-    stroke: white;
+    stroke: #f3f4f6;
+    transition: stroke 0.2s ease;
+}
+
+.social-icon:hover svg {
+    stroke: #ffffff;
 }
 
 .footer-bottom {
-    margin-top: 20px;
+    margin-top: 25px;
+    padding-top: 25px;
     text-align: center;
-    font-size: 0.9rem;
-    opacity: 0.7;
+    font-size: 0.95rem;
+    color: #949aa6;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Responsive design */
+/* Responsive */
 @media (max-width: 768px) {
     .footer {
-        padding: 30px 15px 15px;
+        padding: 45px 15px 20px;
     }
-
-    .footer-content {
-        gap: 15px;
-    }
-
-    .logo-circle {
-        width: 40px;
-        height: 40px;
-    }
-
-    .logo-circle svg {
-        width: 18px;
-        height: 18px;
-    }
-
     .footer-description {
         font-size: 0.95rem;
-    }
-
-    .social-icon {
-        width: 35px;
-        height: 35px;
-    }
-
-    .social-icon svg {
-        width: 16px;
-        height: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .footer {
-        padding: 25px 10px 10px;
-    }
-
-    .footer-content {
-        gap: 10px;
-    }
-
-    .footer-description {
-        font-size: 0.9rem;
-        max-width: 100%;
-    }
-
-    .footer-bottom {
-        font-size: 0.85rem;
     }
 }

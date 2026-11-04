@@ -7,7 +7,7 @@ const Discount = () => {
     const discounts = [
         { name: '50% Off', discription: 'On selected summer items', icon: <i className="fa-solid fa-tag"></i> },
         { name: 'Buy 2 Get 1 Free', discription: 'On all t-shirts', icon: <i className="fa-solid fa-tag"></i> },
-        { name: 'Free Shipping', discription: 'On orders over $100', icon: <i className="fa-solid fa-tag"></i> },
+        { name: 'Free Shipping', discription: 'On orders over 500 EGP', icon: <i className="fa-solid fa-tag"></i> },
     ]
 
     return (

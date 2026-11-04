@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useContactUs } from "../../../Context/ContactUsContext";
 import { toast } from "react-toastify";
@@ -6,7 +6,7 @@ import "./Contact.css";
 
 const Contact = () => {
   const { t } = useTranslation("Home");
-  const savedLang = localStorage.getItem("lang");
+  const savedLang = localStorage.getItem("lang") || "en";
   const { contactUs, loading } = useContactUs();
 
   const [formData, setFormData] = useState({
@@ -34,20 +34,12 @@ const Contact = () => {
 
   return (
     <section className="container contact-container">
-      <div
-        className={
-          savedLang === `ar` ? "contact contact-ar" : "contact contact-en"
-        }
-      >
+      <div className={`contact ${savedLang === 'ar' ? 'contact-ar' : 'contact-en'}`}>
         <div className="contact-content">
-          <div
-            className={
-              savedLang === `ar`
-                ? "contact-info contact-info-ar"
-                : "contact-info contact-info-en"
-            }
-          >
-            <h3>{t("contactUs.get_in_touch")}</h3>
+          {/* Pitch-Black Floating Card (Matches Screenshot) */}
+          <div className={`contact-info ${savedLang === 'ar' ? 'contact-info-ar' : 'contact-info-en'}`}>
+            <h3 className="contact-info-title">{t("contactUs.get_in_touch")}</h3>
+
             <div className="info-item">
               <i className="fa-solid fa-envelope info-icon"></i>
               <div className="info-text">
@@ -55,6 +47,7 @@ const Contact = () => {
                 <p>ONOStore@gmail.com</p>
               </div>
             </div>
+
             <div className="info-item">
               <i className="fa-solid fa-phone-flip info-icon"></i>
               <div className="info-text">
@@ -62,6 +55,7 @@ const Contact = () => {
                 <p>01023839637</p>
               </div>
             </div>
+
             <div className="info-item">
               <i className="fa-solid fa-location-dot info-icon"></i>
               <div className="info-text">
@@ -71,11 +65,13 @@ const Contact = () => {
             </div>
           </div>
 
+          {/* Form Side */}
           <form className="contact-form" onSubmit={handleSubmit}>
             <div className="contact-header">
               <h2 className="contact-title">{t("contactUs.need_help")}</h2>
               <p className="contact-subtitle">{t("contactUs.subtitle")}</p>
             </div>
+
             <div className="form-group">
               <label htmlFor="name" className="form-label">
                 {t("contactUs.name")}
@@ -90,14 +86,16 @@ const Contact = () => {
                 className="form-input"
                 required
                 disabled={loading}
+                autoComplete="name"
               />
             </div>
+
             <div className="form-group">
               <label htmlFor="phone" className="form-label">
                 {t("contactUs.phone_label")}
               </label>
               <input
-                type="number"
+                type="tel"
                 id="phone"
                 value={formData.phone}
                 onChange={(e) =>
@@ -106,17 +104,17 @@ const Contact = () => {
                 className="form-input"
                 required
                 disabled={loading}
+                autoComplete="tel"
               />
             </div>
+
             <button type="submit" className="submit-btn" disabled={loading}>
-              <div>
-                <span style={{ padding: "8px" }}>
-                  {loading ? "Sending..." : t("contactUs.send_message")}
-                </span>
+              <div className="btn-content">
+                <span>{loading ? "Sending..." : t("contactUs.send_message")}</span>
                 {loading ? (
                   <i className="fa-solid fa-spinner fa-spin"></i>
                 ) : (
-                  <i className="fa-solid fa-paper-plane"></i>
+                  <i className="fa-solid fa-paper-plane submit-plane-icon"></i>
                 )}
               </div>
             </button>

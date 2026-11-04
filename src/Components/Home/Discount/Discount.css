@@ -1,116 +1,125 @@
+/* ==========================================================================
+   DISCOUNT / SPECIAL OFFERS - Black & Gray Degrees Monochrome Redesign
+   ========================================================================== */
+
 .special-offers-section {
-    background-color: var(--main-color);
-    padding: 40px 20px;
+    background: linear-gradient(180deg, #121317 0%, #0a0a0c 100%);
+    padding: 70px 20px;
     text-align: center;
-    color: white;
+    color: #f3f4f6;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
 }
 
-.section-title {
-    font-size: 2.5rem;
-    font-weight: bold;
+.special-offers-section .section-title {
+    font-size: 2.8rem;
+    font-weight: 800;
     margin-bottom: 10px;
+    color: #ffffff;
+    letter-spacing: -0.5px;
 }
 
-.section-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 40px;
+.special-offers-section .section-subtitle {
+    font-size: 1.15rem;
+    color: #949aa6;
+    margin-bottom: 50px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.offers-container {
+.special-offers-section .offers-container {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 32px;
     flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.offer-card {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 30px 20px;
-    width: 280px;
-    min-height: 200px;
+/* Offer Card (No translateY, color transitions on hover) */
+.special-offers-section .offer-card {
+    background: linear-gradient(145deg, #1e2128, #15171c);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 38px 26px;
+    width: 310px;
+    min-height: 220px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    position: relative;
+    cursor: default;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
-.offer-card:hover {
-    transform: translateY(-5px);
-    background-color: rgba(255, 255, 255, 0.15);
+.special-offers-section .offer-card:hover {
+    background: linear-gradient(145deg, #252932, #1a1c22);
+    border-color: #cbd5e1;
 }
 
-.offer-icon {
-    margin-bottom: 20px;
+.special-offers-section .offer-icon {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background-color: #000000;
+    border: 1px solid #4a4e58;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    transition: border-color 0.25s ease, background-color 0.25s ease;
 }
 
-.offer-icon i {
-    font-size: 4rem;
+.special-offers-section .offer-card:hover .offer-icon {
+    border-color: #f3f4f6;
+    background-color: #121316;
 }
 
-.offer-title {
+.special-offers-section .offer-icon i {
+    font-size: 2rem;
+    color: #f3f4f6;
+}
+
+.special-offers-section .offer-title {
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 10px;
+    color: #ffffff;
 }
 
-.offer-description {
-    font-size: 0.9rem;
-    opacity: 0.8;
+.special-offers-section .offer-description {
+    font-size: 0.95rem;
+    color: #cbd5e1;
     margin: 0;
+    line-height: 1.5;
 }
 
+/* Responsive */
 @media (max-width: 1024px) {
-    .offers-container {
-        gap: 22px;
+    .special-offers-section .offers-container {
+        gap: 20px;
     }
-
-    .offer-card {
-        padding: 24px 16px;
-        width: 220px;
-        min-height: 180px;
-    }
-
-    .offer-icon i {
-        font-size: 3.5rem;
-    }
-
-    .offer-title {
-        font-size: 1.4rem;
+    .special-offers-section .offer-card {
+        width: 260px;
+        padding: 30px 20px;
     }
 }
 
 @media (max-width: 768px) {
-    .section-title {
-        font-size: 2rem;
-    }
-
-    .section-subtitle {
-        font-size: 1rem;
-    }
-
-    .offers-container {
-        gap: 20px;
-    }
-
-    .offer-card {
-        width: 100%;
-        max-width: 300px;
-    }
-}
-
-@media (max-width: 480px) {
     .special-offers-section {
-        padding: 30px 15px;
+        padding: 50px 15px;
     }
-
-    .section-title {
-        font-size: 1.8rem;
+    .special-offers-section .section-title {
+        font-size: 2.2rem;
     }
-
-    .offer-card {
-        padding: 25px 15px;
-        min-height: auto;
+    .special-offers-section .offer-card {
+        width: 100%;
+        max-width: 360px;
     }
 }

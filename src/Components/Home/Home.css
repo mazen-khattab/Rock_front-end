@@ -1,3 +1,7 @@
 .home {
-    height: 200vh;
+    background-color: var(--page-bg);
+    min-height: 100vh;
+    color: var(--text-primary);
+    position: relative;
+    overflow-x: hidden;
 }
