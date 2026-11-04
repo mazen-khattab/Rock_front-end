@@ -5,10 +5,11 @@ import {
     Phone,
     Globe,
     Building,
-    Loader as Road,
+    MapPin,
     Lock,
     Save,
     Edit3,
+    Loader2,
 } from "lucide-react";
 import Navbar from "../Home/Navbar/Navbar";
 import Footer from "../Home/Footer/Footer";
@@ -41,13 +42,13 @@ const UserProfile = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [isInitialLoading, setIsInitialLoading] = useState(true);
     const [formData, setFormData] = useState(initialFormData);
-    const [profileErrorMessage, setProfileErrorMessage] = useState("")
+    const [profileErrorMessage, setProfileErrorMessage] = useState("");
     const [profileSuccessMessage, setProfileSuccessMessage] = useState("");
     const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
     const [passwordSuccessMessage, setPasswordSuccessMessage] = useState("");
     const [passwordData, setPasswordData] = useState(initialPasswordData);
 
-    // used to load the user profile info
+    // load user profile info
     useEffect(() => {
         const loadProfile = async () => {
             try {
@@ -62,7 +63,7 @@ const UserProfile = () => {
         loadProfile();
     }, [getProfile]);
 
-    // used to update the values of FormData from the getProfile endpoint
+    // sync formData from profile
     useEffect(() => {
         if (!profile) {
             return;
@@ -81,7 +82,6 @@ const UserProfile = () => {
         });
     }, [profile]);
 
-    // used to handle changing in any user info input value
     const handleInputChange = (field: string, value: string) => {
         setFormData((prev) => ({
             ...prev,
@@ -89,7 +89,6 @@ const UserProfile = () => {
         }));
     };
 
-    // used to handle changing in user address input value
     const handleAddressChange = (field: string, value: string) => {
         setFormData((prev) => ({
             ...prev,
@@ -100,7 +99,6 @@ const UserProfile = () => {
         }));
     };
 
-    // used to handle changing in user passwords value
     const handlePasswordChange = (field: string, value: string) => {
         setPasswordData((prev) => ({
             ...prev,
@@ -108,12 +106,10 @@ const UserProfile = () => {
         }));
     };
 
-    // used to cancel and discart the changing before saving
     const handleCancel = () => {
         setIsEditing(false);
         setProfileErrorMessage("");
         setProfileSuccessMessage("");
-        // setPasswordData(initialPasswordData);
 
         if (!profile) {
             setFormData(initialFormData);
@@ -133,7 +129,6 @@ const UserProfile = () => {
         });
     };
 
-    // calling change password endpoint
     const handlePasswordSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setPasswordErrorMessage("");
@@ -146,9 +141,8 @@ const UserProfile = () => {
         } catch (error: any) {
             setPasswordErrorMessage(error.message || "Failed to change password");
         }
-    }
+    };
 
-    // calling seve the user info 
     const handleSave = async () => {
         setProfileErrorMessage("");
         setProfileSuccessMessage("");
@@ -168,289 +162,303 @@ const UserProfile = () => {
         } catch (error: any) {
             setProfileErrorMessage(error.message || "Failed to update profile");
         }
-    }
+    };
 
     if (isInitialLoading) {
         return (
             <div>
-                <Navbar></Navbar>
-                <div className="profile-page">
-                    <div className="container">
-                        <div className="profile-page-content">
-                            <div className="profile-section">
-                                <p>{t("manage_personal_info")}</p>
-                            </div>
-                        </div>
+                <Navbar />
+                <div className="profile-page container">
+                    <div className="profile-loading">
+                        <Loader2 className="profile-loading-icon" size={44} />
                     </div>
                 </div>
-                <Footer></Footer>
+                <Footer />
             </div>
         );
     }
 
     return (
         <div>
-            <Navbar></Navbar>
+            <Navbar />
 
-            <div className="profile-page">
-                <div className="container">
-                    <div className="profile-page-content">
-                        <div className="profile-header">
-                            <div className="profile-avatar">
-                                <User size={48} />
-                            </div>
-                            <div className="profile-title">
-                                <h1>{t("user_profile")}</h1>
-                                <p>{t("manage_personal_info")}</p>
-                            </div>
-                            <div className="actions-buttons">
-                                {!isEditing ? (
-                                    <button onClick={() => setIsEditing(true)} className="edit-btn">
-                                        <Edit3 size={18} />
-                                        {t("edit_profile")}
+            <main className="profile-page container">
+                <div className="profile-page-content">
+                    {/* Header */}
+                    <div className="profile-header">
+                        <div className="profile-avatar">
+                            <User size={38} />
+                        </div>
+                        <div className="profile-title">
+                            <h1>{t("user_profile")}</h1>
+                            <p>{t("manage_personal_info")}</p>
+                        </div>
+                        <div className="actions-buttons">
+                            {!isEditing ? (
+                                <button
+                                    type="button"
+                                    onClick={() => setIsEditing(true)}
+                                    className="edit-btn"
+                                >
+                                    <Edit3 size={16} />
+                                    <span>{t("edit_profile")}</span>
+                                </button>
+                            ) : (
+                                <div className="edit-actions">
+                                    <button
+                                        type="button"
+                                        onClick={handleCancel}
+                                        className="cancel-btn"
+                                    >
+                                        <span>{t("cancel")}</span>
                                     </button>
-                                ) : (
-                                    <div className="edit-actions">
-                                        <button onClick={handleCancel} className="cancel-btn">
-                                            {t("cancel")}
-                                        </button>
-                                        <button onClick={handleSave} className="save-btn" disabled={loading}>
-                                            <Save size={18} />
-                                            {loading ? "Saving..." : t("save_changes")}
-                                        </button>
-                                    </div>
-                                )}
+                                    <button
+                                        type="button"
+                                        onClick={handleSave}
+                                        className="save-btn"
+                                        disabled={loading}
+                                    >
+                                        <Save size={16} />
+                                        <span>{loading ? "Saving..." : t("save_changes")}</span>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="profile-content">
+                        {/* Personal Information */}
+                        <div className="profile-section">
+                            <h2 className="section-title">{t("personal_information")}</h2>
+                            {profileErrorMessage && (
+                                <p className="error-message">{profileErrorMessage}</p>
+                            )}
+                            {!profileErrorMessage && profileSuccessMessage && (
+                                <p className="success-message">{profileSuccessMessage}</p>
+                            )}
+                            <div className="form-grid">
+                                <div className="form-group">
+                                    <label className="form-label">
+                                        <User size={16} />
+                                        <span>{t("first_name")}</span>
+                                    </label>
+                                    {isEditing ? (
+                                        <input
+                                            type="text"
+                                            value={formData.firstName}
+                                            onChange={(e) => handleInputChange("firstName", e.target.value)}
+                                            className="form-input"
+                                            placeholder={t("enter_first_name")}
+                                        />
+                                    ) : (
+                                        <div className="form-display">{formData.firstName || "—"}</div>
+                                    )}
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">
+                                        <User size={16} />
+                                        <span>{t("last_name")}</span>
+                                    </label>
+                                    {isEditing ? (
+                                        <input
+                                            type="text"
+                                            value={formData.lastName}
+                                            onChange={(e) => handleInputChange("lastName", e.target.value)}
+                                            className="form-input"
+                                            placeholder={t("enter_last_name")}
+                                        />
+                                    ) : (
+                                        <div className="form-display">{formData.lastName || "—"}</div>
+                                    )}
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">
+                                        <Mail size={16} />
+                                        <span>{t("email_address")}</span>
+                                    </label>
+                                    {isEditing ? (
+                                        <input
+                                            type="email"
+                                            value={formData.email}
+                                            onChange={(e) => handleInputChange("email", e.target.value)}
+                                            className="form-input"
+                                            placeholder={t("enter_email")}
+                                        />
+                                    ) : (
+                                        <div className="form-display">{formData.email || "—"}</div>
+                                    )}
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">
+                                        <Phone size={16} />
+                                        <span>{t("phone_number")}</span>
+                                    </label>
+                                    {isEditing ? (
+                                        <input
+                                            type="tel"
+                                            value={formData.phone}
+                                            onChange={(e) => handleInputChange("phone", e.target.value)}
+                                            className="form-input"
+                                            placeholder={t("enter_phone")}
+                                        />
+                                    ) : (
+                                        <div className="form-display">{formData.phone || "—"}</div>
+                                    )}
+                                </div>
                             </div>
                         </div>
 
-                        <div className="profile-content">
-                            <div className="profile-section">
-                                <h2 className="section-title">{t("personal_information")}</h2>
-                                <p className="error-message" style={{ marginBottom: "16px" }}>
-                                    {profileErrorMessage}
-                                </p>
-                                {!profileErrorMessage && profileSuccessMessage ? (
-                                    <p className="success-message" style={{ marginBottom: "16px" }}>
-                                        {profileSuccessMessage}
-                                    </p>
-                                ) : null}
-                                <div className="form-grid">
-                                    <div className="form-group">
-                                        <label className="form-label">
-                                            <User size={18} />
-                                            {t("first_name")}
-                                        </label>
-                                        {isEditing ? (
-                                            <input
-                                                type="text"
-                                                value={formData.firstName}
-                                                onChange={(e) => handleInputChange("firstName", e.target.value)}
-                                                className="form-input"
-                                                placeholder={t("enter_first_name")}
-                                            />
-                                        ) : (
-                                            <div className="form-display">{formData.firstName}</div>
-                                        )}
-                                    </div>
+                        {/* Address Information */}
+                        <div className="profile-section">
+                            <h2 className="section-title">{t("address_information")}</h2>
+                            <div className="form-grid">
+                                <div className="form-group">
+                                    <label className="form-label">
+                                        <Globe size={16} />
+                                        <span>{t("governorate")}</span>
+                                    </label>
+                                    {isEditing ? (
+                                        <input
+                                            type="text"
+                                            value={formData.address?.governorate || ""}
+                                            onChange={(e) =>
+                                                handleAddressChange("governorate", e.target.value)
+                                            }
+                                            className="form-input"
+                                            placeholder={t("enter_governorate")}
+                                        />
+                                    ) : (
+                                        <div className="form-display">
+                                            {formData.address?.governorate || "—"}
+                                        </div>
+                                    )}
+                                </div>
 
-                                    <div className="form-group">
-                                        <label className="form-label">
-                                            <User size={18} />
-                                            {t("last_name")}
-                                        </label>
-                                        {isEditing ? (
-                                            <input
-                                                type="text"
-                                                value={formData.lastName}
-                                                onChange={(e) => handleInputChange("lastName", e.target.value)}
-                                                className="form-input"
-                                                placeholder={t("enter_last_name")}
-                                            />
-                                        ) : (
-                                            <div className="form-display">{formData.lastName}</div>
-                                        )}
-                                    </div>
+                                <div className="form-group">
+                                    <label className="form-label">
+                                        <Building size={16} />
+                                        <span>{t("city")}</span>
+                                    </label>
+                                    {isEditing ? (
+                                        <input
+                                            type="text"
+                                            value={formData.address?.city || ""}
+                                            onChange={(e) => handleAddressChange("city", e.target.value)}
+                                            className="form-input"
+                                            placeholder={t("enter_city")}
+                                        />
+                                    ) : (
+                                        <div className="form-display">{formData.address?.city || "—"}</div>
+                                    )}
+                                </div>
 
-                                    <div className="form-group">
-                                        <label className="form-label">
-                                            <Mail size={18} />
-                                            {t("email_address")}
-                                        </label>
-                                        {isEditing ? (
-                                            <input
-                                                type="email"
-                                                value={formData.email}
-                                                onChange={(e) => handleInputChange("email", e.target.value)}
-                                                className="form-input"
-                                                placeholder={t("enter_email")}
-                                            />
-                                        ) : (
-                                            <div className="form-display">{formData.email}</div>
-                                        )}
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label className="form-label">
-                                            <Phone size={18} />
-                                            {t("phone_number")}
-                                        </label>
-                                        {isEditing ? (
-                                            <input
-                                                type="tel"
-                                                value={formData.phone}
-                                                onChange={(e) => handleInputChange("phone", e.target.value)}
-                                                className="form-input"
-                                                placeholder={t("enter_phone")}
-                                            />
-                                        ) : (
-                                            <div className="form-display">{formData.phone}</div>
-                                        )}
-                                    </div>
+                                <div className="form-group full-width">
+                                    <label className="form-label">
+                                        <MapPin size={16} />
+                                        <span>{t("full_address")}</span>
+                                    </label>
+                                    {isEditing ? (
+                                        <input
+                                            type="text"
+                                            value={formData.address?.fullAddress || ""}
+                                            onChange={(e) =>
+                                                handleAddressChange("fullAddress", e.target.value)
+                                            }
+                                            className="form-input"
+                                            placeholder={t("enter_full_address")}
+                                        />
+                                    ) : (
+                                        <div className="form-display">
+                                            {formData.address?.fullAddress || "—"}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
+                        </div>
 
-                            <div className="profile-section">
-                                <h2 className="section-title">{t("address_information")}</h2>
+                        {/* Change Password */}
+                        <div className="profile-section">
+                            <h2 className="section-title">{t("change_password")}</h2>
+                            <form onSubmit={handlePasswordSubmit} className="password-form">
+                                {passwordErrorMessage && (
+                                    <p className="error-message">{passwordErrorMessage}</p>
+                                )}
+                                {!passwordErrorMessage && passwordSuccessMessage && (
+                                    <p className="success-message">{passwordSuccessMessage}</p>
+                                )}
                                 <div className="form-grid">
-                                    <div className="form-group">
-                                        <label className="form-label">
-                                            <Globe size={18} />
-                                            {t("governorate")}
-                                        </label>
-                                        {isEditing ? (
-                                            <input
-                                                type="text"
-                                                value={formData.address?.governorate || ""}
-                                                onChange={(e) =>
-                                                    handleAddressChange("governorate", e.target.value)
-                                                }
-                                                className="form-input"
-                                                placeholder={t("enter_governorate")}
-                                            />
-                                        ) : (
-                                            <div className="form-display">
-                                                {formData.address?.governorate || ""}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label className="form-label">
-                                            <Building size={18} />
-                                            {t("city")}
-                                        </label>
-                                        {isEditing ? (
-                                            <input
-                                                type="text"
-                                                value={formData.address?.city || ""}
-                                                onChange={(e) => handleAddressChange("city", e.target.value)}
-                                                className="form-input"
-                                                placeholder={t("enter_city")}
-                                            />
-                                        ) : (
-                                            <div className="form-display">{formData.address?.city || ""}</div>
-                                        )}
-                                    </div>
-
                                     <div className="form-group full-width">
                                         <label className="form-label">
-                                            <Road size={18} />
-                                            {t("full_address")}
+                                            <Lock size={16} />
+                                            <span>{t("current_password")}</span>
                                         </label>
-                                        {isEditing ? (
-                                            <input
-                                                type="text"
-                                                value={formData.address?.fullAddress || ""}
-                                                onChange={(e) =>
-                                                    handleAddressChange("fullAddress", e.target.value)
-                                                }
-                                                className="form-input"
-                                                placeholder={t("enter_full_address")}
-                                            />
-                                        ) : (
-                                            <div className="form-display">
-                                                {formData.address?.fullAddress || ""}
-                                            </div>
-                                        )}
+                                        <input
+                                            type="password"
+                                            value={passwordData.oldPassword}
+                                            onChange={(e) =>
+                                                handlePasswordChange("oldPassword", e.target.value)
+                                            }
+                                            className="form-input"
+                                            placeholder={t("enter_current_password")}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label">
+                                            <Lock size={16} />
+                                            <span>{t("new_password")}</span>
+                                        </label>
+                                        <input
+                                            type="password"
+                                            value={passwordData.newPassword}
+                                            onChange={(e) =>
+                                                handlePasswordChange("newPassword", e.target.value)
+                                            }
+                                            className="form-input"
+                                            placeholder={t("enter_new_password")}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label">
+                                            <Lock size={16} />
+                                            <span>{t("confirm_new_password")}</span>
+                                        </label>
+                                        <input
+                                            type="password"
+                                            value={passwordData.confirmedPassword}
+                                            onChange={(e) =>
+                                                handlePasswordChange("confirmedPassword", e.target.value)
+                                            }
+                                            className="form-input"
+                                            placeholder={t("confirm_password_placeholder")}
+                                            required
+                                        />
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="profile-section">
-                                <h2 className="section-title">{t("change_password")}</h2>
-                                <form onSubmit={handlePasswordSubmit} className="password-form">
-                                    <p className="error-message">{passwordErrorMessage}</p>
-                                    {!passwordErrorMessage && passwordSuccessMessage ? (
-                                        <p className="success-message">{passwordSuccessMessage}</p>
-                                    ) : null}
-                                    <div className="form-grid">
-                                        <div className="form-group full-width">
-                                            <label className="form-label">
-                                                <Lock size={18} />
-                                                {t("current_password")}
-                                            </label>
-                                            <input
-                                                type="password"
-                                                value={passwordData.oldPassword}
-                                                onChange={(e) =>
-                                                    handlePasswordChange("oldPassword", e.target.value)
-                                                }
-                                                className="form-input"
-                                                placeholder={t("enter_current_password")}
-                                                required
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label className="form-label">
-                                                <Lock size={18} />
-                                                {t("new_password")}
-                                            </label>
-                                            <input
-                                                type="password"
-                                                value={passwordData.newPassword}
-                                                onChange={(e) =>
-                                                    handlePasswordChange("newPassword", e.target.value)
-                                                }
-                                                className="form-input"
-                                                placeholder={t("enter_new_password")}
-                                                required
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label className="form-label">
-                                                <Lock size={18} />
-                                                {t("confirm_new_password")}
-                                            </label>
-                                            <input
-                                                type="password"
-                                                value={passwordData.confirmedPassword}
-                                                onChange={(e) =>
-                                                    handlePasswordChange("confirmedPassword", e.target.value)
-                                                }
-                                                className="form-input"
-                                                placeholder={t("confirm_password_placeholder")}
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="password-actions">
-                                        <button type="submit" className="change-password-btn" disabled={loading}>
-                                            <Lock size={18} />
-                                            {loading ? "Loading..." : t("change_password_button")}
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+                                <div className="password-actions">
+                                    <button
+                                        type="submit"
+                                        className="change-password-btn"
+                                        disabled={loading}
+                                    >
+                                        <Lock size={16} />
+                                        <span>{loading ? "Loading..." : t("change_password_button")}</span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
+            </main>
 
-
-            <Footer></Footer>
+            <Footer />
         </div>
     );
 };

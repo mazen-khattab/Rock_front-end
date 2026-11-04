@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import { useOrder } from "../../Context/OrderContext";
 import type { OrderHistoryItem } from "../../Types/order";
 
-
 const OrderHistory = () => {
     const { getOrderHistory, loading } = useOrder();
 
@@ -27,7 +26,7 @@ const OrderHistory = () => {
         const fetchOrderHistory = async () => {
             try {
                 const orderHistory = await getOrderHistory();
-                setOrders(orderHistory);
+                setOrders(orderHistory || []);
             } catch (error) {
                 console.error("Error fetching order history:", error);
             }
@@ -69,19 +68,22 @@ const OrderHistory = () => {
 
     return (
         <div>
-            <Navbar></Navbar>
+            <Navbar />
 
             <div className="order-history-page">
-                <div className="order-history-container">
+                <main className="order-history-container container">
                     {loading ? (
                         <div className="page-loading" aria-live="polite" aria-busy="true">
-                            <Loader2 className="page-loading-icon" size={48} />
+                            <Loader2 className="page-loading-icon" size={44} />
                         </div>
                     ) : (
                         <>
+                            {/* Header Card */}
                             <div className="page-header">
                                 <div className="header-content">
-                                    <Package className="header-icon" size={100} />
+                                    <div className="header-icon-wrap">
+                                        <Package className="header-icon" size={30} />
+                                    </div>
                                     <div>
                                         <h1 className="page-title">{t("order_history")}</h1>
                                         <p className="page-subtitle">{t("view_and_track_orders")}</p>
@@ -89,6 +91,7 @@ const OrderHistory = () => {
                                 </div>
                             </div>
 
+                            {/* Orders List */}
                             <div className="orders-list">
                                 {orders.map((order) => (
                                     <div key={order.orderNumber} className="order-card">
@@ -98,14 +101,14 @@ const OrderHistory = () => {
                                         >
                                             <div className="order-info">
                                                 <div className="order-id">
-                                                    <Package size={20} />
+                                                    <Package size={18} />
                                                     <span>
                                                         {t("order")} <strong>#{order.orderNumber}</strong>
                                                     </span>
                                                 </div>
                                                 <div className="order-meta">
                                                     <div className="order-date">
-                                                        <Calendar size={16} />
+                                                        <Calendar size={14} />
                                                         <span>{formatDate(order.createdAt)}</span>
                                                     </div>
                                                     <div className={`order-status ${getStatusColor(order.status)}`}>
@@ -117,14 +120,18 @@ const OrderHistory = () => {
                                                 <div className="order-total">
                                                     <span>
                                                         {order.totalPrice.toFixed(2)}{" "}
-                                                        <span className="currency">{t("currency")}</span>{" "}
+                                                        <span className="currency">{t("currency")}</span>
                                                     </span>
                                                 </div>
-                                                <button className="expand-btn">
+                                                <button
+                                                    type="button"
+                                                    className="expand-btn"
+                                                    aria-label="Toggle order details"
+                                                >
                                                     {expandedOrders.includes(order.orderNumber) ? (
-                                                        <ChevronUp size={20} />
+                                                        <ChevronUp size={18} />
                                                     ) : (
-                                                        <ChevronDown size={20} />
+                                                        <ChevronDown size={18} />
                                                     )}
                                                 </button>
                                             </div>
@@ -140,15 +147,18 @@ const OrderHistory = () => {
                                                             </div>
                                                             <div className="product-info">
                                                                 <h3 className="product-name">{product.name}</h3>
-                                                                <div dangerouslySetInnerHTML={{
-                                                                    __html: product.description || ""
-                                                                }} />
+                                                                <div
+                                                                    className="product-description"
+                                                                    dangerouslySetInnerHTML={{
+                                                                        __html: product.description || ""
+                                                                    }}
+                                                                />
                                                                 <div className="product-meta">
                                                                     <span className="product-meta-info">
-                                                                        <strong>{t("color")}: </strong> {product.colorName}{" "}
+                                                                        <strong>{t("color")}: </strong> {product.colorName}
                                                                     </span>
                                                                     <span className="product-meta-info">
-                                                                        <strong>{t("size")}: </strong> {product.sizeName}{" "}
+                                                                        <strong>{t("size")}: </strong> {product.sizeName}
                                                                     </span>
                                                                     <span className="product-meta-info">
                                                                         <strong>{t("price")}: </strong> {product.price * product.quantity}{" "}
@@ -168,22 +178,26 @@ const OrderHistory = () => {
                                 ))}
                             </div>
 
+                            {/* Empty Orders */}
                             {orders.length === 0 && (
                                 <div className="empty-orders">
-                                    <Package className="empty-icon" size={64} />
+                                    <div className="empty-icon-wrap">
+                                        <Package className="empty-icon" size={44} />
+                                    </div>
                                     <h2>{t("no_orders_yet")}</h2>
                                     <p>{t("no_orders_message")}</p>
                                     <Link to="/products" className="shop-now-btn">
-                                        {t("start_shopping")}
+                                        <span>{t("start_shopping")}</span>
+                                        <i className="fa-solid fa-arrow-right"></i>
                                     </Link>
                                 </div>
                             )}
                         </>
                     )}
-                </div>
+                </main>
             </div>
 
-            <Footer></Footer>
+            <Footer />
         </div>
     );
 };
