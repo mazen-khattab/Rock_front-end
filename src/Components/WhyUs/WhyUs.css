@@ -1,292 +1,399 @@
-/* ===== whyus-header ===== */
-.whyus-header {
-    background-color: var(--main-color);
-    color: white;
-    padding: 10rem 2rem;
-    text-align: center;
+/* ==========================================================================
+   Why Us Page Styling - Monochrome Dark & Gray Theme
+   ========================================================================== */
+
+.whyus-page {
+  padding: 20px 24px 100px;
+  margin-top: 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 75px;
 }
 
-/* ===== whyus-header-container ===== */
-.whyus-header-container {
-    max-width: 1280px;
-    margin: 0 auto;
+/* ==========================================================================
+   Header Hero Card
+   ========================================================================== */
+.whyus-header-card {
+  background: #16181d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 4.25rem 2rem;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* ===== whyus-header-title ===== */
+.whyus-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #242730;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #cbd5e1;
+  letter-spacing: 1.5px;
+  margin-bottom: 20px;
+}
+
+.whyus-badge .badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
 .whyus-header-title {
-    font-size: clamp(2.5rem, 5vw, 3.75rem);
-    font-weight: 700;
-    margin-bottom: 24px;
+  font-size: clamp(2.2rem, 4.5vw, 3.25rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
 }
 
-/* ===== whyus-header-subtitle ===== */
 .whyus-header-subtitle {
-    font-size: clamp(1rem, 2vw, 1.5rem);
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 48rem;
-    margin: 0 auto;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  color: #cbd5e1;
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
-/* ===== whyus-section / whyus-section-light / whyus-section-dark ===== */
-.whyus-section,
-.whyus-section-light,
-.whyus-section-dark {
-    padding: 80px 24px;
+/* ==========================================================================
+   Universal Card Sections
+   ========================================================================== */
+.whyus-card-section {
+  background: #1a1c22;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 4rem 3.5rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
-.whyus-section-light {
-    background-color: #f9fafb;
+.whyus-sub-tag {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #94a3b8;
+  margin-bottom: 8px;
+  text-transform: uppercase;
 }
 
-.whyus-section-dark {
-    background-color: var(--main-color);
-    color: white;
-}
-
-/* ===== whyus-section-container ===== */
-.whyus-section-container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 24px;
-}
-
-/* ===== whyus-section-title (in advantages section) ===== */
-.whyus-section-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: var(--main-color);
-    margin-bottom: 32px;
-    text-align: center;
-}
-
-.whyus-section-dark .whyus-section-title {
-    color: white;
-}
-
-/* ===== whyus-section-heading ===== */
 .whyus-section-heading {
-    text-align: center;
-    margin-bottom: 48px;
+  text-align: center;
+  margin-bottom: 36px;
 }
 
-/* ===== whyus-section-heading-title ===== */
-.whyus-section-heading-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: var(--main-color);
-    margin-bottom: 24px;
+.whyus-section-title {
+  font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 16px;
 }
 
-.whyus-section-dark .whyus-section-heading-title {
-    color: white;
-}
-
-/* ===== whyus-section-heading-text ===== */
 .whyus-section-heading-text {
-    font-size: 1.25rem;
-    color: #4b5563;
-    margin: 0 auto;
-    max-width: 56rem;
+  font-size: 15.5px;
+  color: #cbd5e1;
+  max-width: 680px;
+  margin: 0 auto;
+  line-height: 1.7;
 }
 
-.whyus-section-dark .whyus-section-heading-text {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.125rem;
-    margin-bottom: 16px;
-    line-height: 1.75;
+/* ==========================================================================
+   Features Grid (The Difference We Make)
+   ========================================================================== */
+.whyus-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
-/* ===== whyus-feature-list ===== */
-.whyus-feature-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.whyus-feature-card {
+  background: #242730;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-/* ===== whyus-feature-item ===== */
-.whyus-feature-item {
-    padding: 16px 0;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
+.whyus-feature-card:hover {
+  background-color: #2c313d;
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
-.whyus-feature-item:last-child {
-    border-bottom: none;
+.whyus-feature-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-/* ===== whyus-feature-icon ===== */
 .whyus-feature-icon {
-    width: 24px;
-    height: 24px;
-    color: var(--main-color);
-    flex-shrink: 0;
-    margin-top: 2px;
+  color: #ffffff;
+  width: 22px;
+  height: 22px;
 }
 
-/* ===== whyus-feature-content ===== */
 .whyus-feature-content {
-    /* No direct styles — children inherit */
+  flex: 1;
 }
 
-/* ===== whyus-feature-title ===== */
 .whyus-feature-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--main-color);
-    margin-bottom: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
 }
 
-/* ===== whyus-feature-description ===== */
 .whyus-feature-description {
-    font-size: 1rem;
-    color: #4b5563;
-    margin: 0;
+  font-size: 14px;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin: 0;
 }
 
-/* ===== whyus-grid-3 ===== */
+/* ==========================================================================
+   Advantages & Testimonials Grid (3-Column)
+   ========================================================================== */
 .whyus-grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
 }
 
-/* ===== whyus-card ===== */
-.whyus-card {
-    background: white;
-    padding: 32px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: var(--transition);
+/* Advantages Cards */
+.whyus-adv-card {
+  background: #242730;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 2.25rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.whyus-card:hover {
-    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
-    transform: translateY(-8px);
+.whyus-adv-card:hover {
+  background-color: #2c313d;
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
-/* ===== whyus-card-icon ===== */
 .whyus-card-icon {
-    width: 64px;
-    height: 64px;
-    background-color: var(--main-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-    transition: var(--transition)
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-.whyus-card:hover .whyus-card-icon {
-    background-color: #014849;
-}
-
-/* ===== whyus-card-icon-svg ===== */
 .whyus-card-icon-svg {
-    width: 32px;
-    height: 32px;
-    color: white;
+  width: 26px;
+  height: 26px;
+  color: #ffffff;
 }
 
-/* ===== whyus-card-title ===== */
 .whyus-card-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--main-color);
-    margin-bottom: 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12px;
 }
 
-/* ===== whyus-card-text ===== */
 .whyus-card-text {
-    font-size: 1rem;
-    color: #4b5563;
-    margin: 0;
+  font-size: 14px;
+  color: #cbd5e1;
+  line-height: 1.65;
+  margin: 0;
 }
 
-/* ===== whyus-testimonial ===== */
-.whyus-testimonial {
-    background: white;
-    padding: 32px;
-    border-radius: 12px;
-    border-left: 4px solid var(--main-color);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* ==========================================================================
+   Testimonial Cards
+   ========================================================================== */
+.whyus-testimonial-card {
+  background: #242730;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 2.25rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-/* ===== whyus-testimonial-text ===== */
+.whyus-testimonial-card:hover {
+  background-color: #2c313d;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.testimonial-rating {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.testimonial-rating .star-icon {
+  color: #ffffff;
+}
+
 .whyus-testimonial-text {
-    font-size: 1rem;
-    color: #4b5563;
-    margin-bottom: 16px;
-    font-style: italic;
+  font-size: 14.5px;
+  color: #cbd5e1;
+  line-height: 1.75;
+  font-style: italic;
+  margin-bottom: 22px;
+  flex: 1;
 }
 
-/* ===== whyus-testimonial-author ===== */
+.whyus-testimonial-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .whyus-testimonial-author {
-    font-weight: 600;
-    color: var(--main-color);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #ffffff;
 }
 
-/* ===== whyus-cta-button-wrapper ===== */
+.verified-badge {
+  font-size: 12px;
+  color: #94a3b8;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.verified-badge i {
+  color: #cbd5e1;
+  font-size: 11px;
+}
+
+/* ==========================================================================
+   Call To Action (CTA) Section
+   ========================================================================== */
+.whyus-cta-section {
+  text-align: center;
+  background: #16181d;
+}
+
+.whyus-cta-content {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.whyus-cta-text {
+  font-size: 15.5px;
+  color: #cbd5e1;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
 .whyus-cta-button-wrapper {
-    text-align: center;
-    margin-top: 48px;
+  display: flex;
+  justify-content: center;
 }
 
-/* ===== whyus-cta-button ===== */
 .whyus-cta-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 16px 32px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    background-color: white;
-    color: var(--main-color);
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 14px 36px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: none !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .whyus-cta-button:hover {
-    background-color: var(--hover-color);
-    color: white;
+  background: #242730;
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow: none !important;
 }
 
-/* ===== Mobile Responsiveness ===== */
+.cta-arrow {
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
 @media (max-width: 1024px) {
-    .whyus-grid-3 {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .whyus-page {
+    margin-top: 7rem;
+    gap: 60px;
+    padding: 20px 20px 80px;
+  }
+
+  .whyus-card-section {
+    padding: 3rem 2.25rem;
+  }
+
+  .whyus-features-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .whyus-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
 }
 
 @media (max-width: 768px) {
-    .whyus-header-title {
-        font-size: 2rem;
-    }
+  .whyus-page {
+    margin-top: 6rem;
+    padding: 16px 14px 60px;
+    gap: 48px;
+  }
 
-    .whyus-header-subtitle {
-        font-size: 1rem;
-    }
+  .whyus-header-card {
+    padding: 3.5rem 1.5rem;
+    border-radius: 18px;
+  }
 
-    .whyus-section,
-    .whyus-section-light,
-    .whyus-section-dark {
-        padding: 48px 24px;
-    }
+  .whyus-card-section {
+    padding: 2.25rem 1.25rem;
+    border-radius: 18px;
+  }
 
-    .whyus-section-title,
-    .whyus-section-heading-title {
-        font-size: 1.875rem;
-    }
+  .whyus-grid-3 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 
-    .whyus-grid-3 {
-        grid-template-columns: 1fr;
-    }
+  .whyus-adv-card,
+  .whyus-testimonial-card {
+    padding: 1.75rem 1.4rem;
+  }
 
-    .whyus-card {
-        padding: 24px;
-    }
+  .whyus-feature-card {
+    padding: 1.4rem 1.2rem;
+  }
+
+  .whyus-cta-button {
+    width: 100%;
+    justify-content: center;
+  }
 }
