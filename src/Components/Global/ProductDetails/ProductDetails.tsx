@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { Product, VariantImages } from '../../../Types/product';
+import type { ProductDetails, VariantImages } from '../../../Types/product';
 import './ProductDetails.css';
 import { useCart } from '../../../Context/CartContext';
 import { useParams } from 'react-router-dom';
@@ -11,7 +11,7 @@ import Navbar from '../../Home/Navbar/Navbar';
 const ProductPopup = () => {
     const { id } = useParams<{ id: string }>();
     const { GetById } = useProduct();
-    const [product, setProduct] = useState<Product | null>(null);
+    const [product, setProduct] = useState<ProductDetails | null>(null);
     const { t } = useTranslation("ProductDetails");
 
     // calling the endpoint that return the product by id
@@ -155,9 +155,10 @@ const ProductPopup = () => {
                     <div className="product-details-section">
                         <div className="product-badge">{t("primary_quantity")}</div>
                         <h1 className="product-title">{product?.name}</h1>
-
-                        <p className="product-description">
-                            {product?.description || "Prepare to embrace the cold in style and warmth with our Premium Quality Down Jacket. Crafted with the utmost attention to detail and featuring the finest materials, this jacket is designed to keep you cozy in even the harshest winter conditions."}
+                            <div dangerouslySetInnerHTML={{
+                                __html: product?.description || ""
+                            }} />
+                        <p >
                         </p>
 
                         <div className="product-price">{t("price")}:  {product?.price} {t("egp")}</div>

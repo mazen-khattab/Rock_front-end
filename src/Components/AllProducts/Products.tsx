@@ -26,8 +26,6 @@ function ProductPage() {
   const activeSize = searchParams.get("size");
   const activeColor = searchParams.get("color");
 
-  // const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
   const { GetAllProducts, loading } = useProduct();
 
   const translatedCategories = [
@@ -66,14 +64,6 @@ function ProductPage() {
 
     fetchProducts();
   }, [searchParams]);
-
-  // const handleProductClick = (product: Product) => {
-  //   setSelectedProduct(product);
-  // };
-
-  // const handleClosePopup = () => {
-  //   setSelectedProduct(null);
-  // };
 
   // Generic function to update (toggle) a query parameter
   const updateSearchParameter = (key: FilterKey, value: string) => {
@@ -295,20 +285,12 @@ function ProductPage() {
                   <ProductCard
                     key={product.id}
                     product={product}
-                  // onProductClick={handleProductClick}
                   />
                 ))}
               </div>
             </main>
           </div>
         )}
-
-        {/* {selectedProduct && (
-          <ProductPopup
-            product={selectedProduct}
-            // onClose={handleClosePopup}
-          />
-        )} */}
       </div>
 
     </div >

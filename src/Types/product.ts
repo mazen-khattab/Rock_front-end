@@ -1,4 +1,4 @@
-export interface Product {
+interface BaseProduct {
   id: number;
   name: string; // trans
   description: string; // trans
@@ -8,25 +8,32 @@ export interface Product {
   metaDescription: string;
   metaTitle: string;
   slug: string;
-  variants: Variant[];
 }
-
-export interface Variant {
+interface Variant {
   id: number;
   productId: number;
-  imagesDtos: VariantImages[];
   colorName: string;
   hexCode: string;
   sizeName: string;
   quantity: number;
   reserved: number;
 }
-
+export interface Product extends BaseProduct {
+  variants: ProductVariants[];
+}
+export interface ProductDetails extends BaseProduct {
+  variants: ProductDetailsVariant[];
+}
+export interface ProductVariants extends Variant {
+  imagesDtos: VariantImages;
+}
+export interface ProductDetailsVariant extends Variant {
+  imagesDtos: VariantImages[];
+}
 export interface VariantImages {
   altText: string;
   imageUrl: string;
 }
-
 export interface CartItem {
   productId: number;
   variantId: number;

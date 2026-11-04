@@ -1,14 +1,15 @@
 import React, { createContext, useContext, useState } from "react";
-import type { Product } from "../Types/product";
+import type { Product, ProductDetails } from "../Types/product";
 import api from '../API'
+import type { ApiResponse } from "../Types/auth";
 
 type ProductContextType = {
     products: Product[];
-    selectedProduct: Product | null;
+    selectedProduct: ProductDetails | null;
     loading: boolean;
 
     GetAllProducts: (pageNumber: number, pageSize: number, category?: string, size?: string, color?: string) => Promise<Product[]>;
-    GetById: (id: number) => Promise<Product | null>;
+    GetById: (id: number) => Promise<ProductDetails | null>;
 };
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -19,10 +20,8 @@ type ProductProviderProps = {
 
 export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) => {
     const [products, setProducts] = useState<Product[]>([]);
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [selectedProduct, setSelectedProduct] = useState<ProductDetails | null>(null);
     const [loading, setLoading] = useState(false);
-    const savedLang = localStorage.getItem("lang"); 
-    const langId = savedLang === 'ar' ? 1 : 2;
 
     // =========================
     // 1) GetAllProducts
@@ -31,7 +30,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
         try {
             setLoading(true);
 
-            const response = await api.get(`/Product/Products/${langId}`, {
+            const response = await api.get(`/Products`, {
                 params: {
                     pageNumber,
                     pageSize,
@@ -58,10 +57,10 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
         try {
             setLoading(true);
 
-            const response = await api.get<Product>(`/Product/${id}/${langId}`);
+            const response = await api.get<ApiResponse<ProductDetails>>(`/Products/${id}`);
             
-            setSelectedProduct(response.data);
-            return response.data;
+            setSelectedProduct(response.data.data);
+            return response.data.data;
         } catch (error) {
             console.error("GetById Error:", error);
             return null;

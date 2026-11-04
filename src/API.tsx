@@ -3,6 +3,7 @@ import type { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axio
 import type { ApiError } from './Types/auth';
 
 let API_URL = "";
+const savedLang = localStorage.getItem("lang");
 
 if ((import.meta as any).env.MODE === "development") {
   API_URL = "https://localhost:7179/api";
@@ -23,6 +24,7 @@ const axiosInstance: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
+    'Accept-Language': `${savedLang}`
   },
 });
 

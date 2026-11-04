@@ -46,7 +46,7 @@ const OrderHistory = () => {
 
     const getStatusColor = (status: string) => {
         switch (status) {
-            case "Delivered":
+            case "Confirmed":
                 return "status-delivered";
             case "Shipped":
                 return "status-shipped";
@@ -140,9 +140,9 @@ const OrderHistory = () => {
                                                             </div>
                                                             <div className="product-info">
                                                                 <h3 className="product-name">{product.name}</h3>
-                                                                <p className="product-description">
-                                                                    {product.description}
-                                                                </p>
+                                                                <div dangerouslySetInnerHTML={{
+                                                                    __html: product.description || ""
+                                                                }} />
                                                                 <div className="product-meta">
                                                                     <span className="product-meta-info">
                                                                         <strong>{t("color")}: </strong> {product.colorName}{" "}

@@ -110,11 +110,6 @@ const CartContext = createContext<CartContextValue>({
   clearCart: () => { }
 });
 
-function getLangId() {
-  const savedLang = localStorage.getItem("lang");
-  return savedLang === "ar" ? 1 : 2;
-}
-
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, loading } = useAuth();
   const [state, dispatch] = useReducer(cartReducer, initialState);
@@ -124,14 +119,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const cartCount = state.items.reduce((count, item) => count + item.quantity, 0);
 
   const getCart = useCallback(async (): Promise<ApiResponse<CartItem[]> | null> => {
-    const langId = getLangId();
 
     try {
       setCartLoading(true);
 
       const response = isAuthenticated
-        ? await cartService.GetUserCart(langId)
-        : await cartService.GetGuestCart(guestId, langId);
+        ? await cartService.GetUserCart()
+        : await cartService.GetGuestCart(guestId);
 
       dispatch({ type: "SET_ITEMS", items: response.data ?? [] });
       return response;
