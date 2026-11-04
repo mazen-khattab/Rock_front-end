@@ -1,308 +1,360 @@
-/* ===== about-header ===== */
-.about-header {
-    background-color: #003334;
-    color: white;
-    padding: 10rem 2rem;
-    text-align: center;
+/* ==========================================================================
+   About Us Page Styling - Monochrome Dark & Gray Theme
+   ========================================================================== */
+
+.about-page {
+  padding: 30px 20px 80px;
+  margin-top: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
-/* ===== about-header-container ===== */
-.about-header-container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 24px;
+/* ==========================================================================
+   Header Hero Card
+   ========================================================================== */
+.about-header-card {
+  background: #16181d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 4.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
-/* ===== about-header-title ===== */
+.about-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #242730;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #cbd5e1;
+  letter-spacing: 1.5px;
+  margin-bottom: 20px;
+}
+
+.about-badge .badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
 .about-header-title {
-    font-size: clamp(2.5rem, 5vw, 3.75rem);
-    font-weight: 700;
-    margin-bottom: 24px;
+  font-size: clamp(2.2rem, 4.5vw, 3.25rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
 }
 
-/* ===== about-header-subtitle ===== */
 .about-header-subtitle {
-    font-size: clamp(1rem, 2vw, 1.5rem);
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 48rem;
-    margin: 0 auto;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  color: #cbd5e1;
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
-/* ===== about-section / about-section-light ===== */
-.about-section,
-.about-section-light {
-    padding: 80px 24px;
+/* ==========================================================================
+   Universal Card Sections
+   ========================================================================== */
+.about-card-section {
+  background: #1a1c22;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 3.5rem 3rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
-.about-section-light {
-    background-color: #f9fafb;
+.about-sub-tag {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #94a3b8;
+  margin-bottom: 8px;
+  text-transform: uppercase;
 }
 
-/* ===== about-section-container ===== */
-.about-section-container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 24px;
-}
-
-/* ===== about-section-title (h2 in content sections) ===== */
 .about-section-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #003334;
-    margin-bottom: 32px;
+  font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 24px;
 }
 
-/* ===== about-section-paragraph ===== */
 .about-section-paragraph {
-    font-size: 1.125rem;
-    color: #374151;
-    margin-bottom: 16px;
-    line-height: 1.75;
+  font-size: 15.5px;
+  color: #cbd5e1;
+  line-height: 1.8;
+  margin-bottom: 18px;
 }
 
-/* ===== about-grid-2 ===== */
+.about-section-paragraph:last-of-type {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Our Beginning - 2-Column Grid
+   ========================================================================== */
 .about-grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: center;
 }
 
-/* ===== about-text-content ===== */
-.about-text-content {
-    /* No direct styles — layout handled by grid */
+.about-image-wrapper {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #14161a;
+  aspect-ratio: 4 / 3;
+  max-height: 380px;
 }
 
-/* ===== about-image-placeholder ===== */
-.about-image-placeholder {
-    background-color: #003334;
-    border-radius: 16px;
-    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
-    height: 24rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.125rem;
-    opacity: 0.6;
+.about-story-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-/* ===== about-grid-4 ===== */
-.about-grid-4 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
+.about-image-badge {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 8px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-/* ===== about-card ===== */
-.about-card {
-    background: white;
-    padding: 32px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+.about-image-badge .badge-year {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 1px;
 }
 
-.about-card:hover {
-    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
-    transform: translateY(-8px);
+.about-image-badge .badge-text {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #ffffff;
 }
 
-/* ===== about-card-icon ===== */
-.about-card-icon {
-    width: 64px;
-    height: 64px;
-    background-color: #003334;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-    transition: background-color 0.3s ease;
-}
-
-.about-card:hover .about-card-icon {
-    background-color: #014849;
-}
-
-/* ===== about-card-icon-svg ===== */
-.about-card-icon-svg {
-    width: 32px;
-    height: 32px;
-    color: white;
-}
-
-/* ===== about-card-title ===== */
-.about-card-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #003334;
-    margin-bottom: 16px;
-}
-
-/* ===== about-card-text ===== */
-.about-card-text {
-    font-size: 1rem;
-    color: #4b5563;
-    margin: 0;
-}
-
-/* ===== about-section-heading ===== */
+/* ==========================================================================
+   Our Values - 4-Column Grid
+   ========================================================================== */
 .about-section-heading {
-    text-align: center;
-    margin-bottom: 48px;
+  text-align: center;
+  margin-bottom: 32px;
 }
 
-/* ===== about-section-heading-title ===== */
-.about-section-heading-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #003334;
-    margin-bottom: 24px;
+.about-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
-/* ===== about-section-heading-text ===== */
-.about-section-heading-text {
-    font-size: 1.25rem;
-    color: #4b5563;
-    margin: 0 auto;
-    max-width: 56rem;
+.about-val-card {
+  background: #242730;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 2rem 1.4rem;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ===== about-cta-wrapper ===== */
-.about-cta-wrapper {
-    text-align: center;
-    margin-top: 48px;
+.about-val-card:hover {
+  background-color: #2c313d;
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
-/* ===== about-cta-button ===== */
-.about-cta-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 16px 32px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: #003334;
-    color: white;
+.about-card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-.about-cta-button:hover {
-    background-color: #014849;
+.about-card-icon-svg {
+  width: 24px;
+  height: 24px;
+  color: #ffffff;
 }
 
-/* ===== about-cta-icon ===== */
-.about-cta-icon {
-    transition: transform 0.3s ease;
+.about-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
 }
 
-.about-cta-button:hover .about-cta-icon {
-    transform: translateX(4px);
+.about-card-text {
+  font-size: 14px;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin: 0;
 }
 
-/* ===== about-btn-group ===== */
+/* ==========================================================================
+   Our Mission Section
+   ========================================================================== */
+.about-mission-section {
+  background: linear-gradient(180deg, #16181d 0%, #1a1c22 100%);
+  text-align: center;
+}
+
+.about-mission-content {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.mission-icon-wrap {
+  display: inline-flex;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #242730;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.mission-quote-icon {
+  color: #cbd5e1;
+  font-size: 18px;
+}
+
+.about-mission-text {
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  color: #cbd5e1;
+  line-height: 1.85;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   Join Our Journey (CTA) Section
+   ========================================================================== */
+.about-cta-section {
+  text-align: center;
+  background: #16181d;
+}
+
+.about-cta-content {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.about-cta-text {
+  font-size: 15.5px;
+  color: #cbd5e1;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
 .about-btn-group {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 24px;
+  display: flex;
+  justify-content: center;
 }
 
-/* ===== about-btn-primary ===== */
 .about-btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 16px 32px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: #003334;
-    color: white;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 14px 36px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: none !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .about-btn-primary:hover {
-    background-color: #014849;
+  background: #242730;
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow: none !important;
 }
 
-/* ===== about-btn-secondary ===== */
-.about-btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 16px 32px;
-    border: 2px solid #003334;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: white;
-    color: #003334;
+.cta-arrow {
+  font-size: 13px;
 }
 
-.about-btn-secondary:hover {
-    background-color: #003334;
-    color: white;
-}
-
-/* ===== Responsive: Tablet (≤1024px) ===== */
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
 @media (max-width: 1024px) {
-    .about-grid-4 {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .about-card-section {
+    padding: 3rem 2rem;
+  }
 
-    .about-grid-2 {
-        grid-template-columns: 1fr;
-        gap: 48px;
-    }
+  .about-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .about-grid-2 {
+    gap: 36px;
+  }
 }
 
-/* ===== Responsive: Mobile (≤768px) ===== */
 @media (max-width: 768px) {
-    .about-header-title {
-        font-size: 2rem;
-    }
+  .about-page {
+    margin-top: 5rem;
+    padding: 20px 14px 60px;
+    gap: 20px;
+  }
 
-    .about-header-subtitle {
-        font-size: 1rem;
-    }
+  .about-header-card {
+    padding: 3.5rem 1.5rem;
+    border-radius: 18px;
+  }
 
-    .about-section,
-    .about-section-light {
-        padding: 48px 24px;
-    }
+  .about-card-section {
+    padding: 2.25rem 1.25rem;
+    border-radius: 18px;
+  }
 
-    .about-section-title,
-    .about-section-heading-title {
-        font-size: 1.875rem;
-    }
+  .about-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
 
-    .about-grid-4,
-    .about-grid-2 {
-        grid-template-columns: 1fr;
-    }
+  .about-grid-4 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
 
-    .about-card {
-        padding: 24px;
-    }
+  .about-val-card {
+    padding: 1.5rem 1.25rem;
+  }
 
-    .about-btn-group {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .about-btn-primary,
-    .about-btn-secondary {
-        width: 100%;
-        justify-content: center;
-    }
+  .about-btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
 }
