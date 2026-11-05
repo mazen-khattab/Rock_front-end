@@ -447,7 +447,7 @@
   }
 
   .product-page .products-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 16px;
   }
 }
@@ -473,16 +473,17 @@
   }
 
   .product-page .products-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 14px;
     width: 100%;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .product-page .products-grid {
     grid-template-columns: 1fr;
     gap: 18px;
+    width: 100%;
   }
 
   .product-page .size-grid {
