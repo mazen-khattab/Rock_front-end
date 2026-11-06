@@ -215,6 +215,7 @@
 @media (max-width: 768px) {
   .product-card {
     width: 100%;
+    max-width: 100%;
   }
   .product-card .product-image-container {
     height: 220px;

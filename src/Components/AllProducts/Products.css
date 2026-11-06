@@ -428,6 +428,7 @@
 .product-page .products-main {
   flex: 1;
   min-width: 0;
+  width: 100%;
 }
 
 .product-page .products-grid {
@@ -435,6 +436,7 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   justify-items: center;
   gap: 24px;
+  width: 100%;
 }
 
 /* ==========================================================================
@@ -460,7 +462,9 @@
 
   .product-page .page-content {
     flex-direction: column;
+    align-items: stretch;
     gap: 0;
+    width: 100%;
   }
 
   .product-page .filter-sidebar {
@@ -469,6 +473,10 @@
 
   .product-page .mobile-filter-container {
     display: block;
+    width: 100%;
+  }
+
+  .product-page .products-main {
     width: 100%;
   }
 
