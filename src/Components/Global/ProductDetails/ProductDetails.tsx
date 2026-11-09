@@ -264,12 +264,12 @@ const ProductDetails = () => {
                                 </button>
 
                                 {/* Delivery Info */}
-                                <div className="delivery-info">
+                                {/* <div className="delivery-info">
                                     <i className="fa-solid fa-truck-fast"></i> Free delivery on orders over 500 EGP
-                                </div>
+                                </div> */}
 
                                 {/* Key Features */}
-                                <div className="features-section">
+                                {/* <div className="features-section">
                                     <h3>KEY FEATURES</h3>
                                     <ul>
                                         <li><i className="fa-solid fa-check"></i> High stand-up collar</li>
@@ -278,7 +278,7 @@ const ProductDetails = () => {
                                         <li><i className="fa-solid fa-check"></i> Long sleeves with hidden elastic cuffs</li>
                                         <li><i className="fa-solid fa-check"></i> Premium inner lining</li>
                                     </ul>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     )}

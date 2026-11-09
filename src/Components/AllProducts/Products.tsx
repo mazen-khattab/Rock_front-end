@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react';
-import Navbar from '../Home/Navbar/Navbar';
-import {
-  Loader2,
-} from "lucide-react";
-import ProductCard from '../Global/ProductCard/ProductCard';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from "react";
+import Navbar from "../Home/Navbar/Navbar";
+import { Loader2 } from "lucide-react";
+import ProductCard from "../Global/ProductCard/ProductCard";
+import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
-import type { Product } from '../../Types/product';
-import { useProduct } from '../../Context/ProductContext';
-import './Products.css';
+import type { Product } from "../../Types/product";
+import { useProduct } from "../../Context/ProductContext";
+import "./Products.css";
 
 type FilterKey = "category" | "size" | "color";
 
@@ -18,29 +16,22 @@ function ProductPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
-  const translatedSizes = [t('Products.xs'), t('Products.s'), t('Products.m'), t('Products.l'), t('Products.xl')];
+  const translatedSizes = [t("Products.xs"), t("Products.s"), t("Products.m"), t("Products.l"), t("Products.xl")];
 
   // Read selected filters directly from the URL
   const activeCategory = searchParams.get("category");
   const activeSize = searchParams.get("size");
   const activeColor = searchParams.get("color");
 
-  const { GetAllProducts, loading } = useProduct();
-
-  const translatedCategories = [
-    { name: t('Products.coats_jackets'), subcategories: [], slug: 'Jackets' },
-    { name: t('Products.jeans'), subcategories: [], slug: 'Jeans' },
-    { name: t('Products.hoodies_sweatshirts'), subcategories: [], slug: 'Hoodies' },
-    { name: t('Products.t_shirts'), subcategories: [], slug: 'T-shirts' }
-  ];
+  const { GetAllProducts, GetAllCategories, categories, categoriesLoading, loading } = useProduct();
 
   const translatedColors = [
-    { name: t('Products.black'), value: "black" },
-    { name: t('Products.white'), value: "white" },
-    { name: t('Products.cream'), value: "cream" },
-    { name: t('Products.grey'), value: "grey" },
-    { name: t('Products.brown'), value: "brown" },
-    { name: t('Products.green'), value: "green" },
+    { name: t("Products.black"), value: "black" },
+    { name: t("Products.white"), value: "white" },
+    { name: t("Products.cream"), value: "cream" },
+    { name: t("Products.grey"), value: "grey" },
+    { name: t("Products.brown"), value: "brown" },
+    { name: t("Products.green"), value: "green" },
   ];
 
   // Fetch products whenever the URL query parameters change
@@ -51,11 +42,11 @@ function ProductPage() {
       const color = activeColor ?? "";
 
       const response = await GetAllProducts(
-        1,   // page number
-        12,  // page size
+        1, // page number
+        12, // page size
         category,
         size,
-        color
+        color,
       );
 
       setProducts(response);
@@ -63,6 +54,10 @@ function ProductPage() {
 
     fetchProducts();
   }, [searchParams]);
+
+  useEffect(() => {
+    GetAllCategories();
+  }, [GetAllCategories]);
 
   // Generic function to update (toggle) a query parameter
   const updateSearchParameter = (key: FilterKey, value: string) => {
@@ -85,6 +80,29 @@ function ProductPage() {
     setIsOpen(!isOpen);
   };
 
+  const renderCategoriesList = () => (
+    <div className="categories-list">
+      {categoriesLoading && categories.length === 0 ? (
+        <div className="page-loading" style={{ minHeight: "60px" }}>
+          <Loader2 className="page-loading-icon" size={24} />
+        </div>
+      ) : (
+        categories.map((cat) => (
+          <div
+            key={cat.id}
+            className={activeCategory === cat.name ? "category-item active" : "category-item"}
+            onClick={() => updateSearchParameter("category", cat.name)}
+          >
+            <span>{cat.name}</span>
+            {activeCategory === cat.name ? (
+              <i className="fa-solid fa-check active-check"></i>
+            ) : null}
+          </div>
+        ))
+      )}
+    </div>
+  );
+
   return (
     <div>
       <Navbar />
@@ -101,64 +119,35 @@ function ProductPage() {
               <div className="filter-sidebar-header">
                 <div className="filter-title-wrap">
                   <i className="fa-solid fa-sliders filter-title-icon"></i>
-                  <h3>{t('Products.filter')}</h3>
+                  <h3>{t("Products.filter")}</h3>
                 </div>
               </div>
 
               {/* Categories */}
               <div className="filter-section">
-                <a
-                  className="collapsed-btn"
-                  data-bs-toggle="collapse"
-                  href="#cate"
-                  role="button"
-                  aria-expanded="true"
-                  aria-controls="cate"
-                >
-                  <span>{t('Products.categories')}</span>
+                <a className="collapsed-btn" data-bs-toggle="collapse" href="#cate" role="button" aria-expanded="true" aria-controls="cate">
+                  <span>{t("Products.categories")}</span>
                   <i className="fa-solid fa-chevron-down collapse-icon"></i>
                 </a>
                 <div className="collapse show" id="cate">
-                  <div className="categories-list">
-                    {translatedCategories.map((cat, idx) => (
-                      <div
-                        key={idx}
-                        className={activeCategory === cat.slug ? "category-item active" : "category-item"}
-                        onClick={() => updateSearchParameter('category', cat.slug)}
-                      >
-                        <span>{cat.name}</span>
-                        {activeCategory === cat.slug ? (
-                          <i className="fa-solid fa-check active-check"></i>
-                        ) : (
-                          cat.subcategories.length > 0 && <span className="chevron">›</span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+                  {renderCategoriesList()}
                 </div>
               </div>
 
               {/* Sizes */}
               <div className="filter-section">
-                <a
-                  className="collapsed-btn"
-                  data-bs-toggle="collapse"
-                  href="#sizes"
-                  role="button"
-                  aria-expanded="true"
-                  aria-controls="sizes"
-                >
-                  <span>{t('Products.sizes')}</span>
+                <a className="collapsed-btn" data-bs-toggle="collapse" href="#sizes" role="button" aria-expanded="true" aria-controls="sizes">
+                  <span>{t("Products.sizes")}</span>
                   <i className="fa-solid fa-chevron-down collapse-icon"></i>
                 </a>
                 <div className="collapse show" id="sizes">
                   <div className="size-grid">
-                    {translatedSizes.map(size => (
+                    {translatedSizes.map((size) => (
                       <button
                         key={size}
                         type="button"
                         className={activeSize === size ? "active" : ""}
-                        onClick={() => updateSearchParameter('size', size)}
+                        onClick={() => updateSearchParameter("size", size)}
                       >
                         {size}
                       </button>
@@ -169,34 +158,20 @@ function ProductPage() {
 
               {/* Colors */}
               <div className="filter-section">
-                <a
-                  className="collapsed-btn"
-                  data-bs-toggle="collapse"
-                  href="#colors"
-                  role="button"
-                  aria-expanded="true"
-                  aria-controls="colors"
-                >
-                  <span>{t('Products.colors')}</span>
+                <a className="collapsed-btn" data-bs-toggle="collapse" href="#colors" role="button" aria-expanded="true" aria-controls="colors">
+                  <span>{t("Products.colors")}</span>
                   <i className="fa-solid fa-chevron-down collapse-icon"></i>
                 </a>
                 <div className="collapse show" id="colors">
                   <div className="color-grid">
-                    {translatedColors.map(color => (
+                    {translatedColors.map((color) => (
                       <label
                         key={color.value}
                         className={activeColor === color.name ? "color-option active" : "color-option"}
-                        onClick={() => updateSearchParameter('color', color.name)}
+                        onClick={() => updateSearchParameter("color", color.name)}
                       >
-                        <input
-                          type="checkbox"
-                          checked={activeColor === color.name}
-                          readOnly
-                        />
-                        <span
-                          className="color-swatch"
-                          style={{ backgroundColor: getColorHex(color.value) }}
-                        />
+                        <input type="checkbox" checked={activeColor === color.name} readOnly />
+                        <span className="color-swatch" style={{ backgroundColor: getColorHex(color.value) }} />
                         <span className="color-label">{color.name}</span>
                       </label>
                     ))}
@@ -206,13 +181,9 @@ function ProductPage() {
 
               {/* Reset Button */}
               <div className="filter-sidebar-footer">
-                <button
-                  type="button"
-                  className="btn-clear"
-                  onClick={resetFilters}
-                >
+                <button type="button" className="btn-clear" onClick={resetFilters}>
                   <i className="fa-solid fa-rotate-left"></i>
-                  <span>{t('Products.reset')}</span>
+                  <span>{t("Products.reset")}</span>
                 </button>
               </div>
             </aside>
@@ -224,31 +195,23 @@ function ProductPage() {
                 type="button"
                 className="moblie-filter-button"
                 onClick={toggleSidebar}
-                aria-label={isOpen ? t('Products.close_filters') : t('Products.open_filters')}
+                aria-label={isOpen ? t("Products.close_filters") : t("Products.open_filters")}
               >
                 <i className="fa-solid fa-sliders"></i>
-                <span>{t('Products.filter')}</span>
+                <span>{t("Products.filter")}</span>
               </button>
 
               {/* Overlay */}
-              <div
-                className={`moblie-sidebar-overlay ${isOpen ? 'active' : ''}`}
-                onClick={toggleSidebar}
-              />
+              <div className={`moblie-sidebar-overlay ${isOpen ? "active" : ""}`} onClick={toggleSidebar} />
 
               {/* Mobile Sidebar */}
-              <aside className={`moblie-filter-sidebar ${isOpen ? 'open' : ''}`}>
+              <aside className={`moblie-filter-sidebar ${isOpen ? "open" : ""}`}>
                 <div className="mobile-sidebar-header">
                   <div className="filter-title-wrap">
                     <i className="fa-solid fa-sliders filter-title-icon"></i>
-                    <p className="filter-sidebar-title">{t('Products.filter')}</p>
+                    <p className="filter-sidebar-title">{t("Products.filter")}</p>
                   </div>
-                  <button
-                    type="button"
-                    className="mobile-close-btn"
-                    onClick={toggleSidebar}
-                    aria-label="Close filters"
-                  >
+                  <button type="button" className="mobile-close-btn" onClick={toggleSidebar} aria-label="Close filters">
                     <i className="fa-solid fa-xmark"></i>
                   </button>
                 </div>
@@ -264,26 +227,11 @@ function ProductPage() {
                       aria-expanded="true"
                       aria-controls="mobile-cate"
                     >
-                      <span>{t('Products.categories')}</span>
+                      <span>{t("Products.categories")}</span>
                       <i className="fa-solid fa-chevron-down collapse-icon"></i>
                     </a>
                     <div className="collapse show" id="mobile-cate">
-                      <div className="categories-list">
-                        {translatedCategories.map((cat, idx) => (
-                          <div
-                            key={idx}
-                            className={activeCategory === cat.slug ? "category-item active" : "category-item"}
-                            onClick={() => updateSearchParameter('category', cat.slug)}
-                          >
-                            <span>{cat.name}</span>
-                            {activeCategory === cat.slug ? (
-                              <i className="fa-solid fa-check active-check"></i>
-                            ) : (
-                              cat.subcategories.length > 0 && <span className="chevron">›</span>
-                            )}
-                          </div>
-                        ))}
-                      </div>
+                      {renderCategoriesList()}
                     </div>
                   </div>
 
@@ -297,17 +245,17 @@ function ProductPage() {
                       aria-expanded="true"
                       aria-controls="mobile-sizes"
                     >
-                      <span>{t('Products.sizes')}</span>
+                      <span>{t("Products.sizes")}</span>
                       <i className="fa-solid fa-chevron-down collapse-icon"></i>
                     </a>
                     <div className="collapse show" id="mobile-sizes">
                       <div className="size-grid">
-                        {translatedSizes.map(size => (
+                        {translatedSizes.map((size) => (
                           <button
                             key={size}
                             type="button"
                             className={activeSize === size ? "active" : ""}
-                            onClick={() => updateSearchParameter('size', size)}
+                            onClick={() => updateSearchParameter("size", size)}
                           >
                             {size}
                           </button>
@@ -326,26 +274,19 @@ function ProductPage() {
                       aria-expanded="true"
                       aria-controls="mobile-colors"
                     >
-                      <span>{t('Products.colors')}</span>
+                      <span>{t("Products.colors")}</span>
                       <i className="fa-solid fa-chevron-down collapse-icon"></i>
                     </a>
                     <div className="collapse show" id="mobile-colors">
                       <div className="color-grid">
-                        {translatedColors.map(color => (
+                        {translatedColors.map((color) => (
                           <label
                             key={color.value}
                             className={activeColor === color.name ? "color-option active" : "color-option"}
-                            onClick={() => updateSearchParameter('color', color.name)}
+                            onClick={() => updateSearchParameter("color", color.name)}
                           >
-                            <input
-                              type="checkbox"
-                              checked={activeColor === color.name}
-                              readOnly
-                            />
-                            <span
-                              className="color-swatch"
-                              style={{ backgroundColor: getColorHex(color.value) }}
-                            />
+                            <input type="checkbox" checked={activeColor === color.name} readOnly />
+                            <span className="color-swatch" style={{ backgroundColor: getColorHex(color.value) }} />
                             <span className="color-label">{color.name}</span>
                           </label>
                         ))}
@@ -365,7 +306,7 @@ function ProductPage() {
                     }}
                   >
                     <i className="fa-solid fa-rotate-left"></i>
-                    <span>{t('Products.reset')}</span>
+                    <span>{t("Products.reset")}</span>
                   </button>
                 </div>
               </aside>
@@ -374,11 +315,8 @@ function ProductPage() {
             {/* Main content */}
             <main className="products-main">
               <div className="products-grid">
-                {products.map(product => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                  />
+                {products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             </main>
@@ -398,7 +336,7 @@ function getColorHex(colorName: string) {
     grey: "#808080",
     brown: "#A52A2A",
     green: "#008000",
-    multicolor: "linear-gradient(45deg, #FF5733, #33FF57, #3357FF)"
+    multicolor: "linear-gradient(45deg, #FF5733, #33FF57, #3357FF)",
   } as const;
   return colors[colorName as keyof typeof colors] || "#CCCCCC";
 }
