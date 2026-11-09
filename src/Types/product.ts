@@ -47,3 +47,24 @@ export interface CartItem {
   reserved: number;
   quantity: number;
 }
+export interface CategoryLookup {
+  id: number;
+  name: string;
+}
+export type ProductContextType = {
+  products: Product[];
+  categories: CategoryLookup[];
+  selectedProduct: ProductDetails | null;
+  loading: boolean;
+  categoriesLoading: boolean;
+
+  GetAllProducts: (
+    pageNumber: number,
+    pageSize: number,
+    category?: string,
+    size?: string,
+    color?: string,
+  ) => Promise<Product[]>;
+  GetById: (id: number) => Promise<ProductDetails | null>;
+  GetAllCategories: () => Promise<CategoryLookup[]>;
+};
